@@ -1,4 +1,4 @@
-# Take_And_Stop_Fro_Binance
+# Take_And_Stop_For_Binance
 
 API - from ->
 # Java Binance Unofficial API Client
