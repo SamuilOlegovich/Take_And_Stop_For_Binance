@@ -51,7 +51,6 @@ package main.model.binance.datatype;/* =========================================
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import lombok.Data;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +58,7 @@ import java.util.List;
 @Data
 public class BinanceEventOutboundAccountInfo {
 
-    public List<com.webcerebrium.binance.datatype.BinanceWalletAsset> balances;
+    public List<BinanceWalletAsset> balances;
     public Long sellerCommission;
     public Long makerCommission;
     public Long takerCommission;
@@ -83,7 +82,7 @@ public class BinanceEventOutboundAccountInfo {
         balances = new LinkedList<>();
         JsonArray b = event.get("B").getAsJsonArray();
         for (JsonElement asset : b) {
-            balances.add(new com.webcerebrium.binance.datatype.BinanceWalletAsset(asset.getAsJsonObject()));
+            balances.add(new BinanceWalletAsset(asset.getAsJsonObject()));
         }
     }
 }

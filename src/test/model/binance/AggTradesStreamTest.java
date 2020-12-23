@@ -14,7 +14,6 @@ import main.model.binance.datatype.BinanceEventAggTrade;
 import main.model.binance.datatype.BinanceSymbol;
 import main.model.binance.websocket.BinanceWebSocketAdapterAggTrades;
 import org.eclipse.jetty.websocket.api.Session;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.slf4j.Logger;

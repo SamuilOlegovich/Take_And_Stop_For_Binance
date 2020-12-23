@@ -8,15 +8,14 @@ package test.model.binance;
  * Released under the MIT License
  * ============================================================ */
 
-import com.webcerebrium.binance.websocket.BinanceWebSocketAdapterDepthLevel;
-import com.webcerebrium.binance.websocket.BinanceWebSocketAdapterDepth;
-import com.webcerebrium.binance.datatype.BinanceEventDepthLevelUpdate;
-import com.webcerebrium.binance.datatype.BinanceEventDepthUpdate;
-import com.webcerebrium.binance.datatype.BinanceSymbol;
 import main.model.binance.api.BinanceApi;
 import main.model.binance.api.BinanceApiException;
+import main.model.binance.datatype.BinanceEventDepthLevelUpdate;
+import main.model.binance.datatype.BinanceEventDepthUpdate;
+import main.model.binance.datatype.BinanceSymbol;
+import main.model.binance.websocket.BinanceWebSocketAdapterDepth;
+import main.model.binance.websocket.BinanceWebSocketAdapterDepthLevel;
 import org.eclipse.jetty.websocket.api.Session;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.slf4j.Logger;

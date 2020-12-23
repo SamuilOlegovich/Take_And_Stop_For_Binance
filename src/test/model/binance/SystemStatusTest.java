@@ -2,11 +2,14 @@ package test.model.binance;
 
 
 import com.google.gson.JsonObject;
-import lombok.extern.slf4j.Slf4j;
+import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceApiException;
 import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.junit.Test;
+
+
 
 //@Slf4j
 public class SystemStatusTest {

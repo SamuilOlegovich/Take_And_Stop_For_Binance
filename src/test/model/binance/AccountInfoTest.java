@@ -10,10 +10,10 @@ package test.model.binance;
 
 // This class contains READ-only tests for account
 
+import com.google.gson.JsonObject;
 import main.model.binance.api.BinanceApi;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceOrder;
-import lombok.extern.slf4j.Slf4j;
 import com.google.gson.JsonArray;
 import main.model.binance.datatype.BinanceSymbol;
 import main.model.binance.datatype.BinanceTrade;

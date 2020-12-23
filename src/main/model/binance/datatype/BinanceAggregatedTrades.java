@@ -20,9 +20,13 @@ package main.model.binance.datatype;
 // "M": true           // Was the trade the best price match?
 // }
 
-import lombok.Data;
 
 import java.math.BigDecimal;
+
+
+
+
+
 
 @Data
 public class BinanceAggregatedTrades {

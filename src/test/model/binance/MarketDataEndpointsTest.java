@@ -8,15 +8,12 @@ package test.model.binance;
  * Released under the MIT License
  * ============================================================ */
 
-import com.webcerebrium.binance.datatype.BinanceAggregatedTrades;
-import com.webcerebrium.binance.datatype.BinanceCandlestick;
-import com.webcerebrium.binance.datatype.BinanceInterval;
-import com.webcerebrium.binance.datatype.BinanceSymbol;
-import com.webcerebrium.binance.datatype.BinanceTicker;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import lombok.extern.slf4j.Slf4j;
+import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceApiException;
+import main.model.binance.datatype.*;
 import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.slf4j.Logger;
@@ -31,6 +28,9 @@ import java.util.Map;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+
+
 
 //@Slf4j
 public class MarketDataEndpointsTest {

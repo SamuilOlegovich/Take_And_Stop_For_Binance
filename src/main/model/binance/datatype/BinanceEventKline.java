@@ -6,13 +6,11 @@ package main.model.binance.datatype;/* =========================================
  * Released under the MIT License
  * ============================================================ */
 
-import com.webcerebrium.binance.api.BinanceApiException;
 import com.google.gson.JsonObject;
-import lombok.extern.slf4j.Slf4j;
+import main.model.binance.api.BinanceApiException;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import org.slf4j.Logger;
-import lombok.Data;
 
 /*
     {
@@ -48,8 +46,8 @@ public class BinanceEventKline {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceEventKline.class);
 
-    public com.webcerebrium.binance.datatype.BinanceInterval interval;
-    public com.webcerebrium.binance.datatype.BinanceSymbol symbol;
+    public BinanceInterval interval;
+    public BinanceSymbol symbol;
     public Long eventTime;
 
     public Long startTime;
@@ -73,11 +71,11 @@ public class BinanceEventKline {
 
     public BinanceEventKline(JsonObject event) throws BinanceApiException {
         eventTime = event.get("E").getAsLong();
-        symbol = com.webcerebrium.binance.datatype.BinanceSymbol.valueOf(event.get("s").getAsString());
+        symbol = BinanceSymbol.valueOf(event.get("s").getAsString());
 
         JsonObject k = event.get("k").getAsJsonObject();
         log.info(k.get("i").getAsString());
-        interval = com.webcerebrium.binance.datatype.BinanceInterval.lookup(k.get("i").getAsString());
+        interval = BinanceInterval.lookup(k.get("i").getAsString());
 
         startTime = k.get("t").getAsLong();
         endTime  = k.get("T").getAsLong();

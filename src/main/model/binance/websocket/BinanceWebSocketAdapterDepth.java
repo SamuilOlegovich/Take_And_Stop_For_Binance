@@ -9,16 +9,16 @@ package main.model.binance.websocket;
  * ============================================================ */
 
 
-import com.webcerebrium.binance.datatype.BinanceEventDepthUpdate;
+import main.model.binance.api.BinanceApiException;
+import main.model.binance.datatype.BinanceEventDepthUpdate;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
-import com.webcerebrium.binance.api.BinanceApiException;
-import com.webcerebrium.binance.api.BinanceApi;
 import org.eclipse.jetty.websocket.api.Session;
 import com.google.gson.JsonObject;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
+
+
 
 
 //@Slf4j

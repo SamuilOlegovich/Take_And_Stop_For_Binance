@@ -7,43 +7,21 @@ package main.model.binance.api;
  * Released under the MIT License
  * ============================================================ */
 
-import lombok.*;
-import main.model.binance.datatype.BinanceOrder;
+import com.google.common.collect.ImmutableSet;
+import main.model.binance.datatype.*;
+import main.model.binance.websocket.*;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.websocket.api.Session;
-import com.google.common.collect.ImmutableSet;
-import com.webcerebrium.binance.websocket.*;
-import com.webcerebrium.binance.datatype.*;
-import com.google.common.net.UrlEscapers;
 import com.google.gson.reflect.TypeToken;
-import com.google.common.escape.Escaper;
-import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import lombok.extern.slf4j.Slf4j;
 import com.google.gson.Gson;
+import org.sellcom.core.Strings;
 import org.slf4j.Logger;
 
-
-import com.webcerebrium.binance.websocket.BinanceWebSocketAdapterAggTrades;
-import com.webcerebrium.binance.websocket.BinanceWebSocketAdapterUserData;
-import com.webcerebrium.binance.websocket.BinanceWebSocketAdapterDepth;
-import com.webcerebrium.binance.websocket.BinanceWebSocketAdapterKline;
-
-import com.webcerebrium.binance.datatype.BinanceAggregatedTrades;
-import com.webcerebrium.binance.datatype.BinanceOrderPlacement;
-import com.webcerebrium.binance.datatype.BinanceHistoryFilter;
-import com.webcerebrium.binance.datatype.BinanceExchangeStats;
-import com.webcerebrium.binance.datatype.BinanceExchangeInfo;
-import com.webcerebrium.binance.datatype.BinanceWalletAsset;
-import com.webcerebrium.binance.datatype.BinanceCandlestick;
-import com.webcerebrium.binance.datatype.BinanceInterval;
-import com.webcerebrium.binance.datatype.BinanceSymbol;
-import com.webcerebrium.binance.datatype.BinanceTicker;
-import com.webcerebrium.binance.datatype.BinanceTrade;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,6 +33,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.net.URI;
+
+
 
 //@Slf4j
 @Data

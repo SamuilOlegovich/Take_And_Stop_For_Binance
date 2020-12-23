@@ -9,6 +9,8 @@ package test.model.binance;
  * ============================================================ */
 
 import com.google.gson.JsonObject;
+import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceApiException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +18,8 @@ import java.util.Date;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+
 
 public class GeneralEndpointsTest {
 

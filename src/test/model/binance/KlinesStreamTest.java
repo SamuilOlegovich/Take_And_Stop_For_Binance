@@ -1,11 +1,12 @@
 package test.model.binance;
 
-import com.webcerebrium.binance.websocket.BinanceWebSocketAdapterKline;
-import com.webcerebrium.binance.datatype.BinanceEventKline;
-import com.webcerebrium.binance.datatype.BinanceInterval;
-import com.webcerebrium.binance.datatype.BinanceSymbol;
+import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceApiException;
+import main.model.binance.datatype.BinanceEventKline;
+import main.model.binance.datatype.BinanceInterval;
+import main.model.binance.datatype.BinanceSymbol;
+import main.model.binance.websocket.BinanceWebSocketAdapterKline;
 import org.eclipse.jetty.websocket.api.Session;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.slf4j.Logger;

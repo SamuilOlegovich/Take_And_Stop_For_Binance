@@ -7,16 +7,20 @@ package test.model.binance;
  * Released under the MIT License
  * ============================================================ */
 
-import com.webcerebrium.binance.datatype.BinanceExchangeSymbol;
-import com.webcerebrium.binance.datatype.BinanceExchangeStats;
-import com.webcerebrium.binance.datatype.BinanceExchangeInfo;
-import lombok.extern.slf4j.Slf4j;
+import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceApiException;
+import main.model.binance.datatype.BinanceExchangeInfo;
+import main.model.binance.datatype.BinanceExchangeStats;
+import main.model.binance.datatype.BinanceExchangeSymbol;
 import org.slf4j.LoggerFactory;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.junit.Test;
 
 import java.util.List;
+
+
+
 
 //@Slf4j
 public class PublicMarketsTest {
@@ -39,7 +43,7 @@ public class PublicMarketsTest {
     @Test
     public void testExchangeInfo() throws Exception, BinanceApiException {
         BinanceExchangeInfo binanceExchangeInfo = binanceApi.exchangeInfo();
-        List<BinanceExchangeSymbol> symbols = binanceExchangeInfo.getSymbols();
+        List<BinanceExchangeSymbol> symbols = BinanceExchangeInfo.getSymbols();
         // BinanceExchangeSymbol BNB = symbols.stream().filter(a -> a.getQuoteAsset().equals("BNB")).findFirst().get();
         // log.info("BNB Lot Size: {}", BNB.getLotSize().toString());
         symbols

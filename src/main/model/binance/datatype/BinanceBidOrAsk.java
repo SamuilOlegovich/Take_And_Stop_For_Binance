@@ -7,7 +7,6 @@ package main.model.binance.datatype;/* =========================================
  * ============================================================ */
 
 import com.google.gson.JsonArray;
-import lombok.Data;
 
 import java.math.BigDecimal;
 

@@ -9,8 +9,7 @@ package main.model.binance.datatype;/* =========================================
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.webcerebrium.binance.api.BinanceApiException;
-import lombok.Data;
+import main.model.binance.api.BinanceApiException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -51,13 +50,13 @@ import java.util.List;
 public class BinanceEventDepthUpdate {
     public List<BinanceBidOrAsk> bids = null;
     public List<BinanceBidOrAsk> asks = null;
-    public com.webcerebrium.binance.datatype.BinanceSymbol symbol;
+    public BinanceSymbol symbol;
     public Long eventTime;
     public Long updateId;
 
     public BinanceEventDepthUpdate(JsonObject event) throws BinanceApiException {
         eventTime = event.get("E").getAsLong();
-        symbol = com.webcerebrium.binance.datatype.BinanceSymbol.valueOf(event.get("s").getAsString());
+        symbol = BinanceSymbol.valueOf(event.get("s").getAsString());
         updateId = event.get("u").getAsLong();
 
         bids = new LinkedList<>();

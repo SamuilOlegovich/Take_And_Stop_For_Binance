@@ -7,9 +7,13 @@ package main.model.binance.api;
  * Released under the MIT License
  * ============================================================ */
 
-import com.google.common.base.Strings;
+
+import org.sellcom.core.Strings;
 
 import java.util.Properties;
+
+
+
 
 public class BinanceConfig {
 

@@ -5,7 +5,10 @@ import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceHistoryFilter;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Calendar;
+
 
 
 //@Slf4j

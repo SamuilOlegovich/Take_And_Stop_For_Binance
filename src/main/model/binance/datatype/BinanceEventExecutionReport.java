@@ -7,8 +7,7 @@ package main.model.binance.datatype;/* =========================================
  * ============================================================ */
 
 import com.google.gson.JsonObject;
-import com.webcerebrium.binance.api.BinanceApiException;
-import lombok.Data;
+import main.model.binance.api.BinanceApiException;
 
 import java.math.BigDecimal;
 
@@ -49,19 +48,19 @@ import java.math.BigDecimal;
 @Data
 public class BinanceEventExecutionReport {
 
-    public com.webcerebrium.binance.datatype.BinanceTimeInForce timeInForce;
+    public BinanceTimeInForce timeInForce;
     public String newClientOrderId;
-    public com.webcerebrium.binance.datatype.BinanceOrderSide side;
-    public com.webcerebrium.binance.datatype.BinanceOrderType type;
-    public com.webcerebrium.binance.datatype.BinanceSymbol symbol;
+    public BinanceOrderSide side;
+    public BinanceOrderType type;
+    public BinanceSymbol symbol;
     public Long eventTime;
 
     public BigDecimal quantity;
     public BigDecimal price;
 
-    public com.webcerebrium.binance.datatype.BinanceExecutionType executionType;
-    public com.webcerebrium.binance.datatype.BinanceRejectReason rejectReason;
-    public com.webcerebrium.binance.datatype.BinanceOrderStatus status;
+    public BinanceExecutionType executionType;
+    public BinanceRejectReason rejectReason;
+    public BinanceOrderStatus status;
 
     public BigDecimal accumulatedQuantityOfFilledTrades;
     public BigDecimal quantityOfLastFilledTrade;
@@ -76,19 +75,19 @@ public class BinanceEventExecutionReport {
 
     public BinanceEventExecutionReport(JsonObject event) throws BinanceApiException {
         eventTime = event.get("E").getAsLong();
-        symbol = com.webcerebrium.binance.datatype.BinanceSymbol.valueOf(event.get("s").getAsString());
+        symbol = BinanceSymbol.valueOf(event.get("s").getAsString());
         newClientOrderId = event.get("c").getAsString();
 
-        side = com.webcerebrium.binance.datatype.BinanceOrderSide.valueOf(event.get("S").getAsString()); // was using "c" again
-        type = com.webcerebrium.binance.datatype.BinanceOrderType.valueOf(event.get("o").getAsString());
-        timeInForce = com.webcerebrium.binance.datatype.BinanceTimeInForce.valueOf(event.get("f").getAsString());
+        side = BinanceOrderSide.valueOf(event.get("S").getAsString()); // was using "c" again
+        type = BinanceOrderType.valueOf(event.get("o").getAsString());
+        timeInForce = BinanceTimeInForce.valueOf(event.get("f").getAsString());
 
         price = event.get("p").getAsBigDecimal();
         quantity = event.get("q").getAsBigDecimal();
 
-        executionType = com.webcerebrium.binance.datatype.BinanceExecutionType.valueOf(event.get("x").getAsString());
-        status = com.webcerebrium.binance.datatype.BinanceOrderStatus.valueOf(event.get("X").getAsString());
-        rejectReason = com.webcerebrium.binance.datatype.BinanceRejectReason.valueOf(event.get("r").getAsString());
+        executionType = BinanceExecutionType.valueOf(event.get("x").getAsString());
+        status = BinanceOrderStatus.valueOf(event.get("X").getAsString());
+        rejectReason = BinanceRejectReason.valueOf(event.get("r").getAsString());
 
         orderId = event.get("i").getAsLong();
 

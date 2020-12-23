@@ -10,8 +10,7 @@ package main.model.binance.datatype;
 // Internal variables are not human readable. So this class contains better readable getters
 
 import com.google.gson.JsonArray;
-import com.webcerebrium.binance.api.BinanceApiException;
-import lombok.Data;
+import main.model.binance.api.BinanceApiException;
 
 import java.math.BigDecimal;
 

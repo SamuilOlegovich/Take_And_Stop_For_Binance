@@ -8,12 +8,10 @@ package main.model.binance.datatype;
  * ============================================================ */
 
 
-import com.webcerebrium.binance.api.BinanceApiException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import lombok.extern.slf4j.Slf4j;
-import lombok.Data;
+import main.model.binance.api.BinanceApiException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -32,8 +30,8 @@ import java.util.List;
 @Slf4j
 public class BinanceExchangeInfo {
 
-    List<com.webcerebrium.binance.datatype.BinanceExchangeSymbol> symbols = new LinkedList<>();
-    List<com.webcerebrium.binance.datatype.BinanceRateLimit> rateLimits = new LinkedList<>();
+    List<BinanceExchangeSymbol> symbols = new LinkedList<>();
+    List<BinanceRateLimit> rateLimits = new LinkedList<>();
     List<JsonObject> exchangeFilters = new LinkedList<>(); // missing proper documentation on that yet
     String timezone = null;
     Long serverTime = 0L;
@@ -49,7 +47,7 @@ public class BinanceExchangeInfo {
             JsonArray arrRateLimits = obj.get("rateLimits").getAsJsonArray();
             rateLimits.clear();
             for (JsonElement entry: arrRateLimits) {
-                com.webcerebrium.binance.datatype.BinanceRateLimit limit = new com.webcerebrium.binance.datatype.BinanceRateLimit(entry.getAsJsonObject());
+                BinanceRateLimit limit = new BinanceRateLimit(entry.getAsJsonObject());
                 rateLimits.add(limit);
             }
         }
@@ -69,7 +67,7 @@ public class BinanceExchangeInfo {
                 String sym = jsonObject.get("symbol").getAsString();
                 if (sym.equals("123456")) continue; // some special symbol that doesn't fit
 
-                com.webcerebrium.binance.datatype.BinanceExchangeSymbol symbol = new com.webcerebrium.binance.datatype.BinanceExchangeSymbol(jsonObject);
+                BinanceExchangeSymbol symbol = new BinanceExchangeSymbol(jsonObject);
                 symbols.add(symbol);
             }
         }
@@ -77,7 +75,7 @@ public class BinanceExchangeInfo {
 
     /////////////////////////////////////    I had to add == пришлось добавить   ///////////////////////////////////////
 
-    public List<com.webcerebrium.binance.datatype.BinanceExchangeSymbol> getSymbols() {
+    public static List<BinanceExchangeSymbol> getSymbols() {
         return symbols;
     }
 

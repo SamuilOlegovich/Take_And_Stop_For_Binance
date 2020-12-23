@@ -9,15 +9,18 @@ package main.model.binance.websocket;
  * ============================================================ */
 
 
-import com.webcerebrium.binance.datatype.BinanceEventAggTrade;
+import main.model.binance.api.BinanceApiException;
+import main.model.binance.datatype.BinanceEventAggTrade;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
-import com.webcerebrium.binance.api.BinanceApiException;
 import org.eclipse.jetty.websocket.api.Session;
 import com.google.gson.JsonObject;
-import lombok.extern.slf4j.Slf4j;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+
+
 
 //@Slf4j
 public abstract class BinanceWebSocketAdapterAggTrades extends WebSocketAdapter {
