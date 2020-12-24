@@ -8,7 +8,9 @@ package main.model.binance.datatype;
  * ============================================================ */
 
 import com.google.gson.JsonObject;
+import lombok.Data;
 import main.model.binance.api.BinanceApiException;
+
 
 import java.math.BigDecimal;
 

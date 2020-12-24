@@ -10,6 +10,8 @@ package main.model.binance.api;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
 import org.sellcom.core.Strings;
 import org.slf4j.LoggerFactory;

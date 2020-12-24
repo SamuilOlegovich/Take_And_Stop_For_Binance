@@ -7,6 +7,8 @@ package main.model.binance.datatype;/* =========================================
  * ============================================================ */
 
 import com.google.gson.JsonObject;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import main.model.binance.api.BinanceApiException;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
@@ -41,7 +43,7 @@ import org.slf4j.Logger;
 */
 
 @Data
-@Slf4j
+//@Slf4j
 public class BinanceEventKline {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceEventKline.class);

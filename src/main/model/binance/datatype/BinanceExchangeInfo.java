@@ -11,7 +11,10 @@ package main.model.binance.datatype;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import main.model.binance.api.BinanceApiException;
+
 
 import java.util.LinkedList;
 import java.util.List;

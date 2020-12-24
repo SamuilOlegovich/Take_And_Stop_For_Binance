@@ -19,12 +19,9 @@ package main.model.binance.datatype;
 // "m": true,          // Was the buyer the maker?
 // "M": true           // Was the trade the best price match?
 // }
-
+import lombok.Data;
 
 import java.math.BigDecimal;
-
-
-
 
 
 

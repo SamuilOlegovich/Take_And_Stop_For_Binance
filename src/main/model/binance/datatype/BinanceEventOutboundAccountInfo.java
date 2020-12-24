@@ -51,6 +51,8 @@ package main.model.binance.datatype;/* =========================================
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+import lombok.Data;
+
 
 import java.util.LinkedList;
 import java.util.List;

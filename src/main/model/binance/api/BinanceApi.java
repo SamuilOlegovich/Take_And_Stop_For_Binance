@@ -8,6 +8,9 @@ package main.model.binance.api;
  * ============================================================ */
 
 import com.google.common.collect.ImmutableSet;
+import lombok.Data;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import main.model.binance.datatype.*;
 import main.model.binance.websocket.*;
 import org.eclipse.jetty.websocket.client.WebSocketClient;

@@ -44,5 +44,6 @@
     <orderEntry type="library" name="commons-logging:commons-logging:1.1.1" level="application" />
     <orderEntry type="library" name="javax.servlet:servlet-api:2.5" level="application" />
     <orderEntry type="library" name="jline:jline:0.9.94" level="application" />
+    <orderEntry type="library" name="org.projectlombok:lombok:1.16.18" level="application" />
   </component>
 </module>
