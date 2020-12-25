@@ -8,7 +8,7 @@ package test.model.binance;
  * Released under the MIT License
  * ============================================================ */
 
-import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceEventExecutionReport;
 import main.model.binance.datatype.BinanceEventOutboundAccountInfo;
@@ -27,11 +27,11 @@ public class UserDataStreamTest {
 
     private static final Logger log = LoggerFactory.getLogger(UserDataStreamTest.class);
 
-    private BinanceApi binanceApi = null;
+    private BinanceAPI binanceApi = null;
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
-        binanceApi = new BinanceApi();
+        binanceApi = new BinanceAPI();
     }
 
     @Test

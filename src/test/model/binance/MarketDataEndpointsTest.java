@@ -11,7 +11,7 @@ package test.model.binance;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.*;
 import org.slf4j.LoggerFactory;
@@ -37,12 +37,12 @@ public class MarketDataEndpointsTest {
 
     private static final Logger log = LoggerFactory.getLogger(MarketDataEndpointsTest.class);
 
-    private BinanceApi binanceApi = null;
+    private BinanceAPI binanceApi = null;
     private BinanceSymbol symbol = null;
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
-        binanceApi = new BinanceApi();
+        binanceApi = new BinanceAPI();
         symbol = BinanceSymbol.valueOf("ETHBTC");
     }
 

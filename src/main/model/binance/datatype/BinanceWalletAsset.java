@@ -6,10 +6,10 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 
+
 // Structure from account balance
 @Data
 public class BinanceWalletAsset {
-
     public BigDecimal locked;
     public BigDecimal free;
     public String asset;

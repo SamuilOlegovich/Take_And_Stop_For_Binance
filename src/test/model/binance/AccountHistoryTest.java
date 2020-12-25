@@ -1,6 +1,6 @@
 package test.model.binance;
 
-import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceHistoryFilter;
 import org.junit.Before;
@@ -16,11 +16,11 @@ public class AccountHistoryTest {
 
     private static final Logger log = LoggerFactory.getLogger(AccountInfoTest.class);
 
-    private BinanceApi binanceApi = null;
+    private BinanceAPI binanceApi = null;
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
-        binanceApi = new BinanceApi();
+        binanceApi = new BinanceAPI();
     }
 
     @Test

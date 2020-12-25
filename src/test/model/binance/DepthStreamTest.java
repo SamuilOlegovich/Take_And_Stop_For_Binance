@@ -8,7 +8,7 @@ package test.model.binance;
  * Released under the MIT License
  * ============================================================ */
 
-import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceEventDepthLevelUpdate;
 import main.model.binance.datatype.BinanceEventDepthUpdate;
@@ -29,12 +29,12 @@ public class DepthStreamTest {
 
     private static final Logger log = LoggerFactory.getLogger(DepthStreamTest.class);
 
-    private BinanceApi binanceApi = null;
+    private BinanceAPI binanceApi = null;
     private BinanceSymbol symbol = null;
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
-        binanceApi = new BinanceApi();
+        binanceApi = new BinanceAPI();
         symbol = BinanceSymbol.valueOf("ETHBTC");
     }
 

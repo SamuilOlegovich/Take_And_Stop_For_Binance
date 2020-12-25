@@ -1,8 +1,8 @@
 package main.model.binance.datatype;
 
-import com.google.common.net.UrlEscapers;
-import com.google.common.escape.Escaper;
 import com.google.common.base.Strings;
+import com.google.common.escape.Escaper;
+import com.google.common.net.UrlEscapers;
 import lombok.Data;
 
 import java.util.Date;

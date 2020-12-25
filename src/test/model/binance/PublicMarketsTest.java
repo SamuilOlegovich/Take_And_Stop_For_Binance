@@ -7,7 +7,7 @@ package test.model.binance;
  * Released under the MIT License
  * ============================================================ */
 
-import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceExchangeInfo;
 import main.model.binance.datatype.BinanceExchangeStats;
@@ -24,14 +24,13 @@ import java.util.List;
 
 //@Slf4j
 public class PublicMarketsTest {
-
     private static final Logger log = LoggerFactory.getLogger(PublicMarketsTest.class);
+    private BinanceAPI binanceApi = null;
 
-    private BinanceApi binanceApi = null;
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
-        binanceApi = new BinanceApi();
+        binanceApi = new BinanceAPI();
     }
 
     @Test
@@ -43,14 +42,17 @@ public class PublicMarketsTest {
     @Test
     public void testExchangeInfo() throws Exception, BinanceApiException {
         BinanceExchangeInfo binanceExchangeInfo = binanceApi.exchangeInfo();
-        List<BinanceExchangeSymbol> symbols = BinanceExchangeInfo.getSymbols();
-        // BinanceExchangeSymbol BNB = symbols.stream().filter(a -> a.getQuoteAsset().equals("BNB")).findFirst().get();
-        // log.info("BNB Lot Size: {}", BNB.getLotSize().toString());
+        List<BinanceExchangeSymbol> symbols = binanceExchangeInfo.getSymbols();
+         BinanceExchangeSymbol BNB = symbols.stream().filter(a -> a.getQuoteAsset().equals("BNB")).findFirst().get();
+         log.info("BNB Lot Size: {}", BNB.getLotSize().toString());
         symbols
         .stream()
         .filter(b -> (b.getBaseAsset().equals("BNB") || b.getQuoteAsset().equals("BNB")))
         .forEach(a -> {
-//            log.info("Base: {} Quote: {} Lot Size: {} Min Notional: {}", a.getBaseAsset(), a.getQuoteAsset(), a.getLotSize().toString(), a.getMinNotionalValue() );
+            log.info("Base: {" + a.getBaseAsset()
+                    + "} Quote: {" + a.getQuoteAsset()
+                    + "} Lot Size: {" + a.getLotSize().toString()
+                    + "} Min Notional: {" + a.getMinNotionalValue() + "}");
         });
     }
 }

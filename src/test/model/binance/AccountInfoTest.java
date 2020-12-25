@@ -11,7 +11,7 @@ package test.model.binance;
 // This class contains READ-only tests for account
 
 import com.google.gson.JsonObject;
-import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceOrder;
 import com.google.gson.JsonArray;
@@ -35,12 +35,12 @@ public class AccountInfoTest {
 
     private static final Logger log = LoggerFactory.getLogger(AccountInfoTest.class);
 
-    private BinanceApi binanceApi = null;
+    private BinanceAPI binanceApi = null;
     private BinanceSymbol symbol = null;
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
-        binanceApi = new BinanceApi();
+        binanceApi = new BinanceAPI();
         symbol = BinanceSymbol.valueOf("BNBBTC");
     }
 

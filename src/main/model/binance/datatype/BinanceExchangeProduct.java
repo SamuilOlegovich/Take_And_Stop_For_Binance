@@ -1,9 +1,7 @@
 package main.model.binance.datatype;
 
-import com.webcerebrium.binance.api.BinanceApi;
-import com.webcerebrium.binance.api.BinanceApiException;
 import com.google.gson.JsonObject;
-import lombok.extern.slf4j.Slf4j;
+import main.model.binance.api.BinanceApiException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import lombok.Data;
@@ -13,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@Slf4j
+//@Slf4j
 public class BinanceExchangeProduct {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceExchangeProduct.class);
@@ -26,7 +24,7 @@ public class BinanceExchangeProduct {
     String baseAssetUnit;
     BigDecimal activeBuy;
     BigDecimal prevClose;
-    com.webcerebrium.binance.datatype.BinanceSymbol symbol;
+    BinanceSymbol symbol;
     Long lastAggTradeId;
     BigDecimal tickSize;
     BigDecimal minTrade;
@@ -68,7 +66,7 @@ public class BinanceExchangeProduct {
 
     public BinanceExchangeProduct(JsonObject obj) throws BinanceApiException {
 
-        symbol = com.webcerebrium.binance.datatype.BinanceSymbol.valueOf(obj.get("symbol").getAsString());
+        symbol = BinanceSymbol.valueOf(obj.get("symbol").getAsString());
         active = obj.get("active").getAsBoolean();
 
         quoteAsset = obj.get("quoteAsset").getAsString();
@@ -103,7 +101,7 @@ public class BinanceExchangeProduct {
         return active;
     }
 
-    public com.webcerebrium.binance.datatype.BinanceSymbol getSymbol() {
+    public BinanceSymbol getSymbol() {
         return symbol;
     }
 

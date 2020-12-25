@@ -11,8 +11,8 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.io.IOUtils;
 import org.sellcom.core.Strings;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -262,7 +262,8 @@ public class BinanceRequest {
 
             if (conn.getResponseCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
                 // Try to parse JSON
-                JsonObject obj = (JsonObject)jsonParser.parse(lastResponse);
+                JsonObject obj = (JsonObject) jsonParser.parse(lastResponse);
+//                JsonObject obj = (JsonObject) jsonParser.(lastResponse);
                 if (obj.has("code") && obj.has("msg")) {
                     throw new BinanceApiException("ERROR: " +
                             obj.get("code").getAsString() + ", " + obj.get("msg").getAsString() );

@@ -1,7 +1,7 @@
 package main.model.binance.datatype;
 
-import com.webcerebrium.binance.api.BinanceApiException;
 import com.google.common.base.Strings;
+import main.model.binance.api.BinanceApiException;
 
 public class BinanceSymbol {
 
@@ -15,8 +15,13 @@ public class BinanceSymbol {
         if (symbol.contains(" ")) {
             throw new BinanceApiException("Symbol cannot contain spaces. Example: BQXBTC");
         }
-        if (!symbol.endsWith("BTC") && !symbol.endsWith("ETH")&& !symbol.endsWith("BNB") && !symbol.endsWith("USDT")) {
-            throw new BinanceApiException("Market Symbol should be ending with BTC, ETH, BNB or USDT. Example: BQXBTC. Provided: " + symbol);
+        if (!symbol.endsWith("BTC")
+                && !symbol.endsWith("ETH")
+                && !symbol.endsWith("BNB")
+                && !symbol.endsWith("USDT")
+                && !symbol.endsWith("BUSD")) {
+            throw new BinanceApiException("Market Symbol should be ending with BTC, ETH, BNB or USDT, BUSDT. " +
+                    "Example: BQXBTC. Provided: " + symbol);
         }
         this.symbol = symbol.replace("_", "").replace("-", "").toUpperCase();
     }
@@ -42,8 +47,13 @@ public class BinanceSymbol {
     public static BinanceSymbol BNB(String pair) throws BinanceApiException {
         return BinanceSymbol.valueOf(pair.toUpperCase() + "BNB");
     }
+
     public static BinanceSymbol USDT(String pair) throws BinanceApiException {
        return BinanceSymbol.valueOf(pair.toUpperCase() + "USDT");
+    }
+
+    public static BinanceSymbol BUSD(String pair) throws BinanceApiException {
+        return BinanceSymbol.valueOf(pair.toUpperCase() + "BUSD");
     }
 
     public boolean contains(String coin) {

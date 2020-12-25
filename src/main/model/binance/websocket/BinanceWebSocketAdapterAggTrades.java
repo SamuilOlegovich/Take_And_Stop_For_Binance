@@ -9,6 +9,7 @@ package main.model.binance.websocket;
  * ============================================================ */
 
 
+import lombok.extern.slf4j.Slf4j;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceEventAggTrade;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;

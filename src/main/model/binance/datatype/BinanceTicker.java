@@ -19,6 +19,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+
 @Data
 public class BinanceTicker {
     public BigDecimal bidPrice = null;

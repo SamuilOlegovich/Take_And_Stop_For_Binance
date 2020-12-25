@@ -2,7 +2,7 @@ package test.model.binance;
 
 
 import com.google.gson.JsonObject;
-import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import org.slf4j.LoggerFactory;
 import org.junit.Before;
@@ -16,11 +16,11 @@ public class SystemStatusTest {
 
     private static final Logger log = LoggerFactory.getLogger(SystemStatusTest.class);
 
-    private BinanceApi binanceApi = null;
+    private BinanceAPI binanceApi = null;
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
-        binanceApi = new BinanceApi();
+        binanceApi = new BinanceAPI();
     }
 
     @Test

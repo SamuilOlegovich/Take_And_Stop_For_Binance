@@ -78,7 +78,7 @@ public class BinanceExchangeInfo {
 
     /////////////////////////////////////    I had to add == пришлось добавить   ///////////////////////////////////////
 
-    public static List<BinanceExchangeSymbol> getSymbols() {
+    public List<BinanceExchangeSymbol> getSymbols() {
         return symbols;
     }
 

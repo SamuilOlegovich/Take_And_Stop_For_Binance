@@ -1,10 +1,10 @@
 package main.model.binance.datatype;
 
-import com.webcerebrium.binance.api.BinanceApiException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import lombok.Data;
+import main.model.binance.api.BinanceApiException;
 
 import java.util.LinkedList;
 import java.util.TreeSet;
@@ -42,9 +42,9 @@ public class BinanceExchangeStats {
         return result;
     }
 
-    public Set<com.webcerebrium.binance.datatype.BinanceSymbol> getSymbolsOf(String coin) throws BinanceApiException {
+    public Set<BinanceSymbol> getSymbolsOf(String coin) throws BinanceApiException {
         List<BinanceExchangeProduct> coins = getMarketsOf(coin);
-        Set<com.webcerebrium.binance.datatype.BinanceSymbol> result = new TreeSet<>();
+        Set<BinanceSymbol> result = new TreeSet<>();
         for (BinanceExchangeProduct sym: coins) {
             result.add(sym.getSymbol());
         }

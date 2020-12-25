@@ -7,12 +7,12 @@ package main.model.binance.datatype;
  * Released under the MIT License
  * ============================================================ */
 
-import com.webcerebrium.binance.api.BinanceApiException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Data;
+import main.model.binance.api.BinanceApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,17 +39,17 @@ import java.util.List;
      ]
  }
  */
-@Slf4j
+//@Slf4j
 @Data
 public class BinanceExchangeSymbol {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceExchangeSymbol.class);
 
-    List<com.webcerebrium.binance.datatype.BinanceOrderType> orderTypes = new LinkedList<>();
+    List<BinanceOrderType> orderTypes = new LinkedList<>();
     HashMap<String, JsonObject> filters = new HashMap<>();
     Long baseAssetPrecision;
     boolean icebergAllowed;
-    com.webcerebrium.binance.datatype.BinanceSymbol symbol;
+    BinanceSymbol symbol;
     Long quotePrecision;
     String quoteAsset;
     String baseAsset;
@@ -58,7 +58,7 @@ public class BinanceExchangeSymbol {
     public BinanceExchangeSymbol(JsonObject obj) throws BinanceApiException {
         // log.debug("Reading Symbol {}, {}", obj.get("symbol").getAsString(), obj.toString());
 
-        symbol = com.webcerebrium.binance.datatype.BinanceSymbol.valueOf(obj.get("symbol").getAsString());
+        symbol = BinanceSymbol.valueOf(obj.get("symbol").getAsString());
         status = obj.get("status").getAsString();
 
         baseAsset = obj.get("baseAsset").getAsString();
@@ -71,7 +71,7 @@ public class BinanceExchangeSymbol {
             JsonArray arrOrderTypes = obj.get("orderTypes").getAsJsonArray();
             orderTypes.clear();
             for (JsonElement entry: arrOrderTypes) {
-                orderTypes.add(com.webcerebrium.binance.datatype.BinanceOrderType.valueOf(entry.getAsString()));
+                orderTypes.add(BinanceOrderType.valueOf(entry.getAsString()));
             }
         }
 

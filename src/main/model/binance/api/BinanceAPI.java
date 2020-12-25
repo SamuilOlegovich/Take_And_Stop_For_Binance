@@ -8,9 +8,10 @@ package main.model.binance.api;
  * ============================================================ */
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.escape.Escaper;
+import com.google.common.net.UrlEscapers;
 import lombok.Data;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import main.model.binance.datatype.*;
 import main.model.binance.websocket.*;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
@@ -39,12 +40,14 @@ import java.net.URI;
 
 
 
+
+
 //@Slf4j
 @Data
-public class BinanceApi {
+public class BinanceAPI {
 
     @Getter
-    private static final Logger log = LoggerFactory.getLogger(BinanceApi.class);
+    private static final Logger log = LoggerFactory.getLogger(BinanceAPI.class);
 
     /* Actual API key and Secret Key that will be used == Фактический ключ API и секретный ключ,
     *       который будет использоваться
@@ -80,7 +83,7 @@ public class BinanceApi {
      * @param secretKey Secret API Key
      * @throws BinanceApiException in case of any error
      */
-    public BinanceApi(String apiKey, String secretKey) throws BinanceApiException {
+    public BinanceAPI(String apiKey, String secretKey) throws BinanceApiException {
         this.apiKey = apiKey;
         this.secretKey = secretKey;
         validateCredentials();
@@ -89,7 +92,7 @@ public class BinanceApi {
     /**
      * Constructor of API - keys are loaded from VM options, environment variables, resource files
      */
-    public BinanceApi() {
+    public BinanceAPI() {
         BinanceConfig config = new BinanceConfig();
         this.apiKey = config.getVariable("BINANCE_API_KEY");
         this.secretKey = config.getVariable("BINANCE_SECRET_KEY");
@@ -797,7 +800,7 @@ public class BinanceApi {
     }
 
     protected boolean canEqual(final Object other) {
-        return other instanceof BinanceApi;
+        return other instanceof BinanceAPI;
     }
 
     /////////////////////////////////////    I had to add == пришлось добавить   ///////////////////////////////////////

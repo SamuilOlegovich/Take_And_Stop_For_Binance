@@ -10,7 +10,7 @@ package test.model.binance;
 
 // This class contains tests for trading. Take it wisely
 
-import main.model.binance.api.BinanceApi;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.*;
 import com.google.gson.JsonObject;
@@ -29,7 +29,7 @@ public class TradingTest {
 
     private static final Logger log = LoggerFactory.getLogger(TradingTest.class);
 
-    private BinanceApi binanceApi = null;
+    private BinanceAPI binanceApi = null;
     private BinanceSymbol symbol = null;
     private BinanceOrder order = null;
     private String asset = "";
@@ -39,7 +39,7 @@ public class TradingTest {
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
-        binanceApi = new BinanceApi();
+        binanceApi = new BinanceAPI();
         asset = "BNB";
         symbol = BinanceSymbol.valueOf(asset + "BTC");
         order = null;

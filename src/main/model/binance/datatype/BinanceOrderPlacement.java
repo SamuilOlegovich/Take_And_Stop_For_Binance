@@ -7,23 +7,23 @@ package main.model.binance.datatype;
  * Released under the MIT License
  * ============================================================ */
 
-import com.webcerebrium.binance.api.BinanceApiException;
-import com.google.common.net.UrlEscapers;
-import com.google.common.escape.Escaper;
 import com.google.common.base.Strings;
+import com.google.common.escape.Escaper;
+import com.google.common.net.UrlEscapers;
 import lombok.Data;
+import main.model.binance.api.BinanceApiException;
 
 import java.math.BigDecimal;
 
 @Data
 public class BinanceOrderPlacement {
 
-    public com.webcerebrium.binance.datatype.BinanceTimeInForce timeInForce = com.webcerebrium.binance.datatype.BinanceTimeInForce.GOOD_TILL_CANCELLED;
-    public com.webcerebrium.binance.datatype.BinanceOrderType type = com.webcerebrium.binance.datatype.BinanceOrderType.LIMIT;
-    public com.webcerebrium.binance.datatype.BinanceOrderSide side = null;
+    public BinanceTimeInForce timeInForce = BinanceTimeInForce.GOOD_TILL_CANCELLED;
+    public BinanceOrderType type = BinanceOrderType.LIMIT;
+    public BinanceOrderSide side = null;
     public String newClientOrderId = "";
     public BigDecimal icebergQty = null;
-    public com.webcerebrium.binance.datatype.BinanceSymbol symbol = null;
+    public BinanceSymbol symbol = null;
     public BigDecimal stopPrice = null;
     public BigDecimal quantity;
     public BigDecimal price;
@@ -31,7 +31,7 @@ public class BinanceOrderPlacement {
     public BinanceOrderPlacement() {
     }
 
-    public BinanceOrderPlacement(com.webcerebrium.binance.datatype.BinanceSymbol symbol, com.webcerebrium.binance.datatype.BinanceOrderSide side) {
+    public BinanceOrderPlacement(BinanceSymbol symbol, BinanceOrderSide side) {
         this.symbol = symbol;
         this.side = side;
     }
@@ -56,7 +56,7 @@ public class BinanceOrderPlacement {
         }
         sb.append("&quantity=").append(quantity.toString());
 
-        if (type == com.webcerebrium.binance.datatype.BinanceOrderType.MARKET) {
+        if (type == BinanceOrderType.MARKET) {
             // price should be skipped for a market order, we are accepting market price
             // so should timeInForce
         } else {
@@ -84,7 +84,7 @@ public class BinanceOrderPlacement {
 
     /////////////////////////////////////    I had to add == пришлось добавить   ///////////////////////////////////////
 
-    public void setTimeInForce(com.webcerebrium.binance.datatype.BinanceTimeInForce timeInForce) {
+    public void setTimeInForce(BinanceTimeInForce timeInForce) {
         this.timeInForce = timeInForce;
     }
 
@@ -96,16 +96,16 @@ public class BinanceOrderPlacement {
         this.quantity = quantity;
     }
 
-    public void setType(com.webcerebrium.binance.datatype.BinanceOrderType type) {
+    public void setType(BinanceOrderType type) {
         this.type = type;
     }
 
-    public void setTimeInForce(Enum<com.webcerebrium.binance.datatype.BinanceTimeInForce> enumm) {
-        this.timeInForce = (com.webcerebrium.binance.datatype.BinanceTimeInForce) enumm;
+    public void setTimeInForce(Enum<BinanceTimeInForce> enumm) {
+        this.timeInForce = (BinanceTimeInForce) enumm;
     }
 
-    public void setType(Enum<com.webcerebrium.binance.datatype.BinanceOrderType> type) {
-        this.type = (com.webcerebrium.binance.datatype.BinanceOrderType) type;
+    public void setType(Enum<BinanceOrderType> type) {
+        this.type = (BinanceOrderType) type;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
