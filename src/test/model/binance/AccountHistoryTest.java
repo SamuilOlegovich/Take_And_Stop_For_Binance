@@ -30,7 +30,6 @@ public class AccountHistoryTest {
         cal.add(Calendar.MONTH, -3);
         historyFilter.setStartTime(cal.getTime());
         log.info("DEPOSIT={}", binanceApi.getDepositHistory(historyFilter));
-
     }
 
     @Test

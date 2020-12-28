@@ -39,17 +39,16 @@ import java.io.*;
 @Data
 //@Slf4j
 public class BinanceRequest {
-
     private static final Logger log = LoggerFactory.getLogger(BinanceRequest.class);
 
     public String userAgent = "Mozilla/5.0 (Windows NT 5.1; rv:19.0) Gecko/20100101 Firefox/19.0";
     public HttpsURLConnection conn = null;
+    public String lastResponse = "";
     public String requestUrl = "";
     public String method = "GET";
-    public String lastResponse = "";
 
-    public String apiKey = "";
     public String secretKey = "";
+    public String apiKey = "";
 
     public Map<String, String> headers = new HashMap<>();
 
@@ -57,6 +56,8 @@ public class BinanceRequest {
     // Внутренний анализатор JSON
     private JsonParser jsonParser = new JsonParser();
     private String requestBody = "";
+
+
 
     // Creating public request
     // Создание публичного запроса
@@ -101,7 +102,7 @@ public class BinanceRequest {
                     list.add(key + "=" + options.get(key));
                 }
             }
-            list.add("recvWindow=" + 7000);
+            list.add("recvWindow=" + 5000);
             list.add("timestamp=" + String.valueOf(new Date().getTime()));
             String queryToAdd = String.join("&", list);
             String query = "";
@@ -115,6 +116,7 @@ public class BinanceRequest {
             try {
                 String signature = encode(secretKey, query); // set the HMAC hash header
                 String concatenator = requestUrl.contains("?") ? "&" : "?";
+//                String concatenator = requestUrl.contains("?") ? "&" : "&";
                 requestUrl += concatenator + queryToAdd + "&signature=" + signature;
             } catch (Exception e ) {
                 throw new BinanceApiException("Encryption error " + e.getMessage());
@@ -137,7 +139,7 @@ public class BinanceRequest {
             throw new BinanceApiException("Missing BINANCE_API_KEY. " + humanMessage);
 
         headers.put("X-MBX-APIKEY", apiKey);
-        headers.put("Content-Type", "application/x-www-form-urlencoded");
+        headers.put("Content-Type", " application/x-www-form-urlencoded");
         return this;
     }
 
@@ -176,33 +178,40 @@ public class BinanceRequest {
      * @throws BinanceApiException in case of any error
      */
     public BinanceRequest connect() throws BinanceApiException {
+        SSLContext sc = null;
+        URL url = null;
 
-        TrustManager[] trustAllCerts = new TrustManager[]{
+        TrustManager[] trustAllCerts = new TrustManager[] {
             new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+//                    System.out.println("1");
                     return null;
                 }
                 public void checkClientTrusted(
                     java.security.cert.X509Certificate[] certs, String authType) {
+//                    System.out.println("2");
                 }
                 public void checkServerTrusted(
                     java.security.cert.X509Certificate[] certs, String authType) {
+//                    System.out.println("3");
                 }
             }
         };
+//        System.out.println("4");
 
-        URL url = null;
         try {
             url = new URL(requestUrl);
             log.debug("{} {}", getMethod(), url);
+//            System.out.println("5");
         } catch (MalformedURLException e) {
             throw new BinanceApiException("Mailformed URL " + e.getMessage()); //////////////////////////
         }
-        SSLContext sc = null;
+
         try {
             sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, new java.security.SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+//            System.out.println("6");
         } catch (NoSuchAlgorithmException e) {
             throw new BinanceApiException("SSL Error " + e.getMessage() );
         } catch (KeyManagementException e) {
@@ -211,19 +220,29 @@ public class BinanceRequest {
 
         try {
             conn = (HttpsURLConnection)url.openConnection();
+//            System.out.println(conn);
+
+//            System.out.println("7");
         } catch (IOException e) {
             throw new BinanceApiException("HTTPS Connection error " + e.getMessage());
         }
 
         try {
             conn.setRequestMethod(method);
+//            conn.setRequestMethod("POST");
+            System.out.println(conn);
+//            System.out.println("8");
         } catch (ProtocolException e) {
             throw new BinanceApiException("HTTP method error " + e.getMessage());
         }
+
         conn.setRequestProperty("User-Agent", getUserAgent());
+//        System.out.println("9");
         for(String header: headers.keySet()) {
             conn.setRequestProperty(header, headers.get(header));
+//            System.out.println("10");
         }
+//        System.out.println("11");
         return this;
     }
 
@@ -233,11 +252,10 @@ public class BinanceRequest {
      * @throws BinanceApiException in case of any error
      */
     public BinanceRequest read() throws BinanceApiException {
-        if (conn == null) {
-            connect();
-        }
+        if (conn == null) { connect(); }
         try {
-
+            BufferedReader bufferedReader;
+            InputStream inputStream;
             // posting payload it we do not have it yet == выкладываем полезную нагрузку у нас ее пока нет
             if (!Strings.isNullOrEmpty(getRequestBody())) { //////////////////////////////
                 log.debug("Payload: {}", getRequestBody());
@@ -248,22 +266,23 @@ public class BinanceRequest {
                 writer.close();
             }
 
-            InputStream is;
+            // вылетает ошибка 400
             if (conn.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
-                is = conn.getInputStream();
+                inputStream = conn.getInputStream();
             } else {
                 /* error from server */
-                is = conn.getErrorStream();
+                inputStream = conn.getErrorStream();
+//                System.out.println(is);
+//                System.out.println(conn);
+//                System.out.println(conn.getResponseCode());
             }
 
-            BufferedReader br = new BufferedReader( new InputStreamReader(is));
-            lastResponse = IOUtils.toString(br);
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            lastResponse = IOUtils.toString(bufferedReader);
             log.debug("Response: {}", lastResponse);
-
             if (conn.getResponseCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
                 // Try to parse JSON
                 JsonObject obj = (JsonObject) jsonParser.parse(lastResponse);
-//                JsonObject obj = (JsonObject) jsonParser.(lastResponse);
                 if (obj.has("code") && obj.has("msg")) {
                     throw new BinanceApiException("ERROR: " +
                             obj.get("code").getAsString() + ", " + obj.get("msg").getAsString() );
@@ -280,6 +299,7 @@ public class BinanceRequest {
     public BinanceRequest payload(JsonObject payload) {
         if (payload == null) return this; // this is a valid case
         // according to documentation we need to have this header if we have preload
+        // согласно документации нам нужен этот заголовок, если у нас есть предварительная загрузка
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         this.requestBody = payload.toString();
         return this;

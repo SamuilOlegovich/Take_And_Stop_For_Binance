@@ -12,6 +12,7 @@ import com.google.common.escape.Escaper;
 import com.google.common.net.UrlEscapers;
 import lombok.Data;
 import lombok.Getter;
+import main.model.binance.API;
 import main.model.binance.datatype.*;
 import main.model.binance.websocket.*;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
@@ -59,6 +60,7 @@ public class BinanceAPI {
      * API Base URL
      */
     public String baseUrl = "https://www.binance.com/api/";
+//    public String baseUrl = "https://api1.binance.com/api/";
     /**
      * Old W-API Base URL. Might not function well at that moment, please use modern wapi3 API instead
      */
@@ -94,15 +96,20 @@ public class BinanceAPI {
      */
     public BinanceAPI() {
         BinanceConfig config = new BinanceConfig();
-        this.apiKey = config.getVariable("BINANCE_API_KEY");
         this.secretKey = config.getVariable("BINANCE_SECRET_KEY");
+        this.apiKey = config.getVariable("BINANCE_API_KEY");
+        // если нет файла конфигураций (пропертис) то берем данные апи и ключей из класса API
+        if (apiKey.length() == secretKey.length()) {
+            this.secretKey = API.getSecretKey();
+            this.apiKey = API.getApiKey();
+        }
     }
 
     /**
      * Validation we have API keys set up
      * @throws BinanceApiException in case of any error
      */
-    protected void validateCredentials() throws BinanceApiException {
+    protected void  validateCredentials() throws BinanceApiException {
         String humanMessage = "Please check environment variables or VM options";
         if (Strings.isNullOrEmpty(this.getApiKey()))
             throw new BinanceApiException("Missing BINANCE_API_KEY. " + humanMessage);
@@ -377,8 +384,16 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public JsonObject account() throws BinanceApiException {
-        return (new BinanceRequest(baseUrl + "v3/account"))
-                .sign(apiKey, secretKey, null).read().asJsonObject();
+        BinanceRequest binanceRequest = new BinanceRequest(baseUrl + "v3/account");
+        binanceRequest.sign(apiKey, secretKey, null);
+        System.out.println(binanceRequest.toString());
+        binanceRequest.read();
+        System.out.println(binanceRequest.toString());
+        JsonObject jsonObject = binanceRequest.asJsonObject();
+        System.out.println(jsonObject.toString());
+//        return (new BinanceRequest(baseUrl + "v3/account"))
+//                .sign(apiKey, secretKey, null).read().asJsonObject();
+        return jsonObject;
     }
 
     /**
@@ -813,10 +828,7 @@ public class BinanceAPI {
         return apiKey;
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 }
 
 

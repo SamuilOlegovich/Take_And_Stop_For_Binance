@@ -1,9 +1,9 @@
 package main.model.binance;
 
 
-import main.model.API;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
+import main.model.binance.datatype.BinanceSymbol;
 
 public class MainBinance {
     private static String KEY_API = "VNxOm5Z4JL6qkaD3pNY9TApQKxJmxz0UJBIpIyXMYofkJTtavV8ILePM2PxHXOiY";
@@ -14,6 +14,7 @@ public class MainBinance {
         try {
 //            BinanceAPI api = new BinanceAPI(KEY_API, SICRET_KEY);
             BinanceAPI binanceAPI = new BinanceAPI(API.getApiKey(), API.getSecretKey());
+            BinanceSymbol binanceSymbol = new BinanceSymbol("BTC");
 //            JsonObject account = api.account();
 //            System.out.println("ETH-BTC PRICE=" + api.pricesMap().get("ETHBTC"));
 //            System.out.println(api.ping().toString());
