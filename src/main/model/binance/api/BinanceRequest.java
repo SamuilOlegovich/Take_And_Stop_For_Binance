@@ -28,6 +28,7 @@ import java.net.ProtocolException;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.SSLContext;
 import javax.crypto.Mac;
+import javax.xml.bind.DatatypeConverter;
 import java.net.URL;
 import java.util.*;
 import java.io.*;
@@ -70,13 +71,28 @@ public class BinanceRequest {
 
     // HMAC encoding
     // Кодировка HMAC
-    public static String encode(String key, String data) throws Exception {
-        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
-        sha256_HMAC.init(secret_key);
+    public static String encode(String key, String data) {
+//        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+//        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
+//        sha256_HMAC.init(secret_key);
 //        return Hex.encodeHexString(sha256_HMAC.doFinal(data.getBytes("UTF-8"))); //////////////////////////////
 //        return (Hex.encodeHex(sha256_HMAC.doFinal(data.getBytes("UTF-8")))).toString(); /////////////////////////
-        return Arrays.toString((Hex.encodeHex(sha256_HMAC.doFinal(data.getBytes("UTF-8")))));
+//        return Arrays.toString((Hex.encodeHex(sha256_HMAC.doFinal(data.getBytes("UTF-8")))));
+
+        try {
+            String keyString = data;
+            Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
+            sha256_HMAC.init(secret_key);
+            String hash = DatatypeConverter.printHexBinary(sha256_HMAC.doFinal(keyString.getBytes()));
+            return hash;
+        } catch (Exception e) {
+            new BinanceApiException("Что-то не то с кодированием HmacSHA256 "
+                    + "-> class BinanceRequest -> method encode() -> "
+                    + e.getStackTrace());
+            System.exit(0);
+        }
+        return null;
     }
 
     /**
@@ -115,8 +131,10 @@ public class BinanceRequest {
             log.debug("Signature: query to be included  = {} queryToAdd={}", query, queryToAdd);
             try {
                 String signature = encode(secretKey, query); // set the HMAC hash header
+//                System.out.println(secretKey);
+//                System.out.println(query);
+//                System.out.println(signature);
                 String concatenator = requestUrl.contains("?") ? "&" : "?";
-//                String concatenator = requestUrl.contains("?") ? "&" : "&";
                 requestUrl += concatenator + queryToAdd + "&signature=" + signature;
             } catch (Exception e ) {
                 throw new BinanceApiException("Encryption error " + e.getMessage());
