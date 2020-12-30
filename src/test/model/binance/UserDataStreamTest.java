@@ -23,6 +23,7 @@ import org.junit.Test;
 
 
 //@Slf4j
+// Тест потока пользовательских данных
 public class UserDataStreamTest {
 
     private static final Logger log = LoggerFactory.getLogger(UserDataStreamTest.class);

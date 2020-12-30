@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 
 
 //@Slf4j
+// Торговый тест
 public class TradingTest {
 
     private static final Logger log = LoggerFactory.getLogger(TradingTest.class);

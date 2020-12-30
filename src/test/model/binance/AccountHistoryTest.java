@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 
 //@Slf4j
+// Проверка истории аккаунта
 public class AccountHistoryTest {
 
     private static final Logger log = LoggerFactory.getLogger(AccountInfoTest.class);

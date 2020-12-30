@@ -33,6 +33,7 @@ import static org.junit.Assert.assertTrue;
 
 
 //@Slf4j
+// Тест конечных точек рыночных данных
 public class MarketDataEndpointsTest {
 
     private static final Logger log = LoggerFactory.getLogger(MarketDataEndpointsTest.class);

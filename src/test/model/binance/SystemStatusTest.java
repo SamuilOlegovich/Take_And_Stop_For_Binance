@@ -12,6 +12,7 @@ import org.junit.Test;
 
 
 //@Slf4j
+// Проверка состояния системы
 public class SystemStatusTest {
 
     private static final Logger log = LoggerFactory.getLogger(SystemStatusTest.class);

@@ -31,6 +31,7 @@ import static org.junit.Assert.assertTrue;
 
 
 //@Slf4j
+// Проверка информации об аккаунте
 public class AccountInfoTest {
 
     private static final Logger log = LoggerFactory.getLogger(AccountInfoTest.class);

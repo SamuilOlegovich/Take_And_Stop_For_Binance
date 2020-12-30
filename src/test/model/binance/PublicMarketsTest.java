@@ -23,6 +23,7 @@ import java.util.List;
 
 
 //@Slf4j
+// Тест публичных рынков
 public class PublicMarketsTest {
     private static final Logger log = LoggerFactory.getLogger(PublicMarketsTest.class);
     private BinanceAPI binanceApi = null;

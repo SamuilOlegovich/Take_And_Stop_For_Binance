@@ -20,7 +20,7 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-
+// Общий тест конечных точек
 public class GeneralEndpointsTest {
 
     private BinanceAPI binanceApi = null;

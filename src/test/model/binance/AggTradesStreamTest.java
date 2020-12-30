@@ -23,6 +23,7 @@ import org.junit.Test;
 
 
 //@Slf4j
+// Тест потока ...
 public class AggTradesStreamTest {
 
     private static final Logger log = LoggerFactory.getLogger(AggTradesStreamTest.class);

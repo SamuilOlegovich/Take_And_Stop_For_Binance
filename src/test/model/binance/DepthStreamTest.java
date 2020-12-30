@@ -25,6 +25,7 @@ import org.junit.Test;
 
 
 //@Slf4j
+// Тест глубины потока
 public class DepthStreamTest {
 
     private static final Logger log = LoggerFactory.getLogger(DepthStreamTest.class);
