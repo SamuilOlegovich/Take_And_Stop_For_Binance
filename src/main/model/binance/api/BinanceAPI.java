@@ -147,9 +147,12 @@ public class BinanceAPI {
 
     /**
      * 24hr ticker price change statistics
+     * 24-часовая статистика изменения цен тикера
+     *
      * @param symbol Symbol pair, i.e. BNBBTC
      * @return result in JSON
      * @throws BinanceApiException in case of any error
+     * глубина
      */
     public JsonObject depth(BinanceSymbol symbol) throws BinanceApiException {
         return (new BinanceRequest(baseUrl + "v1/depth?symbol=" + symbol.get()))
@@ -158,10 +161,13 @@ public class BinanceAPI {
 
     /**
      * 24hr ticker price change statistics, with limit explicitly set
+     * 24-часовая статистика изменения цен тикера с явно установленным лимитом
+     *
      * @param symbol Symbol pair, i.e. BNBBTC
      * @param limit numeric limit of results
      * @return result in JSON
      * @throws BinanceApiException in case of any error
+     * глубина
      */
     public JsonObject depth(BinanceSymbol symbol, int limit) throws BinanceApiException {
         return (new BinanceRequest(baseUrl + "v1/depth?symbol=" + symbol.get() + "&limit=" + limit))
@@ -170,10 +176,16 @@ public class BinanceAPI {
 
     /**
      * Get compressed, aggregate trades and map result into BinanceAggregatedTrades type for better readability
+     * Получите сжатые, агрегированные сделки и сопоставьте результат с типом BinanceAggregatedTrades для лучшей читаемости
      * Trades that fill at the time, from the same order, with the same price will have the quantity aggregated.
+     * Сделки, которые выполняются одновременно из одного и того же ордера по одинаковой цене, будут агрегированы
      * Allowed options - fromId, startTime, endTime.
+     * Допустимые параметры - fromId, startTime, endTime.
      * If both startTime and endTime are sent, limit should not be sent AND the distance between startTime and endTime must be less than 24 hours.
+     * Если отправляются и startTime, и endTime, ограничение не должно отправляться И расстояние между startTime и endTime должно быть меньше 24 часов.
      * If fromId, startTime, and endTime are not sent, the most recent aggregate trades will be returned.
+     * Если fromId, startTime и endTime не отправлены, будут возвращены самые последние совокупные сделки.
+     *
      * @param symbol Symbol pair, i.e. BNBBTC
      * @param limit numeric limit of results
      * @param options map of additional properties. leave null if not needed
@@ -200,6 +212,7 @@ public class BinanceAPI {
 
     /**
      * short version of aggTrades with less parameters
+     * короткая версия aggTrades с меньшим количеством параметров
      *
      * @param symbol Symbol pair, i.e. BNBBTC
      * @param options map of additional properties. leave null if not needed
@@ -212,6 +225,7 @@ public class BinanceAPI {
 
     /**
      * short version of aggTrades with less parameters
+     * короткая версия aggTrades с меньшим количеством параметров
      *
      * @param symbol Symbol pair, i.e. BNBBTC
      * @return list of aggregated trades
@@ -223,7 +237,10 @@ public class BinanceAPI {
 
     /**
      * Kline/candlestick bars for a symbol. Klines are uniquely identified by their open time.
+     * Клайн / свечные бары для символа. Klines однозначно идентифицируются по времени открытия.
      * if startTime and endTime are not sent, the most recent klines are returned.
+     * если startTime и endTime не отправляются, возвращаются самые последние klines.
+     *
      * @param symbol Symbol pair, i.e. BNBBTC
      * @param interval valid time interval, see BinanceInterval enum
      * @param limit numeric limit of results
@@ -249,6 +266,8 @@ public class BinanceAPI {
 
     /**
      * short version of klines() with less parameters
+     * короткая версия klines () с меньшим количеством параметров
+     *
      * @param symbol Symbol pair, i.e. BNBBTC
      * @param interval  valid time interval, see BinanceInterval enum
      * @return list of candlesticks
@@ -261,8 +280,10 @@ public class BinanceAPI {
 
     /**
      * get public statistics on Binance markets
+     * получать публичную статистику по рынкам Binance
      * This is stated to be a temporary solution - not a part of API documentation yet
-
+     * Заявлено, что это временное решение - еще не часть документации API
+     *
      * @return BinanceExchangeStat
      * @throws BinanceApiException in case of any error
      */
@@ -274,6 +295,8 @@ public class BinanceAPI {
 
     /**
      * Exchange info - information about open markets
+     * Информация о бирже - информация об открытых рынках
+     *
      * @return BinanceExchangeInfo
      * @throws BinanceApiException in case of any error
      */
@@ -285,6 +308,8 @@ public class BinanceAPI {
 
     /**
      * 24hr ticker price change statistics
+     * 24-часовая статистика изменения цен тикера
+     *
      * @return json array with prices for all symbols
      * @throws BinanceApiException in case of any error
      */
@@ -295,6 +320,8 @@ public class BinanceAPI {
 
     /**
      * 24hr ticker price change statistics
+     * 24-часовая статистика изменения цен тикера
+     *
      * @param symbol Symbol pair, i.e. BNBBTC
      * @return json with prices
      * @throws BinanceApiException in case of any error
@@ -307,6 +334,7 @@ public class BinanceAPI {
 
     /**
      * Latest price for all symbols
+     * Последняя цена для всех символов
      *
      * @return raw JSON Array of all prices
      * @throws BinanceApiException  in case of any error
@@ -318,6 +346,7 @@ public class BinanceAPI {
 
     /**
      * Latest price for all symbols -
+     * Последняя цена для всех символов
      *
      * @return Map of big decimals
      * @throws BinanceApiException in case of any error
@@ -333,6 +362,7 @@ public class BinanceAPI {
 
     /**
      * Get best price/qty on the order book for all symbols.
+     * Получите лучшую цену / количество в книге заказов для всех символов.
      *
      * @return JsonArray
      * @throws BinanceApiException in case of any error
@@ -344,6 +374,7 @@ public class BinanceAPI {
 
     /**
      * Get best price/qty on the order book for all symbols.
+     * Получите лучшую цену / количество в книге заказов для всех символов.
      *
      * @return map of BinanceTicker
      * @throws BinanceApiException in case of any error
@@ -361,6 +392,7 @@ public class BinanceAPI {
         return mapTickers;
     }
 
+    // получить монеты
     public Set<String> getCoinsOf(String coin) {
         try {
             BinanceExchangeStats binanceExchangeStats = this.publicStats();
@@ -376,21 +408,24 @@ public class BinanceAPI {
 
     // - - - - - - - - - - - - - - - - - - - - - - - -
     // ACCOUNT READ-ONLY ENDPOINTS
+    // КОНЕЧНЫЕ ТОЧКИ ТОЛЬКО ДЛЯ ЧТЕНИЯ АККАУНТА
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
      * Getting account information
+     * Получение информации об аккаунте
+     *
      * @return JsonObject
      * @throws BinanceApiException in case of any error
      */
     public JsonObject account() throws BinanceApiException {
         BinanceRequest binanceRequest = new BinanceRequest(baseUrl + "v3/account");
         binanceRequest.sign(apiKey, secretKey, null);
-        System.out.println(binanceRequest.toString());
+//        System.out.println(binanceRequest.toString());
         binanceRequest.read();
-        System.out.println(binanceRequest.toString());
+//        System.out.println(binanceRequest.toString());
         JsonObject jsonObject = binanceRequest.asJsonObject();
-        System.out.println(jsonObject.toString());
+//        System.out.println(jsonObject.toString());
 //        return (new BinanceRequest(baseUrl + "v3/account"))
 //                .sign(apiKey, secretKey, null).read().asJsonObject();
         return jsonObject;
@@ -398,6 +433,8 @@ public class BinanceAPI {
 
     /**
      * Getting balances - part of account information
+     * Получение остатков - часть информации о счете
+     *
      * @return JsonArray
      * @throws BinanceApiException in case of any error
      */
@@ -407,6 +444,8 @@ public class BinanceAPI {
 
     /**
      * Getting balances - part of account information
+     * Получение остатков - часть информации о счете
+     *
      * @return map of wallet main.main.model.model.assets structure
      * @throws BinanceApiException  in case of any error
      */
