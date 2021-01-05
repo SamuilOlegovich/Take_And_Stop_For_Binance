@@ -722,7 +722,7 @@ public class BinanceAPI {
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - -
-    // WEBSOCKET ENDPOINTS
+    // WEB-SOCKET ENDPOINTS
     // КОНЕЧНЫЕ ТОЧКИ ВЕБ-РОЗЕТКА
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -735,7 +735,7 @@ public class BinanceAPI {
      * @return web socket session
      * @throws BinanceApiException in case of any error
      */
-    public Session getWebsocketSession(String url, WebSocketAdapter adapter) throws BinanceApiException {
+    public Session getWebSocketSession(String url, WebSocketAdapter adapter) throws BinanceApiException {
         try {
             URI uri = new URI(websocketBaseUrl + url);
             SslContextFactory sslContextFactory = new SslContextFactory();
@@ -759,64 +759,74 @@ public class BinanceAPI {
      * @return web socket session
      * @throws BinanceApiException in case of any error
      */
-    public Session websocketDepth(BinanceSymbol symbol, BinanceWebSocketAdapterDepth adapter) throws BinanceApiException {
-        return getWebsocketSession(symbol.toString().toLowerCase() + "@depth", adapter);
+    public Session webSocketDepth(BinanceSymbol symbol, BinanceWebSocketAdapterDepth adapter) throws BinanceApiException {
+        return getWebSocketSession(symbol.toString().toLowerCase() + "@depth", adapter);
     }
 
     /**
-     * Depth Websocket Stream Listener - best 20 levels
+     * Depth Web-Socket Stream Listener - best 20 levels
+     * Слушатель потока Web-сокетов глубины - 20 лучших уровней
+     *
      * @param symbol i.e. "BNBBTC"
      * @param adapter class to handle the events
      * @return web socket session
      * @throws BinanceApiException in case of any error
      */
-    public Session websocketDepth20(BinanceSymbol symbol, BinanceWebSocketAdapterDepthLevel adapter) throws BinanceApiException {
-        return getWebsocketSession(symbol.toString().toLowerCase() + "@depth20", adapter);
+    public Session webSocketDepth20(BinanceSymbol symbol, BinanceWebSocketAdapterDepthLevel adapter) throws BinanceApiException {
+        return getWebSocketSession(symbol.toString().toLowerCase() + "@depth20", adapter);
     }
 
     /**
      * Depth Websocket Stream Listener - best 10 levels
+     * Слушатель потока Web-сокетов глубины - 10 лучших уровней
+     *
      * @param symbol i.e. "BNBBTC"
      * @param adapter  class to handle the events
      * @return  web socket session
      * @throws BinanceApiException in case of any error
      */
-    public Session websocketDepth10(BinanceSymbol symbol, BinanceWebSocketAdapterDepthLevel adapter) throws BinanceApiException {
-        return getWebsocketSession(symbol.toString().toLowerCase() + "@depth10", adapter);
+    public Session webSocketDepth10(BinanceSymbol symbol, BinanceWebSocketAdapterDepthLevel adapter) throws BinanceApiException {
+        return getWebSocketSession(symbol.toString().toLowerCase() + "@depth10", adapter);
     }
 
     /**
      * Depth Websocket Stream Listener - best 5 lavels
+     * Слушатель потока Web-сокетов глубины - 5 лучших уровней
+     *
      * @param symbol i.e. "BNBBTC"
      * @param adapter class to handle the events
      * @return web socket session
      * @throws BinanceApiException in case of any error
      */
-    public Session websocketDepth5(BinanceSymbol symbol, BinanceWebSocketAdapterDepthLevel adapter) throws BinanceApiException {
-        return getWebsocketSession(symbol.toString().toLowerCase() + "@depth5", adapter);
+    public Session webSocketDepth5(BinanceSymbol symbol, BinanceWebSocketAdapterDepthLevel adapter) throws BinanceApiException {
+        return getWebSocketSession(symbol.toString().toLowerCase() + "@depth5", adapter);
     }
 
     /**
-     * Klines Websocket Stream Listener
+     * Klines Web-Socket Stream Listener
+     * Кровать слушателя потока Web-сокетов
+     *
      * @param symbol i.e. "BNBBTC"
      * @param interval  valid time interval, see BinanceInterval enum
      * @param adapter class to handle the events
      * @return web socket session
      * @throws BinanceApiException in case of any error
      */
-    public Session websocketKlines(BinanceSymbol symbol, BinanceInterval interval, BinanceWebSocketAdapterKline adapter) throws BinanceApiException {
-        return getWebsocketSession(symbol.toString().toLowerCase() + "@kline_" + interval.toString(), adapter);
+    public Session webSocketKlines(BinanceSymbol symbol, BinanceInterval interval, BinanceWebSocketAdapterKline adapter) throws BinanceApiException {
+        return getWebSocketSession(symbol.toString().toLowerCase() + "@kline_" + interval.toString(), adapter);
     }
 
     /**
      * Trades Websocket Stream Listener
+     * Торговый слушателя потока Web-сокетов
+     *
      * @param symbol i.e. "BNBBTC"
      * @param adapter class to handle the events
      * @return web socket session
      * @throws BinanceApiException in case of any error
      */
-    public Session websocketTrades(BinanceSymbol symbol, BinanceWebSocketAdapterAggTrades adapter) throws BinanceApiException {
-        return getWebsocketSession(symbol.toString().toLowerCase() + "@aggTrade", adapter);
+    public Session webSocketTrades(BinanceSymbol symbol, BinanceWebSocketAdapterAggTrades adapter) throws BinanceApiException {
+        return getWebSocketSession(symbol.toString().toLowerCase() + "@aggTrade", adapter);
     }
 
     /**
@@ -826,8 +836,8 @@ public class BinanceAPI {
      * @return web socket session
      * @throws BinanceApiException in case of any error
      */
-    public Session websocket(String listenKey, BinanceWebSocketAdapterUserData adapter) throws BinanceApiException {
-        return getWebsocketSession(listenKey, adapter);
+    public Session webSocket(String listenKey, BinanceWebSocketAdapterUserData adapter) throws BinanceApiException {
+        return getWebSocketSession(listenKey, adapter);
     }
 
     /**

@@ -41,7 +41,7 @@ public class DepthStreamTest {
 
     @Test
     public void testDepthStreamWatcher() throws Exception, BinanceApiException {
-        Session session = binanceApi.websocketDepth(symbol, new BinanceWebSocketAdapterDepth() {
+        Session session = binanceApi.webSocketDepth(symbol, new BinanceWebSocketAdapterDepth() {
             @Override
             public void onMessage(BinanceEventDepthUpdate message) {
                 log.info(message.toString());
@@ -53,7 +53,7 @@ public class DepthStreamTest {
 
     @Test
     public void testDepth5StreamWatcher() throws Exception, BinanceApiException {
-        Session session = binanceApi.websocketDepth5(symbol, new BinanceWebSocketAdapterDepthLevel() {
+        Session session = binanceApi.webSocketDepth5(symbol, new BinanceWebSocketAdapterDepthLevel() {
             @Override
             public void onMessage(BinanceEventDepthLevelUpdate message) {
                 log.info(message.toString());

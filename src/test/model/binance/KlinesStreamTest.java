@@ -28,7 +28,7 @@ public class KlinesStreamTest {
 
     @Test
     public void testKlinesStreamWatcher() throws Exception, BinanceApiException {
-        Session session = binanceApi.websocketKlines(symbol, BinanceInterval.ONE_MIN, new BinanceWebSocketAdapterKline() {
+        Session session = binanceApi.webSocketKlines(symbol, BinanceInterval.ONE_MIN, new BinanceWebSocketAdapterKline() {
             @Override
             public void onMessage(BinanceEventKline message) {
                 log.info(message.toString());

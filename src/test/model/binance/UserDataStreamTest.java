@@ -39,7 +39,7 @@ public class UserDataStreamTest {
     public void testUserDataStreamIsCreatedAndClosed() throws Exception, BinanceApiException {
         String listenKey = binanceApi.startUserDataStream();
         log.info("LISTEN KEY=" + listenKey);
-        Session session = binanceApi.websocket(listenKey, new BinanceWebSocketAdapterUserData() {
+        Session session = binanceApi.webSocket(listenKey, new BinanceWebSocketAdapterUserData() {
             @Override
             public void onOutboundAccountInfo(BinanceEventOutboundAccountInfo event) throws BinanceApiException {
                 log.info(event.toString());

@@ -39,7 +39,7 @@ public class AggTradesStreamTest {
 
     @Test
     public void testTradesStreamWatcher() throws Exception, BinanceApiException {
-        Session session = binanceApi.websocketTrades(symbol, new BinanceWebSocketAdapterAggTrades() {
+        Session session = binanceApi.webSocketTrades(symbol, new BinanceWebSocketAdapterAggTrades() {
             @Override
             public void onMessage(BinanceEventAggTrade message) {
                 log.info(message.toString());
