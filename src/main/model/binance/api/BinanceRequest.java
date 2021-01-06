@@ -97,6 +97,7 @@ public class BinanceRequest {
     /**
      * Requests signing - with public and secret key
      * Подписание заявки - с открытым и секретным ключом
+     *
      * @param apiKey string of public API Key == строка открытого ключа API
      * @param secretKey string of secret Key == строка секретного ключа
      * @param options map of additional parameters to include == карта дополнительных параметров для включения
@@ -147,6 +148,8 @@ public class BinanceRequest {
 
     /**
      * Requests signing - just with a public key
+     * Подписание запросов - просто открытым ключом
+     *
      * @param apiKey public key string
      * @return this request object
      * @throws BinanceApiException in case of any error
@@ -162,7 +165,9 @@ public class BinanceRequest {
     }
 
     /**
-     * Settings method as post, keeping interface fluid == Метод настройки как пост, сохраняя интерфейс жидкости
+     * Settings method as post, keeping interface fluid
+     * Метод настройки как пост, сохраняя интерфейс жидкости
+     *
      * @param
      * @return this request object == этот объект запроса
      */
@@ -172,7 +177,9 @@ public class BinanceRequest {
     }
 
     /**
-     * Settings method as PUT, keeping interface fluid == Метод настроек как PUT, сохраняющий интерфейс жидкости
+     * Settings method as PUT, keeping interface fluid
+     * Метод настроек как PUT, сохраняющий интерфейс жидкости
+     *
      * @return this request object == этот объект запроса
      */
     public BinanceRequest put() {
@@ -182,7 +189,9 @@ public class BinanceRequest {
 
 
     /**
-     * Settings method as DELETE, keeping interface fluid == Метод настроек как УДАЛИТЬ, сохраняя интерфейсную жидкость
+     * Settings method as DELETE, keeping interface fluid
+     * Метод настроек как УДАЛИТЬ, сохраняя интерфейсную жидкость
+     *
      * @return this request object == этот объект запроса
      */
     public BinanceRequest delete() {
@@ -192,7 +201,9 @@ public class BinanceRequest {
 
     /**
      * Opens HTTPS connection and save connection Handler
-      @return this request object
+     * Открыть HTTPS-соединение и сохранение обработчика соединения
+     *
+     * @return this request object
      * @throws BinanceApiException in case of any error
      */
     public BinanceRequest connect() throws BinanceApiException {
@@ -266,6 +277,8 @@ public class BinanceRequest {
 
     /**
      * Saving response into local string variable
+     * Сохранение ответа в локальной строковой переменной
+     *
      * @return this request object
      * @throws BinanceApiException in case of any error
      */
@@ -325,6 +338,8 @@ public class BinanceRequest {
 
     /**
      * Getting last response as google JsonObject
+     * Получение последнего ответа как Google JsonObject
+     *
      * @return response as Json Object
      */
     public JsonObject asJsonObject() {

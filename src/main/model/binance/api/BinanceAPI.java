@@ -831,6 +831,8 @@ public class BinanceAPI {
 
     /**
      * User Data Websocket Stream Listener
+     * Пользовательские данные слушателя потока Web-сокетов
+     *
      * @param listenKey string, received in startUserDataStream()
      * @param adapter class to handle the event
      * @return web socket session
@@ -842,6 +844,7 @@ public class BinanceAPI {
 
     /**
      * Withdrawal APIs - might not work yet
+     * API вывода средств - может еще не работать
      *
      * @param asset string of asset name, i.e. "BNB"
      * @param address string of destination wallet address
@@ -866,6 +869,11 @@ public class BinanceAPI {
      * So far response is string. at the moment of writing
      * there is a response in Chinese about parameter exception (which cannot be parsed by JSON),
      * and someone seems to still work on that part of server side
+     * Получение истории выводов - может пока не работать.
+     * Пока ответ - строка. на момент написания
+     * есть ответ на китайском языке об исключении параметра (которое не может быть проанализировано JSON),
+     * и кто-то, кажется, все еще работает на этой части серверной части
+     *
      * @param historyFilter structure for user's history filtration
      * @return Temporary returns String until WAPI will be fixed
      * @throws BinanceApiException in case of any error
@@ -878,9 +886,11 @@ public class BinanceAPI {
 
     /**
      * Getting history of deposits - might not work yet
+     * Получение истории вкладов - пока может не работать
      * So far response is string. at the moment of writing
      * there is a response in Chinese about parameter exception (which cannot be parsed by JSON),
      * and someone seems to still work on that part of server side
+     *
      * @param historyFilter structure for user's history filtration
      * @return Temporary returns String until WAPI will be fixed
      * @throws BinanceApiException in case of any error
@@ -892,10 +902,11 @@ public class BinanceAPI {
     }
 
     /**
-    * Getting status of the system
-    * @return Temporary returns JsonObject
-    * @throws BinanceApiException in case of any error
-    */
+     * Getting status of the system
+     * Получение статуса системы
+     * @return Temporary returns JsonObject
+     * @throws BinanceApiException in case of any error
+     */
     public JsonObject getSystemStatus() throws BinanceApiException {
         String u = baseWapi3 + "/systemStatus.html";
         return (new BinanceRequest(u)).read().asJsonObject();
