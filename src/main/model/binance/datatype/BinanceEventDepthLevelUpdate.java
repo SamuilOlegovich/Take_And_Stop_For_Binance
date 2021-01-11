@@ -9,9 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-
+// Обновление уровня глубины событий Binance
 public class BinanceEventDepthLevelUpdate {
-
     public List<BinanceBidOrAsk> bids = null;
     public List<BinanceBidOrAsk> asks = null;
     private Long lastUpdateId;

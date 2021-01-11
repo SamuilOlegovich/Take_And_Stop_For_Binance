@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 
 
 //@Slf4j
+// Уровень глубины адаптера веб-сокета Binance
 public abstract class BinanceWebSocketAdapterDepthLevel extends WebSocketAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceWebSocketAdapterDepthLevel.class);

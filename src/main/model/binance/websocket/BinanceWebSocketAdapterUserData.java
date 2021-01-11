@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 
 
 //@Slf4j
+// Пользовательские данные адаптера веб-сокета Binance
 public abstract class BinanceWebSocketAdapterUserData  extends WebSocketAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceWebSocketAdapterUserData.class);

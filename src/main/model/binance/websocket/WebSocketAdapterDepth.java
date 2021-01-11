@@ -7,6 +7,8 @@ public class WebSocketAdapterDepth extends BinanceWebSocketAdapterDepth {
 
     @Override
     public void onMessage(BinanceEventDepthUpdate event) throws BinanceApiException {
+
+        System.out.println("DDD");
 //        System.out.println(event.eventTime);
 //        System.out.println(event.updateId);
 //        System.out.println(event.asks);

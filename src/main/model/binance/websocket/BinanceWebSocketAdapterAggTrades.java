@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 
 //@Slf4j
+// Адаптер веб-сокета Binance Agg Trades
 public abstract class BinanceWebSocketAdapterAggTrades extends WebSocketAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceWebSocketAdapterAggTrades.class);

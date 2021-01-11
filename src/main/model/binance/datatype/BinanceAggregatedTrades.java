@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 
 
 @Data
+// Агрегированные сделки Binance
 public class BinanceAggregatedTrades {
 
     //

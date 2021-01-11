@@ -12,6 +12,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
+// Binance Bid или Ask
 public class BinanceBidOrAsk {
 
     public BigDecimal quantity = null;

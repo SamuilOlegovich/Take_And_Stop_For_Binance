@@ -19,14 +19,14 @@ import java.math.BigDecimal;
  "e": "aggTrade",		// event type
  "E": 1499405254326,	// event time
  "s": "ETHBTC",			// symbol
- "a": 70232,			// aggregated tradeid
+ "a": 70232,			// aggregated tradeid => агрегированный tradeid
  "p": "0.10281118",		// price
- "q": "8.15632997",		// quantity
- "f": 77489,			// first breakdown trade id
- "l": 77489,			// last breakdown trade id
+ "q": "8.15632997",		// quantity => количество
+ "f": 77489,			// first breakdown trade id => идентификатор сделки первой разбивки
+ "l": 77489,			// last breakdown trade id => идентификатор сделки последней разбивки
  "T": 1499405254324,	// trade time
- "m": false,			// whehter buyer is a maker
- "M": true				// can be ignored
+ "m": false,			// whehter buyer is a maker => является ли покупатель производителем
+ "M": true				// can be ignored => можно игнорировать
  }
  */
 @Data

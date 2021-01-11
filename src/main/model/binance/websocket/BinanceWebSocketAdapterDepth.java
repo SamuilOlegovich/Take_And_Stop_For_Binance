@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 
 
 //@Slf4j
+// Глубина адаптера веб-сокета Binance
 public abstract class BinanceWebSocketAdapterDepth extends WebSocketAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceWebSocketAdapterDepth.class);

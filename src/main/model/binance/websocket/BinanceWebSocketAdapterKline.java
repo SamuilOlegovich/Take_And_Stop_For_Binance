@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 
 
 //@Slf4j
+// Адаптер веб-сокетов Binance Kline
 public abstract class BinanceWebSocketAdapterKline extends WebSocketAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(BinanceWebSocketAdapterKline.class);

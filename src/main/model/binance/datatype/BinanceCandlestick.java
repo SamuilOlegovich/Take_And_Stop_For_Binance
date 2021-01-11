@@ -33,6 +33,7 @@ import java.math.BigDecimal;
 */
 
 @Data
+// Подсвечник Binance
 public class BinanceCandlestick {
 
     public BigDecimal takerBuyQuoteAssetVolume = null;
