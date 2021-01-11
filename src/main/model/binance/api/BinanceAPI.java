@@ -699,7 +699,7 @@ public class BinanceAPI {
      * Keep user data stream alive
      * Поддерживайте поток пользовательских данных живым
      *
-     * @param listenKey - key that could be used to manage stream
+     * @param listenKey - key that could be used to manage stream == ключ, который можно использовать для управления потоком
      * @return json result
      * @throws BinanceApiException in case of any error
      */

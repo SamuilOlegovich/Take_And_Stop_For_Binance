@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.Data;
+import main.model.Agent;
 import main.model.binance.api.BinanceApiException;
 
 import java.util.LinkedList;
@@ -70,5 +71,7 @@ public class BinanceEventDepthUpdate {
         for (JsonElement askElement : a) {
             asks.add( new BinanceBidOrAsk(BinanceBidType.ASK, askElement.getAsJsonArray()));
         }
+
+        Agent.setBinanceEventDepthUpdate(this);
     }
 }
