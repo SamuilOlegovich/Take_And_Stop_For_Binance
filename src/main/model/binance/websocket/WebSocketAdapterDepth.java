@@ -3,6 +3,8 @@ package main.model.binance.websocket;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceEventDepthUpdate;
 
+
+
 public class WebSocketAdapterDepth extends BinanceWebSocketAdapterDepth {
 
     @Override

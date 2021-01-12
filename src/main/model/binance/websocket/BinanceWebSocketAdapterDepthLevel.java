@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 
-
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
 
 
 //@Slf4j
@@ -18,11 +20,14 @@ public abstract class BinanceWebSocketAdapterDepthLevel extends WebSocketAdapter
 
     private static final Logger log = LoggerFactory.getLogger(BinanceWebSocketAdapterDepthLevel.class);
 
+//    @OnOpen
     @Override
     public void onWebSocketConnect(Session sess) {
+        System.out.println(sess.toString());
         log.debug("onWebSocketConnect: {}", sess);
     }
 
+//    @OnError
     @Override
     public void onWebSocketError(Throwable cause) {
         log.error("onWebSocketError: {}", cause);
@@ -39,6 +44,7 @@ public abstract class BinanceWebSocketAdapterDepthLevel extends WebSocketAdapter
         }
     }
 
+//    @OnMessage
     public abstract void onMessage(BinanceEventDepthLevelUpdate event) throws BinanceApiException;
 
 }

@@ -287,7 +287,8 @@ public class BinanceRequest {
         try {
             BufferedReader bufferedReader;
             InputStream inputStream;
-            // posting payload it we do not have it yet == выкладываем полезную нагрузку у нас ее пока нет
+            // posting payload it we do not have it yet
+            // выкладываем полезную нагрузку у нас ее пока нет
             if (!Strings.isNullOrEmpty(getRequestBody())) { //////////////////////////////
                 log.debug("Payload: {}", getRequestBody());
                 conn.setDoInput(true);
@@ -512,6 +513,12 @@ public class BinanceRequest {
     }
 
     public String toString() {
-        return "BinanceRequest(userAgent=" + this.getUserAgent() + ", conn=" + this.getConn() + ", requestUrl=" + this.getRequestUrl() + ", method=" + this.getMethod() + ", lastResponse=" + this.getLastResponse() + ", apiKey=" + this.getApiKey() + ", secretKey=" + this.getSecretKey() + ", headers=" + this.getHeaders() + ", jsonParser=" + this.getJsonParser() + ", requestBody=" + this.getRequestBody() + ")";
+        return "BinanceRequest(userAgent=" + this.getUserAgent() + ", conn=" + this.getConn()
+                + ", requestUrl=" + this.getRequestUrl() + ", method=" + this.getMethod()
+                + ", lastResponse=" + this.getLastResponse() + ", apiKey="
+                + this.getApiKey() + ", secretKey=" + this.getSecretKey()
+                + ", headers=" + this.getHeaders() + ", jsonParser="
+                + this.getJsonParser() + ", requestBody="
+                + this.getRequestBody() + ")";
     }
 }
