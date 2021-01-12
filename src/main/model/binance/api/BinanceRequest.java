@@ -36,9 +36,9 @@ import java.io.*;
 
 
 
-// Запрос Binance
 @Data
 //@Slf4j
+// Запрос Binance
 public class BinanceRequest {
     private static final Logger log = LoggerFactory.getLogger(BinanceRequest.class);
 
@@ -72,13 +72,6 @@ public class BinanceRequest {
     // HMAC encoding
     // Кодировка HMAC
     public static String encode(String key, String data) {
-//        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-//        SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
-//        sha256_HMAC.init(secret_key);
-//        return Hex.encodeHexString(sha256_HMAC.doFinal(data.getBytes("UTF-8"))); //////////////////////////////
-//        return (Hex.encodeHex(sha256_HMAC.doFinal(data.getBytes("UTF-8")))).toString(); /////////////////////////
-//        return Arrays.toString((Hex.encodeHex(sha256_HMAC.doFinal(data.getBytes("UTF-8")))));
-
         try {
             Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
             SecretKeySpec secret_key = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
@@ -129,17 +122,14 @@ public class BinanceRequest {
             query = query.concat(queryToAdd);
 
             log.debug("Signature: query to be included  = {} queryToAdd={}", query, queryToAdd);
-//            try {
+            try {
                 // set the HMAC hash header
                 String signature = encode(secretKey, query);
-//                System.out.println(secretKey);
-//                System.out.println(query);
-//                System.out.println(signature);
-                String concatenator = requestUrl.contains("?") ? "&" : "?";
-                requestUrl += concatenator + queryToAdd + "&signature=" + signature;
-//            } catch (Exception e ) {
-//                throw new BinanceApiException("Encryption error " + e.getMessage());
-//            }
+                String concatenate = requestUrl.contains("?") ? "&" : "?";
+                requestUrl += concatenate + queryToAdd + "&signature=" + signature;
+            } catch (Exception e) {
+                throw new BinanceApiException("Encryption error => method sign : " + e.getMessage());
+            }
         }
         headers.put("X-MBX-APIKEY", apiKey);
         headers.put("Content-Type", "application/x-www-form-urlencoded");
@@ -156,9 +146,9 @@ public class BinanceRequest {
      */
     public BinanceRequest sign(String apiKey) throws BinanceApiException {
         String humanMessage = "Please check environment variables or VM options";
-        if (Strings.isNullOrEmpty(apiKey))
+        if (Strings.isNullOrEmpty(apiKey)) {
             throw new BinanceApiException("Missing BINANCE_API_KEY. " + humanMessage);
-
+        }
         headers.put("X-MBX-APIKEY", apiKey);
         headers.put("Content-Type", " application/x-www-form-urlencoded");
         return this;
@@ -213,34 +203,28 @@ public class BinanceRequest {
         TrustManager[] trustAllCerts = new TrustManager[] {
             new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-//                    System.out.println("1");
                     return null;
                 }
                 public void checkClientTrusted(
                     java.security.cert.X509Certificate[] certs, String authType) {
-//                    System.out.println("2");
                 }
                 public void checkServerTrusted(
                     java.security.cert.X509Certificate[] certs, String authType) {
-//                    System.out.println("3");
                 }
             }
         };
-//        System.out.println("4");
 
         try {
             url = new URL(requestUrl);
             log.debug("{} {}", getMethod(), url);
-//            System.out.println("5");
         } catch (MalformedURLException e) {
-            throw new BinanceApiException("Mailformed URL " + e.getMessage()); //////////////////////////
+            throw new BinanceApiException("Mail formed URL => method connect : " + e.getMessage()); //////////////////////////
         }
 
         try {
             sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, new java.security.SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-//            System.out.println("6");
         } catch (NoSuchAlgorithmException e) {
             throw new BinanceApiException("SSL Error " + e.getMessage() );
         } catch (KeyManagementException e) {
@@ -249,29 +233,21 @@ public class BinanceRequest {
 
         try {
             conn = (HttpsURLConnection)url.openConnection();
-//            System.out.println(conn);
-
-//            System.out.println("7");
         } catch (IOException e) {
             throw new BinanceApiException("HTTPS Connection error " + e.getMessage());
         }
 
         try {
             conn.setRequestMethod(method);
-//            conn.setRequestMethod("POST");
-            System.out.println(conn);
-//            System.out.println("8");
+            System.out.println(conn); //////////////////////////////////////////////////////////////////////////////////
         } catch (ProtocolException e) {
             throw new BinanceApiException("HTTP method error " + e.getMessage());
         }
 
         conn.setRequestProperty("User-Agent", getUserAgent());
-//        System.out.println("9");
         for(String header: headers.keySet()) {
             conn.setRequestProperty(header, headers.get(header));
-//            System.out.println("10");
         }
-//        System.out.println("11");
         return this;
     }
 
@@ -304,9 +280,6 @@ public class BinanceRequest {
             } else {
                 /* error from server */
                 inputStream = conn.getErrorStream();
-//                System.out.println(is);
-//                System.out.println(conn);
-//                System.out.println(conn.getResponseCode());
             }
 
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -316,8 +289,9 @@ public class BinanceRequest {
                 // Try to parse JSON
                 JsonObject obj = (JsonObject) jsonParser.parse(lastResponse);
                 if (obj.has("code") && obj.has("msg")) {
-                    throw new BinanceApiException("ERROR: " +
-                            obj.get("code").getAsString() + ", " + obj.get("msg").getAsString() );
+                    throw new BinanceApiException("ERROR: "
+                            + obj.get("code").getAsString() + ", "
+                            + obj.get("msg").getAsString() );
                 }
             }
         } catch (IOException e) {

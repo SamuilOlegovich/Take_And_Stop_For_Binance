@@ -5,7 +5,8 @@ package main.model.binance.api;
  * ============================================================
  * Copyright 2017-, Viktor Lopata, Web Cerebrium OÜ
  * Released under the MIT License
- * ============================================================ */
+ * ============================================================
+ * */
 
 
 import org.sellcom.core.Strings;
@@ -37,8 +38,8 @@ public class BinanceConfig {
             prop.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
         } catch (Exception e) {
             // it is fine not to have that resource file
-            // это нормально, если у вас нет этого файла ресурсов.
             // ignoring any error here
+            // это нормально, если у вас нет этого файла ресурсов
             // игнорируем любую ошибку здесь
         }
     }
@@ -47,8 +48,8 @@ public class BinanceConfig {
      * Getting variable from one of the multiple sources available
      * Получение переменной из одного из нескольких доступных источников
      *
-     * @param key variable name == имя переменной
-     * @return string result == строковый результат
+     * @param key variable name => имя переменной
+     * @return string result => строковый результат
      */
     public String getVariable(String key) {
         // checking VM options for properties
