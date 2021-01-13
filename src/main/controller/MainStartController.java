@@ -2,9 +2,7 @@ package main.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,14 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.model.Agent;
-import main.model.DeleteKeysAndSettings;
-import main.model.binance.API;
-import main.model.binance.api.BinanceAPI;
-import main.model.binance.api.BinanceApiException;
+import main.model.*;
 
 
-public class StartController {
+
+public class MainStartController {
+
+    public MainStartController() {
+        Agent.setMainStartController(this);
+    }
 
     @FXML
     private ResourceBundle resources;
@@ -39,54 +38,23 @@ public class StartController {
     private Button enterButton;
 
     @FXML
-    private Button registerNowButton;
-
-    @FXML
     void initialize() {
-        enterButton.setOnAction(event -> {
-            String APIKey = APIKeyField.getText().trim();
-            String secretKey = secretKeyField.getText().trim();
+        Thread thread = new Thread(new GetUpToDateDataOnPairs());
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-            if ((!secretKey.equals("") && !APIKey.equals("")) && (secretKey.length() > 10 && APIKey.length() > 10)) {
-                setAPIAndSecretKey(secretKey, APIKey);
-                API.setSecretKey(secretKey);
-                API.setApiKey(APIKey);
-                openNewScene("/main/view/main_start_controller.fxml");
+        enterButton.setOnAction(event -> {
+            if (Agent.isGetUpToDateDataOnPairs() == true) {
+
             } else {
                 openNewScene("/main/view/error_API_or_secret_key.fxml");
             }
         });
-
-//        registerNowButton.setOnAction(event -> {
-//            openNewScene("/sample/main.view/signUp.fxml");
-//        });
     }
-
-
-
-    private void setAPIAndSecretKey(String loginText, String passwordText) {
-
-//        int counter = 0;
-//        User user = new User();
-//        user.setLogin(loginText);
-//        user.setPassword(passwordText);
-//        DatabaseHandler databaseHandler = new DatabaseHandler();
-//        ResultSet resultSet = databaseHandler.getUser(user);
-
-//        try {
-//            while (resultSet.next()) counter++;
-//        } catch (SQLException e) { e.printStackTrace(); }
-//
-//        if (counter >= 1) openNewScene("/sample/main.view/app.fxml");
-//        else {
-//            Shake shakeLogin = new Shake(loginField);
-//            Shake shakePassword = new Shake(passwordField);
-//            shakeLogin.playAnim();
-//            shakePassword.playAnim();
-//        }
-    }
-
-
 
     private void openNewScene(String window) {
         // при нажатии на кнопку мы прячем окно

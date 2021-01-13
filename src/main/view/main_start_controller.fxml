@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #1c1c1c;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.StartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #1c1c1c;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.MainStartController">
     <children>
-      <ImageView fitHeight="177.0" fitWidth="615.0" layoutX="185.0" layoutY="-35.0" nodeOrientation="INHERIT" AnchorPane.rightAnchor="0.0">
-         <image>
-            <Image url="@../assets/bi_1.png" />
-         </image>
-      </ImageView>
+        <ImageView fitHeight="177.0" fitWidth="615.0" layoutX="185.0" layoutY="-35.0" nodeOrientation="INHERIT" AnchorPane.rightAnchor="0.0">
+            <image>
+                <Image url="@../assets/bi_1.png" />
+            </image>
+        </ImageView>
         <AnchorPane layoutY="110.0" prefHeight="290.0" prefWidth="700.0" style="-fx-background-color: #fafafa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
             <children>
                 <PasswordField fx:id="secretKeyField" layoutX="216.0" layoutY="123.0" prefHeight="38.0" prefWidth="270.0" promptText="SECRET KEY" style="-fx-border-color: gray; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="216.0" AnchorPane.rightAnchor="214.0">
@@ -39,15 +39,10 @@
                         <Font name="Caveat" size="34.0" />
                     </font>
                 </Button>
-              <Button fx:id="registerNowButton" layoutX="348.0" layoutY="177.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="114.0" style="-fx-background-color: #f39c36; -fx-background-radius: 10;" text="Register now" textFill="#fcf9f9" AnchorPane.rightAnchor="338.0" AnchorPane.topAnchor="177.0">
-                  <font>
-                      <Font name="Caveat" size="20.0" />
-                  </font>
-              </Button>
             </children>
         </AnchorPane>
     </children>
-   <cursor>
-      <Cursor fx:constant="DEFAULT" />
-   </cursor>
+    <cursor>
+        <Cursor fx:constant="DEFAULT" />
+    </cursor>
 </AnchorPane>
