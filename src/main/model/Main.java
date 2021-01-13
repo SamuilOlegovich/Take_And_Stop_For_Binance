@@ -1,21 +1,10 @@
 package main.model;
 
-import com.google.gson.JsonObject;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.model.binance.API;
-import main.model.binance.api.BinanceAPI;
-import main.model.binance.api.BinanceApiException;
-import main.model.binance.datatype.BinanceSymbol;
-import main.model.binance.datatype.BinanceTicker;
-import main.model.binance.websocket.WebSocketAdapterDepth;
-
-import javax.websocket.Session;
-import java.util.ArrayList;
-import java.util.Map;
 
 
 public class Main extends Application {
