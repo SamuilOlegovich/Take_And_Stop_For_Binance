@@ -9,6 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import main.model.WedgeLines;
+
 
 public class ErrorAPIOrSecretKeyController {
 
@@ -19,10 +22,14 @@ public class ErrorAPIOrSecretKeyController {
     private URL location;
 
     @FXML
+    private Text errorText;
+
+    @FXML
     private Button enterButton;
 
     @FXML
     void initialize() {
+        errorText.setText(WedgeLines.s0);
         enterButton.setOnAction(event -> {
             openNewScene("/main/view/authorization.fxml");
         });

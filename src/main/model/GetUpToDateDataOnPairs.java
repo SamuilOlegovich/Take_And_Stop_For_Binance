@@ -31,6 +31,7 @@ public class GetUpToDateDataOnPairs implements Runnable {
             treeSet.clear();
         } catch (BinanceApiException e) {
             new DeleteKeysAndSettings();
+            Agent.setGetUpToDateDataOnPairs(false);
         }
         Agent.setGetUpToDateDataOnPairs(true);
     }
