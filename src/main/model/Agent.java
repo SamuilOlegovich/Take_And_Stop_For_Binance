@@ -1,6 +1,6 @@
 package main.model;
 
-import main.controller.MainStartController;
+import main.controller.MainPageController;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.datatype.BinanceEventDepthUpdate;
 
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class Agent {
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
-    private static MainStartController mainStartController;
     private static BinanceAPI binanceAPI;
 
     private static ArrayList<String> listAllCoinPair;
@@ -60,14 +59,6 @@ public class Agent {
 
     public static void setBinanceAPI(BinanceAPI binanceAPI) {
         Agent.binanceAPI = binanceAPI;
-    }
-
-    public static MainStartController getMainStartController() {
-        return Agent.mainStartController;
-    }
-
-    public static void setMainStartController(MainStartController mainStartController) {
-        Agent.mainStartController = mainStartController;
     }
 
     public static boolean isGetUpToDateDataOnPairs() {

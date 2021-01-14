@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #1c1c1c;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.SettingPageController">
+    <children>
+        <ImageView fitHeight="177.0" fitWidth="615.0" layoutX="185.0" layoutY="-35.0" nodeOrientation="INHERIT" AnchorPane.rightAnchor="0.0">
+            <image>
+                <Image url="@../assets/bi_1.png" />
+            </image>
+        </ImageView>
+        <AnchorPane layoutY="110.0" prefHeight="290.0" prefWidth="700.0" style="-fx-background-color: #e3e1e1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+            <children>
+                <ListView id="listViewInMainPage" fx:id="listViewInSettingPage" layoutX="294.0" layoutY="17.0" prefHeight="466.0" prefWidth="257.0" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="17.0" />
+            <AnchorPane layoutX="293.0" layoutY="496.0" prefHeight="77.0" prefWidth="257.0" style="-fx-background-color: #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="17.0">
+               <children>
+                  <Button fx:id="addPairButton" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="219.0" style="-fx-background-color: #0b2440; -fx-background-radius: 10;" text="ADD PAIR" textFill="#fcfbfa">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="579.0" layoutY="496.0" prefHeight="77.0" prefWidth="515.0" style="-fx-background-color: #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="17.0">
+               <children>
+                        <Button fx:id="okButton" layoutX="384.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="219.0" style="-fx-background-color: #00A480#00A480; -fx-background-radius: 10;" text="OK" textFill="#fcfbfa" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="14.0">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="backButton" layoutX="69.0" layoutY="227.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #0b2440; -fx-background-radius: 10;" text="BACK" textFill="#fcfbfa" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="251.0">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Button>
+               </children>
+            </AnchorPane>
+            <TextField fx:id="tradingPairField" layoutX="289.0" layoutY="17.0" prefHeight="50.0" prefWidth="219.0" promptText="Trading pair " style="-fx-background-radius: 10;" AnchorPane.leftAnchor="289.0" AnchorPane.topAnchor="17.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <RadioButton id="buyRadioButton" fx:id="buyRadioButton" layoutX="526.0" layoutY="17.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="BUY" textFill="#00a480" AnchorPane.leftAnchor="526.0" AnchorPane.topAnchor="17.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </RadioButton>
+            <RadioButton id="sellRadioButton" fx:id="sellRadioButton" layoutX="645.0" layoutY="17.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="SELL" textFill="#be008a" AnchorPane.leftAnchor="645.0" AnchorPane.topAnchor="17.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </RadioButton>
+            <TextField id="numberOfCoinsField" fx:id="numberOfCoinsField" layoutX="289.0" layoutY="83.0" prefHeight="50.0" prefWidth="219.0" promptText="Number of coins" style="-fx-background-radius: 10;" AnchorPane.leftAnchor="289.0" AnchorPane.topAnchor="83.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <TextField id="priceField" fx:id="priceField" layoutX="289.0" layoutY="149.0" prefHeight="50.0" prefWidth="219.0" promptText="Price" style="-fx-background-radius: 10;" AnchorPane.leftAnchor="289.0" AnchorPane.topAnchor="149.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <TextField id="takePriceField" fx:id="takePriceField" layoutX="289.0" layoutY="215.0" prefHeight="50.0" prefWidth="219.0" promptText="Take price" style="-fx-background-radius: 10;" AnchorPane.leftAnchor="289.0" AnchorPane.topAnchor="215.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <TextField id="stopPriceField" fx:id="stopPriceField" layoutX="289.0" layoutY="282.0" prefHeight="50.0" prefWidth="219.0" promptText="Stop price" style="-fx-background-radius: 10;" AnchorPane.leftAnchor="289.0" AnchorPane.topAnchor="282.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <TextField id="fractionalPartsField" fx:id="fractionalPartsField" layoutX="289.0" layoutY="348.0" prefHeight="50.0" prefWidth="219.0" promptText="Fractional parts" style="-fx-background-radius: 10;" AnchorPane.leftAnchor="289.0" AnchorPane.topAnchor="348.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            <TextField id="trailingStopField" fx:id="trailingStopField" layoutX="289.0" layoutY="414.0" prefHeight="50.0" prefWidth="219.0" promptText="Trailing stop -&gt; %" style="-fx-background-radius: 10;" AnchorPane.leftAnchor="289.0" AnchorPane.topAnchor="414.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </TextField>
+            </children>
+        </AnchorPane>
+    </children>
+    <cursor>
+        <Cursor fx:constant="DEFAULT" />
+    </cursor>
+</AnchorPane>

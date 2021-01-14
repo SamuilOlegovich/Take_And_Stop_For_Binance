@@ -12,11 +12,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         if (Agent.isYesOrNotAPIKey() == true) {
-            Parent root = FXMLLoader.load(getClass().getResource("/main/view/main_start_controller.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/main/view/main_page.fxml"));
             primaryStage.setTitle("Take and Loss for Binance");
             primaryStage.setScene(new Scene(root, 1200, 700));
         } else {
-            Parent root = FXMLLoader.load(getClass().getResource("/main/view/start_controller.fxml"));
+//            Parent root = FXMLLoader.load(getClass().getResource("/main/view/authorization.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/main/view/main_page.fxml"));
             primaryStage.setTitle("Take and Loss for Binance");
             primaryStage.setScene(new Scene(root, 800, 500));
         }

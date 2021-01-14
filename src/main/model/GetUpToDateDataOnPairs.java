@@ -16,6 +16,7 @@ public class GetUpToDateDataOnPairs implements Runnable {
     public void run() {
         get();
         Thread thread = new Thread(new ConnectWebSocket());
+        thread.start();
     }
 
     private void get() {
@@ -31,6 +32,6 @@ public class GetUpToDateDataOnPairs implements Runnable {
         } catch (BinanceApiException e) {
             new DeleteKeysAndSettings();
         }
-        Agent.setGetUpToDateDataOnPairs(false);
+        Agent.setGetUpToDateDataOnPairs(true);
     }
 }

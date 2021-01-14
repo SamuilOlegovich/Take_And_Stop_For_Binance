@@ -2,9 +2,7 @@ package main.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,14 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.model.Agent;
-import main.model.DeleteKeysAndSettings;
 import main.model.binance.API;
-import main.model.binance.api.BinanceAPI;
-import main.model.binance.api.BinanceApiException;
 
 
-public class StartController {
+public class AuthorizationController {
 
     @FXML
     private ResourceBundle resources;
@@ -39,9 +33,6 @@ public class StartController {
     private Button enterButton;
 
     @FXML
-    private Button registerNowButton;
-
-    @FXML
     void initialize() {
         enterButton.setOnAction(event -> {
             String APIKey = APIKeyField.getText().trim();
@@ -51,9 +42,9 @@ public class StartController {
                 setAPIAndSecretKey(secretKey, APIKey);
                 API.setSecretKey(secretKey);
                 API.setApiKey(APIKey);
-                openNewScene("/main/view/main_start_controller.fxml");
+                openNewScene("/main/view/main_page.fxml");
             } else {
-                openNewScene("/main/view/error_API_or_secret_key.fxml");
+                openNewScene("/main/view/error_api_or_secret_key.fxml");
             }
         });
 

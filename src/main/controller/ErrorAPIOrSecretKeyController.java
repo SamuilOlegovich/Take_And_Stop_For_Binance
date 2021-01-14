@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class ErrorAPIOrSecretKey {
+public class ErrorAPIOrSecretKeyController {
 
     @FXML
     private ResourceBundle resources;
@@ -24,7 +24,7 @@ public class ErrorAPIOrSecretKey {
     @FXML
     void initialize() {
         enterButton.setOnAction(event -> {
-            openNewScene("/main/view/start_controller.fxml");
+            openNewScene("/main/view/authorization.fxml");
         });
     }
 
