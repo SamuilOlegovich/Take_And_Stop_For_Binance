@@ -1,6 +1,5 @@
 package main.model;
 
-import main.controller.MainPageController;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.datatype.BinanceEventDepthUpdate;
 
@@ -8,9 +7,10 @@ import java.util.ArrayList;
 
 public class Agent {
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
+    private static ArraysOfStrategies arraysOfStrategies;
     private static BinanceAPI binanceAPI;
 
-    private static ArrayList<String> listAllCoinPair;
+    private static ArrayList<String> allCoinPairList;
 
     private static boolean getUpToDateDataOnPairs;
     private static boolean connectWebSocket;
@@ -27,13 +27,13 @@ public class Agent {
         Agent.binanceEventDepthUpdate = binanceEventDepthUpdate;
     }
 
-    public static ArrayList<String> getListAllCoinPair() {
-        return listAllCoinPair;
+    public static ArrayList<String> getAllCoinPairList() {
+        return allCoinPairList;
     }
 
-    public static void setListAllCoinPair(ArrayList<String> listAllCoinPair) {
-        if (Agent.listAllCoinPair == null) {
-            Agent.listAllCoinPair = new ArrayList<>(listAllCoinPair);
+    public static void setAllCoinPairList(ArrayList<String> allCoinPairList) {
+        if (Agent.allCoinPairList == null) {
+            Agent.allCoinPairList = new ArrayList<>(allCoinPairList);
         }
     }
 
@@ -75,5 +75,13 @@ public class Agent {
 
     public static void setConnectWebSocket(boolean connectWebSocket) {
         Agent.connectWebSocket = connectWebSocket;
+    }
+
+    public static ArraysOfStrategies getArraysOfStrategies() {
+        return arraysOfStrategies;
+    }
+
+    public static void setArraysOfStrategies(ArraysOfStrategies arraysOfStrategies) {
+        Agent.arraysOfStrategies = arraysOfStrategies;
     }
 }

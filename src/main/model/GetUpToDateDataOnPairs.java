@@ -26,7 +26,7 @@ public class GetUpToDateDataOnPairs implements Runnable {
             // Получаем ключь к веб сокету
             Agent.setKeyForWebSocket(Agent.getBinanceAPI().startUserDataStream());
             TreeSet<String> treeSet = new TreeSet<>(Agent.getBinanceAPI().allBookTickersMap().keySet());
-            Agent.setListAllCoinPair(new ArrayList<>(treeSet));
+            Agent.setAllCoinPairList(new ArrayList<>(treeSet));
             System.out.println(treeSet.size());//////////////////////////////////////////////////
             treeSet.clear();
         } catch (BinanceApiException e) {

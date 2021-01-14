@@ -26,6 +26,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        Agent.setArraysOfStrategies(new ArraysOfStrategies());
         // считываеи все файлы настроек, ключей и состояний
         ReadKeysAndSettings readKeysAndSettings = new ReadKeysAndSettings();
         // Запускаем визуальную часть в зависимости от того что считалось из файлоф

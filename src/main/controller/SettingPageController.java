@@ -14,13 +14,15 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.model.Agent;
 import main.model.EndPair;
-import main.model.SettingsAndStatus;
 import javafx.scene.text.Text;
+import main.model.StrategySettingAndStatus;
 import main.model.WedgeLines;
 
 
+
+
 public class SettingPageController {
-    private SettingsAndStatus settingsAndStatus;
+    private StrategySettingAndStatus strategySettingAndStatus;
 
     private String nameStrategy;
     private String tradingPair;
@@ -33,8 +35,8 @@ public class SettingPageController {
 
     private int fractionalParts;
     private int buyOrSell;
-    private int onOrOffTS;
     private int onOrOffFP;
+    private int onOrOffTS;
 
 
     @FXML
@@ -102,7 +104,7 @@ public class SettingPageController {
 
     @FXML
     void initialize() {
-        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getListAllCoinPair());
+        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
         listViewInSettingPage.setItems(observableList);
 
         // установка группы
@@ -130,6 +132,22 @@ public class SettingPageController {
             buyOrSell = -1;
         });
 
+        onTSRadioButton.setOnAction(event -> {
+            onOrOffTS = 1;
+        });
+
+        offTSRadioButton.setOnAction(event -> {
+            onOrOffTS = -1;
+        });
+
+        onFPRadioButton.setOnAction(event -> {
+            onOrOffFP = 1;
+        });
+
+        offFPRadioButton.setOnAction(event -> {
+            onOrOffFP = -1;
+        });
+
         okButton.setOnAction(event -> {
             collectAndProcessData();
             if (checkIfEverythingIsOk()) {
@@ -137,13 +155,6 @@ public class SettingPageController {
                 addTheFinishedObjectToTheListOfStrategies();
                 openNewScene("/main/view/main_page.fxml");
             }
-
-            textInfoERROR.setText("nhfv nfhf nfhf nfhf nfrjdjkjj wkjcwcrkcu fkvevhebvhbvd khevhbewivbeiw kjewnvjnewivbids");
-
-
-
-
-
         });
 
         backButton.setOnAction(event -> {
@@ -188,6 +199,7 @@ public class SettingPageController {
 
 
 
+    // считываем данные в полях
     private void collectAndProcessData() {
         String tradingPairText = tradingPairField.getText();
         String nameStrategyText = nameStrategyField.getText();
@@ -197,8 +209,6 @@ public class SettingPageController {
         String stopPriceText = stopPriceField.getText().replaceAll(",", ".");
         String fractionalPartsText = fractionalPartsField.getText();
         String trailingStopText = trailingStopField.getText().replaceAll(",", ".");
-
-
 
         if (tradingPairText.length() >= 5) {
             boolean flag = false;
@@ -264,13 +274,53 @@ public class SettingPageController {
     }
 
 
+    // проверяем все ли заполнено правильно для создания объекта если нет то сообщаем об этом
     private boolean checkIfEverythingIsOk() {
-        String blankFields;
+        boolean flag = true;
+        // Вы не заполнили!
+        StringBuilder blankFields = new StringBuilder("You have not completed!\n");
+        if (tradingPair == null) {
+            blankFields.append("· Trading pair\n");
+            flag = false;
+        }
+        if (buyOrSell == 0) {
+            blankFields.append("· Not chosen BUY or SELL\n");
+            flag = false;
+        }
+        if (nameStrategy == null) {
+            blankFields.append("· Name strategy\n");
+            flag = false;
+        }
+        if (numberOfCoins == -1) {
+            blankFields.append("· Number of coins\n");
+            flag = false;
+        }
+        if (price == -1 && onOrOffTS != 1) {
+            blankFields.append("· Price\n");
+            flag = false;
+        }
+        // Уберите цену, включен трайлирующий стоп, или выключите стоп
+        if (price > 0 && onOrOffTS == 1) {
+            blankFields.append("· Remove price, turn on trailing stop, or turn off stop\n");
+            flag = false;
+        }
+        if (trailingStop == -1 && onOrOffTS == 1) {
+            blankFields.append("· Trailing stop\n");
+            flag = false;
+        }
+        // указан но выключен
+        if (trailingStop > 0 && onOrOffTS <= 0) {
+            blankFields.append("· Trailing stop specified but disabled\n");
+            flag = false;
+        }
 
+        if (flag == false) {
+            textInfoERROR.setText("");
+            textInfoERROR.setText(blankFields.toString());
+            return false;
+        }
 
-
-
-
+        textInfoERROR.setText("");
         textInfoERROR.setText(WedgeLines.s4);
         try {
             Thread.sleep(2000);
@@ -282,12 +332,30 @@ public class SettingPageController {
 
 
 
+    // создаем и заполняем обект стратегии
     private void createAndFillAnObject() {
-        settingsAndStatus = new SettingsAndStatus();
+        strategySettingAndStatus = new StrategySettingAndStatus();
+        strategySettingAndStatus.setNameStrategy(nameStrategy);
+        strategySettingAndStatus.setTradingPair(tradingPair);
+
+        strategySettingAndStatus.setNumberOfCoins(numberOfCoins);
+        strategySettingAndStatus.setTrailingStop(trailingStop);
+        strategySettingAndStatus.setTakePrice(takePrice);
+        strategySettingAndStatus.setStopPrice(stopPrice);
+        strategySettingAndStatus.setPrice(price);
+
+        strategySettingAndStatus.setFractionalParts(fractionalParts);
+        strategySettingAndStatus.setBuyOrSell(buyOrSell);
+        strategySettingAndStatus.setOnOrOffFP(onOrOffFP);
+        strategySettingAndStatus.setOnOrOffTS(onOrOffTS);
+
+        strategySettingAndStatus.setClassID();
     }
 
 
+    // добавляем торговый объект в коллекцию стратегий
     private void addTheFinishedObjectToTheListOfStrategies() {
+
 
     }
 }

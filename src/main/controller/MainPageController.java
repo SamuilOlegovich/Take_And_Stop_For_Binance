@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.LoadException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -58,7 +57,7 @@ public class MainPageController {
         try { thread.join();
         } catch (InterruptedException e) { e.printStackTrace(); }
 
-        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getListAllCoinPair());
+        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
         listViewInMainPage.setItems(observableList);
 
 
