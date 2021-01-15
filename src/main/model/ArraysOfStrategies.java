@@ -16,4 +16,9 @@ public class ArraysOfStrategies {
     public void addToAllStrategySettingAndStatusList(StrategySettingAndStatus strategySettingAndStatus) {
         allStrategySettingAndStatusList.add(strategySettingAndStatus);
     }
+
+
+    public void replaceStrategy(StrategySettingAndStatus strategySettingAndStatus) {
+
+    }
 }

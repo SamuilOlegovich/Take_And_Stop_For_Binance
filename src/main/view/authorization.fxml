@@ -19,26 +19,30 @@
       </ImageView>
         <AnchorPane layoutY="110.0" prefHeight="290.0" prefWidth="700.0" style="-fx-background-color: #fafafa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
             <children>
-                <PasswordField fx:id="secretKeyField" layoutX="200.0" layoutY="139.0" prefHeight="40.0" prefWidth="400.0" promptText="SECRET KEY" style="-fx-border-color: gray; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="139.0">
+                <PasswordField fx:id="secretKeyField" layoutX="200.0" layoutY="150.0" prefHeight="50.0" prefWidth="400.0" promptText="SECRET KEY" style="-fx-border-color: gray; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="160.0">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </PasswordField>
-                <TextField fx:id="APIKeyField" layoutX="200.0" layoutY="76.0" prefHeight="40.0" prefWidth="400.0" promptText="API KEY" style="-fx-border-color: gray; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="76.0">
+                <TextField fx:id="APIKeyField" layoutX="200.0" layoutY="76.0" prefHeight="50.0" prefWidth="400.0" promptText="API KEY" style="-fx-border-color: gray; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="80.0">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </TextField>
-                <Label layoutX="273.0" layoutY="7.0" prefHeight="62.0" prefWidth="254.0" text="Authorization" textAlignment="CENTER" textFill="#7c005a" AnchorPane.leftAnchor="273.0" AnchorPane.topAnchor="7.0">
+                <Label layoutX="273.0" layoutY="7.0" prefHeight="62.0" prefWidth="254.0" text="Authorization" textAlignment="CENTER" textFill="#7c005a" AnchorPane.leftAnchor="273.0" AnchorPane.topAnchor="10.0">
                     <font>
                         <Font name="System Bold" size="44.0" />
                     </font>
                 </Label>
-                <Button fx:id="enterButton" layoutX="276.0" layoutY="251.0" mnemonicParsing="false" prefHeight="98.0" prefWidth="248.0" style="-fx-background-color: #2E3348 #2E3348; -fx-background-radius: 10;" text="Enter" textFill="#fcfbfa" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="276.0" AnchorPane.rightAnchor="276.0">
-                    <font>
-                        <Font name="Caveat Bold" size="48.0" />
-                    </font>
-                </Button>
+            <AnchorPane layoutX="261.0" layoutY="300.0" prefHeight="80.0" prefWidth="230.0" style="-fx-background-color: #bab6b6 #bab6b6 #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0">
+               <children>
+                      <Button fx:id="enterButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2E3348 #2E3348; -fx-background-radius: 10;" text="Enter" textFill="#fcfbfa" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                          <font>
+                              <Font name="System Bold" size="24.0" />
+                          </font>
+                      </Button>
+               </children>
+            </AnchorPane>
             </children>
         </AnchorPane>
     </children>

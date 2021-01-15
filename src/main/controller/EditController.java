@@ -17,11 +17,10 @@ import main.model.EndPair;
 import javafx.scene.text.Text;
 import main.model.StrategySettingAndStatus;
 import main.model.WedgeLines;
+import org.apache.tools.ant.taskdefs.Replace;
 
 
-
-
-public class SettingPageController {
+public class EditController {
     private StrategySettingAndStatus strategySettingAndStatus;
 
     private String nameStrategy;
@@ -104,29 +103,16 @@ public class SettingPageController {
 
     @FXML
     void initialize() {
-        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
-        listViewInSettingPage.setItems(observableList);
-
-        // установка группы
-        ToggleGroup groupBuyOrSel = new ToggleGroup();
-        buyRadioButton.setToggleGroup(groupBuyOrSel);
-        sellRadioButton.setToggleGroup(groupBuyOrSel);
-        sellRadioButton.setSelected(true);
-
-        ToggleGroup groupOnOrOffFp = new ToggleGroup();
-        onFPRadioButton.setToggleGroup(groupOnOrOffFp);
-        offFPRadioButton.setToggleGroup(groupOnOrOffFp);
-        offFPRadioButton.setSelected(true);
+        // получаем и выводим список торговых пар
+        getAListOfTradingPairs();
+        // получаем объект из которого надо получить все данные
+        getAnObjectAndDataFromIt();
+        // установка группы радио кнопок и т д
+        setGroupsOfRadioButtons();
+        // Вывести все имеющиеся данные в поля
+        displayAllAvailableDataInFields();
 
 
-        ToggleGroup groupOnOrOffTs = new ToggleGroup();
-        onTSRadioButton.setToggleGroup(groupOnOrOffTs);
-        offTSRadioButton.setToggleGroup(groupOnOrOffTs);
-        offTSRadioButton.setSelected(true);
-
-        buyOrSell = 0;
-        onOrOffTS = -1;
-        onOrOffFP = -1;
 
         buyRadioButton.setOnAction(event -> {
             buyOrSell = 1;
@@ -156,7 +142,7 @@ public class SettingPageController {
             collectAndProcessData();
             if (checkIfEverythingIsOk()) {
                 createAndFillAnObject();
-                addTheFinishedObjectToTheListOfStrategies();
+                replaceStrategy();
                 openNewScene("/main/view/main.fxml");
             }
         });
@@ -169,6 +155,52 @@ public class SettingPageController {
             tradingPairField.undo();
             tradingPairField.insertText(0, getSelectedItem());
         });
+    }
+
+
+
+    private void displayAllAvailableDataInFields() {
+        tradingPairField.undo();
+        tradingPairField.insertText(0, getSelectedItem());
+
+        nameStrategyField.undo();
+        nameStrategyField.insertText(0, nameStrategy);
+        tradingPairField.undo();
+        tradingPairField.insertText(0, tradingPair);
+
+        numberOfCoinsField.undo();
+        numberOfCoinsField.insertText(0, numberOfCoins.toString());
+        trailingStopField.undo();
+        trailingStopField.insertText(0, trailingStop.toString());
+        takePriceField.undo();
+        takePriceField.insertText(0, takePrice.toString());
+        stopPriceField.undo();
+        stopPriceField.insertText(0, stopPrice.toString());
+        priceField.undo();
+        priceField.insertText(0, price.toString());
+
+        fractionalPartsField.undo();
+        fractionalPartsField.insertText(0, fractionalParts + "");
+    }
+
+    private void setGroupsOfRadioButtons() {
+        ToggleGroup groupBuyOrSel = new ToggleGroup();
+        buyRadioButton.setToggleGroup(groupBuyOrSel);
+        sellRadioButton.setToggleGroup(groupBuyOrSel);
+        if (buyOrSell == 1) buyRadioButton.setSelected(true);
+        else sellRadioButton.setSelected(true);
+
+        ToggleGroup groupOnOrOffFp = new ToggleGroup();
+        onFPRadioButton.setToggleGroup(groupOnOrOffFp);
+        offFPRadioButton.setToggleGroup(groupOnOrOffFp);
+        if (onOrOffFP == 1) onFPRadioButton.setSelected(true);
+        else offFPRadioButton.setSelected(true);
+
+        ToggleGroup groupOnOrOffTs = new ToggleGroup();
+        onTSRadioButton.setToggleGroup(groupOnOrOffTs);
+        offTSRadioButton.setToggleGroup(groupOnOrOffTs);
+        if (onOrOffTS == 1) onTSRadioButton.setSelected(true);
+        else offTSRadioButton.setSelected(true);
     }
 
 
@@ -337,9 +369,15 @@ public class SettingPageController {
 
 
 
+    private void getAListOfTradingPairs() {
+        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
+        listViewInSettingPage.setItems(observableList);
+    }
+
+
+
     // создаем и заполняем обект стратегии
     private void createAndFillAnObject() {
-        strategySettingAndStatus = new StrategySettingAndStatus();
         strategySettingAndStatus.setNameStrategy(nameStrategy);
         strategySettingAndStatus.setTradingPair(tradingPair);
 
@@ -358,9 +396,30 @@ public class SettingPageController {
     }
 
 
-    // добавляем торговый объект в коллекцию стратегий
-    private void addTheFinishedObjectToTheListOfStrategies() {
-        Agent.getArraysOfStrategies().addToAllStrategySettingAndStatusList(strategySettingAndStatus);
+    // Заменить стратегию
+    private void replaceStrategy() {
+        Agent.getArraysOfStrategies().replaceStrategy(strategySettingAndStatus);
+        Agent.setArraysOfStrategies(null);
+    }
+
+
+
+    // получить объект и данные из него
+    private void getAnObjectAndDataFromIt() {
+        strategySettingAndStatus = Agent.getStrategySettingAndStatus();
+
+        nameStrategy = strategySettingAndStatus.getNameStrategy();
+        tradingPair = strategySettingAndStatus.getTradingPair();
+
+        numberOfCoins = strategySettingAndStatus.getNumberOfCoins();
+        trailingStop = strategySettingAndStatus.getTrailingStop();
+        takePrice = strategySettingAndStatus.getTakePrice();
+        stopPrice = strategySettingAndStatus.getStopPrice();
+        price  = strategySettingAndStatus.getPrice();
+
+        fractionalParts = strategySettingAndStatus.getFractionalParts();
+        buyOrSell = strategySettingAndStatus.getBuyOrSell();
+        onOrOffFP = strategySettingAndStatus.getOnOrOffFP();
+        onOrOffTS = strategySettingAndStatus.getOnOrOffTS();
     }
 }
-
