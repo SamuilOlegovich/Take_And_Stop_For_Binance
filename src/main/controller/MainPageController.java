@@ -87,7 +87,7 @@ public class MainPageController {
         });
 
         addButton.setOnAction(event -> {
-            openNewScene("/main/view/setting_page.fxml");
+            openNewScene("/main/view/setting.fxml");
         });
 
         deleteButton.setOnAction(event -> {

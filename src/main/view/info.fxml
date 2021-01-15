@@ -14,16 +14,16 @@
                 <Image url="@../assets/bi_1.png" />
             </image>
         </ImageView>
-        <AnchorPane fx:id="editButton" layoutY="110.0" prefHeight="290.0" prefWidth="700.0" style="-fx-background-color: #e3e1e1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+        <AnchorPane layoutY="110.0" prefHeight="290.0" prefWidth="700.0" style="-fx-background-color: #e3e1e1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
             <children>
                 <AnchorPane layoutX="579.0" layoutY="496.0" prefHeight="80.0" prefWidth="445.0" style="-fx-background-color: #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                     <children>
-                        <Button fx:id="okButton" layoutX="384.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #FFCA00#FFCA00; -fx-background-radius: 10;" text="EDIT" textFill="#fcfbfa" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                        <Button id="editButton" fx:id="editButton" layoutX="384.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #FFCA00#FFCA00; -fx-background-radius: 10;" text="EDIT" textFill="#fcfbfa" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Button>
-                        <Button fx:id="backButton" layoutX="69.0" layoutY="227.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #0b2440; -fx-background-radius: 10;" text="BACK" textFill="#fcfbfa" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="15.0">
+                        <Button id="backButton" fx:id="backButton" layoutX="69.0" layoutY="227.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #0b2440; -fx-background-radius: 10;" text="BACK" textFill="#fcfbfa" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="15.0">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>

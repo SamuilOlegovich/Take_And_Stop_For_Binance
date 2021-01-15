@@ -406,7 +406,7 @@ public class EditController {
 
     // получить объект и данные из него
     private void getAnObjectAndDataFromIt() {
-        strategySettingAndStatus = Agent.getStrategySettingAndStatus();
+        strategySettingAndStatus = Agent.getArraysOfStrategies().getStrategySettingAndStatus();
 
         nameStrategy = strategySettingAndStatus.getNameStrategy();
         tradingPair = strategySettingAndStatus.getTradingPair();

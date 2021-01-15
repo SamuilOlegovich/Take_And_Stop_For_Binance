@@ -6,7 +6,6 @@ import main.model.binance.datatype.BinanceEventDepthUpdate;
 import java.util.ArrayList;
 
 public class Agent {
-    private static StrategySettingAndStatus strategySettingAndStatus;
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
     private static ArraysOfStrategies arraysOfStrategies;
     private static BinanceAPI binanceAPI;
@@ -86,11 +85,4 @@ public class Agent {
         Agent.arraysOfStrategies = arraysOfStrategies;
     }
 
-    public static StrategySettingAndStatus getStrategySettingAndStatus() {
-        return strategySettingAndStatus;
-    }
-
-    public static void setStrategySettingAndStatus(StrategySettingAndStatus strategySettingAndStatus) {
-        Agent.strategySettingAndStatus = strategySettingAndStatus;
-    }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class ArraysOfStrategies {
     private ArrayList<StrategySettingAndStatus> allStrategySettingAndStatusList;
+    private StrategySettingAndStatus strategySettingAndStatus;
 
 
 
@@ -20,5 +21,14 @@ public class ArraysOfStrategies {
 
     public void replaceStrategy(StrategySettingAndStatus strategySettingAndStatus) {
 
+    }
+
+
+    public StrategySettingAndStatus getStrategySettingAndStatus() {
+        return strategySettingAndStatus;
+    }
+
+    public void setStrategySettingAndStatus(StrategySettingAndStatus strategySettingAndStatus) {
+        this.strategySettingAndStatus = strategySettingAndStatus;
     }
 }
