@@ -1,6 +1,5 @@
 package main.model;
 
-import main.model.binance.API;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 
@@ -22,7 +21,7 @@ public class GetUpToDateDataOnPairs implements Runnable {
     private void get() {
         try {
             // считываем актуальные существующие пары на данный момент на бирже
-            Agent.setBinanceAPI(new BinanceAPI(API.getApiKey(), API.getSecretKey()));
+            Agent.setBinanceAPI(new BinanceAPI(Agent.getApi().getAPI_KEY(), Agent.getApi().getSECRET_KEY()));
             // Получаем ключь к веб сокету
             Agent.setKeyForWebSocket(Agent.getBinanceAPI().startUserDataStream());
             TreeSet<String> treeSet = new TreeSet<>(Agent.getBinanceAPI().allBookTickersMap().keySet());

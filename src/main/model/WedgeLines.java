@@ -7,6 +7,9 @@ public class WedgeLines {
     public static String s3 = "Все стратегии";
     public static String s4 = "All right!\n I am adding a new trading strategy ...";
     public static String s5 = "Все хорошо!\n Добавляю новую торговую стратегию...";
+    public static String s6 = "The API or secret keys were entered incorrectly. Rre-enter. Be careful.";
+    public static String s7 = "API или секретные ключи введены не правильно. Повторите ввод. Будьте внимательней.";
+
 
 
 

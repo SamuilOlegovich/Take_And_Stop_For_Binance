@@ -17,7 +17,6 @@ import main.model.EndPair;
 import javafx.scene.text.Text;
 import main.model.StrategySettingAndStatus;
 import main.model.WedgeLines;
-import org.apache.tools.ant.taskdefs.Replace;
 
 
 public class EditController {
@@ -381,7 +380,7 @@ public class EditController {
         strategySettingAndStatus.setNameStrategy(nameStrategy);
         strategySettingAndStatus.setTradingPair(tradingPair);
 
-        strategySettingAndStatus.setNumberOfCoins(numberOfCoins);
+        strategySettingAndStatus.setAmountOfCoins(numberOfCoins);
         strategySettingAndStatus.setTrailingStop(trailingStop);
         strategySettingAndStatus.setTakePrice(takePrice);
         strategySettingAndStatus.setStopPrice(stopPrice);
@@ -399,7 +398,6 @@ public class EditController {
     // Заменить стратегию
     private void replaceStrategy() {
         Agent.getArraysOfStrategies().replaceStrategy(strategySettingAndStatus);
-        Agent.setArraysOfStrategies(null);
     }
 
 
@@ -411,7 +409,7 @@ public class EditController {
         nameStrategy = strategySettingAndStatus.getNameStrategy();
         tradingPair = strategySettingAndStatus.getTradingPair();
 
-        numberOfCoins = strategySettingAndStatus.getNumberOfCoins();
+        numberOfCoins = strategySettingAndStatus.getAmountOfCoins();
         trailingStop = strategySettingAndStatus.getTrailingStop();
         takePrice = strategySettingAndStatus.getTakePrice();
         stopPrice = strategySettingAndStatus.getStopPrice();

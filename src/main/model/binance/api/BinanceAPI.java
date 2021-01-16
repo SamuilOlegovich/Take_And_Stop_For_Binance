@@ -12,7 +12,7 @@ import com.google.common.escape.Escaper;
 import com.google.common.net.UrlEscapers;
 import lombok.Data;
 import lombok.Getter;
-import main.model.binance.API;
+import main.model.Agent;
 import main.model.binance.datatype.*;
 import main.model.binance.websocket.*;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
@@ -100,8 +100,8 @@ public class BinanceAPI {
         this.apiKey = config.getVariable("BINANCE_API_KEY");
         // если нет файла конфигураций (пропертис) то берем данные апи и ключей из класса API
         if (apiKey.length() == secretKey.length()) {
-            this.secretKey = API.getSecretKey();
-            this.apiKey = API.getApiKey();
+            this.secretKey = Agent.getApi().getSECRET_KEY();
+            this.apiKey = Agent.getApi().getAPI_KEY();
         }
     }
 

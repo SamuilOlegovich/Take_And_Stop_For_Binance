@@ -3,8 +3,11 @@ package main.model;
 public class StrategySettingAndStatus {
     private String nameStrategy;
     private String tradingPair;
+    private String classID;
 
-    private Double numberOfCoins;
+    // заполняется только после совершения основной сделки если есть указаны стопы и тейки
+    private Double buyOrSellCoins;
+    private Double amountOfCoins;
     private Double trailingStop;
     private Double takePrice;
     private Double stopPrice;
@@ -14,12 +17,15 @@ public class StrategySettingAndStatus {
     private int buyOrSell;
     private int onOrOffFP;
     private int onOrOffTS;
+    private int works;
 
-    private Long classID;
+    private Position position;
 
 
 
     public StrategySettingAndStatus() {
+        this.buyOrSellCoins = 0.0;
+        this.works = 0;
     }
 
 
@@ -40,12 +46,12 @@ public class StrategySettingAndStatus {
         this.tradingPair = tradingPair;
     }
 
-    public Double getNumberOfCoins() {
-        return numberOfCoins;
+    public Double getAmountOfCoins() {
+        return amountOfCoins;
     }
 
-    public void setNumberOfCoins(Double numberOfCoins) {
-        this.numberOfCoins = numberOfCoins;
+    public void setAmountOfCoins(Double amountOfCoins) {
+        this.amountOfCoins = amountOfCoins;
     }
 
     public Double getTrailingStop() {
@@ -113,5 +119,22 @@ public class StrategySettingAndStatus {
     }
 
     public void setClassID() {
+        classID = "id:" + hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return  (nameStrategy.hashCode()
+                + tradingPair.hashCode()
+                + amountOfCoins.hashCode()
+                + trailingStop.hashCode()
+                + takePrice.hashCode()
+                + stopPrice.hashCode()
+                + price.hashCode()
+                + fractionalParts
+                + buyOrSell
+                + onOrOffFP
+                + onOrOffTS)
+                * 39;
     }
 }

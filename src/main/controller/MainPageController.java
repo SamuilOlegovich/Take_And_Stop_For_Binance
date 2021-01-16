@@ -2,6 +2,10 @@ package main.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -15,7 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import main.model.Agent;
 import main.model.GetUpToDateDataOnPairs;
-
+import javafx.scene.text.Text;
 
 
 public class MainPageController {
@@ -25,6 +29,9 @@ public class MainPageController {
 
     @FXML
     private URL location;
+
+    @FXML
+    private Text timeText;
 
     @FXML
     private ListView<String> listViewInMainPage;
@@ -53,18 +60,27 @@ public class MainPageController {
     @FXML
     void initialize() {
         Thread thread = new Thread(new GetUpToDateDataOnPairs());
+        Thread clock = new Thread(new Clock());
         thread.start();
+        clock.start();
         try { thread.join();
         } catch (InterruptedException e) { e.printStackTrace(); }
 
         ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
         listViewInMainPage.setItems(observableList);
+        // позволяет выбирать несколько элементов из списка
+//        listViewInMainPage.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        // двойное нажатие мыши - переходим на страницу детальной информации
+        listViewInMainPage.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
+                openNewScene("/main/view/info.fxml");
+            }
+        });
 
         startAllButton.setOnAction(event -> {
-            if (Agent.isGetUpToDateDataOnPairs() == true) {
-
-            } else {
+            if (Agent.isGetUpToDateDataOnPairs() == false) {
                 openNewScene("/main/view/error_api_or_secret_key.fxml");
             }
         });
@@ -73,17 +89,23 @@ public class MainPageController {
 
         });
 
+        timeText.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                openNewScene("/main/view/time.fxml");
+            }
+        });
+
         startButton.setOnAction(event -> {
-            String keySymbol = getSelectedItem();
+            Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
         });
 
         editButton.setOnAction(event -> {
-            String keySymbol = getSelectedItem();
-
+            Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
+            openNewScene("/main/view/edit.fxml");
         });
 
         stopButton.setOnAction(event -> {
-            String keySymbol = getSelectedItem();
+            Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
         });
 
         addButton.setOnAction(event -> {
@@ -91,7 +113,7 @@ public class MainPageController {
         });
 
         deleteButton.setOnAction(event -> {
-            String keySymbol = getSelectedItem();
+            Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
         });
     }
 
@@ -119,11 +141,31 @@ public class MainPageController {
         stage.showAndWait();
     }
 
-
-
     private String getSelectedItem() {
-        return listViewInMainPage.getSelectionModel().getSelectedItems().toString()
-                    .replaceAll("\\[", "").replaceAll("]", "");
+        return listViewInMainPage.getSelectionModel().getSelectedItems().toString();
+    }
+
+    private class Clock implements Runnable {
+        DateFormat dateFormat;
+
+        @Override
+        public void run() {
+            dateFormat = new SimpleDateFormat("EEEE HH:mm:ss", Locale.ENGLISH);
+            while (true) {
+            timeText.setText(getDate());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        private String getDate() {
+            Date date = new Date();
+            dateFormat.format(date);
+            return dateFormat.format(date);
+        }
     }
 
 }

@@ -7,8 +7,12 @@ import java.util.ArrayList;
 
 public class Agent {
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
+    private static ReadKeysAndSettings readKeysAndSettings;
+    private static FilesAndPathCreator filesAndPathCreator;
     private static ArraysOfStrategies arraysOfStrategies;
+    private static WriterAndReadFile writerAndReadFile;
     private static BinanceAPI binanceAPI;
+    private static API api;
 
     private static ArrayList<String> allCoinPairList;
 
@@ -17,6 +21,8 @@ public class Agent {
     private static boolean yesOrNotAPIKey;
 
     private static String keyForWebSocket;
+
+    private static int DateDifference = 0;
 
 
     public static BinanceEventDepthUpdate getBinanceEventDepthUpdate() {
@@ -85,4 +91,43 @@ public class Agent {
         Agent.arraysOfStrategies = arraysOfStrategies;
     }
 
+    public static FilesAndPathCreator getFilesAndPathCreator() {
+        return filesAndPathCreator;
+    }
+
+    public static void setFilesAndPathCreator(FilesAndPathCreator filesAndPathCreator) {
+        Agent.filesAndPathCreator = filesAndPathCreator;
+    }
+
+    public static ReadKeysAndSettings getReadKeysAndSettings() {
+        return readKeysAndSettings;
+    }
+
+    public static void setReadKeysAndSettings(ReadKeysAndSettings readKeysAndSettings) {
+        Agent.readKeysAndSettings = readKeysAndSettings;
+    }
+
+    public static int getDateDifference() {
+        return DateDifference;
+    }
+
+    public static void setDateDifference(int dateDifference) {
+        DateDifference = dateDifference;
+    }
+
+    public static WriterAndReadFile getWriterAndReadFile() {
+        return writerAndReadFile;
+    }
+
+    public static void setWriterAndReadFile(WriterAndReadFile writerAndReadFile) {
+        Agent.writerAndReadFile = writerAndReadFile;
+    }
+
+    public static API getApi() {
+        return api;
+    }
+
+    public static void setApi(API api) {
+        Agent.api = api;
+    }
 }

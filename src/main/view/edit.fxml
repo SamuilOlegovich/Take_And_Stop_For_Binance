@@ -64,7 +64,7 @@
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </RadioButton>
-                <TextField id="numberOfCoinsField" fx:id="numberOfCoinsField" layoutX="290.0" layoutY="190.0" prefHeight="50.0" prefWidth="300.0" promptText="Number of coins -&gt; 2.21" style="-fx-background-radius: 10;" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="190.0">
+                <TextField id="numberOfCoinsField" fx:id="numberOfCoinsField" layoutX="290.0" layoutY="190.0" prefHeight="50.0" prefWidth="300.0" promptText="Amount of coins -&gt; 2.21" style="-fx-background-radius: 10;" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="190.0">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>

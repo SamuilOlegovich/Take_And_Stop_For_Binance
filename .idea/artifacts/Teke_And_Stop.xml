@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="javafx" name="Teke_And_Stop">
-    <output-path>$PROJECT_DIR$/out/artifacts/Teke_And_Stop</output-path>
-    <root id="root" />
-  </artifact>
-</component>

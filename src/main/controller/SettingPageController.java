@@ -104,29 +104,11 @@ public class SettingPageController {
 
     @FXML
     void initialize() {
-        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
-        listViewInSettingPage.setItems(observableList);
-
+        // получаем и выводим список торговых пар
+        getAListOfTradingPairs();
         // установка группы
-        ToggleGroup groupBuyOrSel = new ToggleGroup();
-        buyRadioButton.setToggleGroup(groupBuyOrSel);
-        sellRadioButton.setToggleGroup(groupBuyOrSel);
-        sellRadioButton.setSelected(true);
-
-        ToggleGroup groupOnOrOffFp = new ToggleGroup();
-        onFPRadioButton.setToggleGroup(groupOnOrOffFp);
-        offFPRadioButton.setToggleGroup(groupOnOrOffFp);
-        offFPRadioButton.setSelected(true);
-
-
-        ToggleGroup groupOnOrOffTs = new ToggleGroup();
-        onTSRadioButton.setToggleGroup(groupOnOrOffTs);
-        offTSRadioButton.setToggleGroup(groupOnOrOffTs);
-        offTSRadioButton.setSelected(true);
-
+        setGroupsOfRadioButtons();
         buyOrSell = 0;
-        onOrOffTS = -1;
-        onOrOffFP = -1;
 
         buyRadioButton.setOnAction(event -> {
             buyOrSell = 1;
@@ -171,6 +153,11 @@ public class SettingPageController {
         });
     }
 
+    private void getAListOfTradingPairs() {
+        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
+        listViewInSettingPage.setItems(observableList);
+    }
+
 
     private void openNewScene(String window) {
         // при нажатии на кнопку мы прячем окно
@@ -192,6 +179,23 @@ public class SettingPageController {
         Stage stage = new Stage();
         stage.setScene(new Scene(parent));
         stage.showAndWait();
+    }
+
+
+    private void setGroupsOfRadioButtons() {
+        ToggleGroup groupBuyOrSel = new ToggleGroup();
+        buyRadioButton.setToggleGroup(groupBuyOrSel);
+        sellRadioButton.setToggleGroup(groupBuyOrSel);
+
+        ToggleGroup groupOnOrOffFp = new ToggleGroup();
+        onFPRadioButton.setToggleGroup(groupOnOrOffFp);
+        offFPRadioButton.setToggleGroup(groupOnOrOffFp);
+        offFPRadioButton.setSelected(true);
+
+        ToggleGroup groupOnOrOffTs = new ToggleGroup();
+        onTSRadioButton.setToggleGroup(groupOnOrOffTs);
+        offTSRadioButton.setToggleGroup(groupOnOrOffTs);
+        offTSRadioButton.setSelected(true);
     }
 
 
@@ -343,7 +347,7 @@ public class SettingPageController {
         strategySettingAndStatus.setNameStrategy(nameStrategy);
         strategySettingAndStatus.setTradingPair(tradingPair);
 
-        strategySettingAndStatus.setNumberOfCoins(numberOfCoins);
+        strategySettingAndStatus.setAmountOfCoins(numberOfCoins);
         strategySettingAndStatus.setTrailingStop(trailingStop);
         strategySettingAndStatus.setTakePrice(takePrice);
         strategySettingAndStatus.setStopPrice(stopPrice);
@@ -360,7 +364,7 @@ public class SettingPageController {
 
     // добавляем торговый объект в коллекцию стратегий
     private void addTheFinishedObjectToTheListOfStrategies() {
-        Agent.getArraysOfStrategies().addToAllStrategySettingAndStatusList(strategySettingAndStatus);
+        Agent.getArraysOfStrategies().addToAllStrategyList(strategySettingAndStatus);
     }
 }
 

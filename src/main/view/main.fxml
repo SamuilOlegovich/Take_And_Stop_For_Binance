@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #1c1c1c;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.MainPageController">
     <children>
@@ -17,7 +18,7 @@
         </ImageView>
         <AnchorPane layoutY="110.0" prefHeight="290.0" prefWidth="700.0" style="-fx-background-color: #e3e1e1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
             <children>
-                <ListView id="listViewInMainPage" fx:id="listViewInMainPage" layoutX="277.0" prefHeight="463.0" prefWidth="1166.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="17.0" />
+                <ListView id="listViewInMainPage" fx:id="listViewInMainPage" layoutX="277.0" prefHeight="463.0" prefWidth="1166.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="80.0" />
                 <AnchorPane layoutX="920.0" layoutY="17.0" prefHeight="80.0" prefWidth="660.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                     <children>
                         <Button fx:id="editButton" layoutX="329.0" layoutY="494.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #FFCA00#FFCA00; -fx-background-radius: 10;" text="EDIT" textAlignment="CENTER" textFill="#fcfbfa" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="15.0">
@@ -37,6 +38,15 @@
                         </Button>
                     </children>
                 </AnchorPane>
+            <AnchorPane layoutX="872.0" layoutY="34.0" prefHeight="51.0" prefWidth="267.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="15.0">
+               <children>
+                  <Text id="timeText" fx:id="timeText" fill="#0b2440" layoutX="15.0" layoutY="34.169921875" strokeType="OUTSIDE" strokeWidth="0.0" text="Frayday 17 23:35:00" textAlignment="CENTER" wrappingWidth="236.41015625" AnchorPane.bottomAnchor="11.556640625" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.58984375" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
             </children>
         </AnchorPane>
       <AnchorPane layoutX="930.0" layoutY="27.0" prefHeight="80.0" prefWidth="445.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">

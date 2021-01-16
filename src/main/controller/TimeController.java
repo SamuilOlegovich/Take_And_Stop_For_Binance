@@ -18,16 +18,14 @@ import main.model.WedgeLines;
 import main.animations.*;
 
 
-public class AuthorizationController {
+
+public class TimeController {
 
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
-
-    @FXML
-    private PasswordField secretKeyField;
 
     @FXML
     private TextField APIKeyField;
@@ -41,26 +39,24 @@ public class AuthorizationController {
     @FXML
     void initialize() {
         enterButton.setOnAction(event -> {
-            String APIKey = APIKeyField.getText().trim();
-            String secretKey = secretKeyField.getText().trim();
-
-            if ((!secretKey.equals("") && !APIKey.equals(""))
-                    && (secretKey.length() > 10 && APIKey.length() > 10)) {
-                Agent.getApi().setSECRET_KEY(secretKey);
-                Agent.getApi().setAPI_KEY(APIKey);
-                Agent.getReadKeysAndSettings().writeNewKeys();
-                openNewScene("/main/view/main.fxml");
-            } else {
-                // потрусить полями если что-то не верно
-                Shake shakePassword = new Shake(secretKeyField);
-                Shake shakeLogin = new Shake(APIKeyField);
-                shakePassword.playAnim();
-                shakeLogin.playAnim();
-
-                textField.setText(WedgeLines.s6);
-                Agent.getReadKeysAndSettings().enterPatternForKeys();
+            String timeZone = APIKeyField.getText().trim();
+            try {
+                int time = Integer.parseInt(timeZone);
+                if (time > -12 && time < 12) {
+                    Agent.setDateDifference(time);
+                    openNewScene("/main/view/main.fxml");
+                } else { wrongInput(); }
+            } catch (Exception e) {
+                wrongInput();
             }
         });
+    }
+
+    private void wrongInput() {
+        // потрусить полями если что-то не верно
+        Shake shakeLogin = new Shake(APIKeyField);
+        shakeLogin.playAnim();
+        textField.setText("Incorrect input format");
     }
 
 
