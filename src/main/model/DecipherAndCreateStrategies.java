@@ -9,6 +9,11 @@ public class DecipherAndCreateStrategies {
         this.listStrategy = new ArrayList<>(inList);
     }
 
+
+    private void parseAndCreateStrategyObjects() {
+
+    }
+
     /*SETTINGS
         DATE_DIFFERENCE===0
         STATUS

@@ -15,14 +15,14 @@ import javafx.stage.Stage;
 import main.model.Agent;
 import main.model.EndPair;
 import javafx.scene.text.Text;
-import main.model.StrategySettingAndStatus;
+import main.model.StrategyObject;
 import main.model.Lines;
 
 
 
 
 public class SettingPageController {
-    private StrategySettingAndStatus strategySettingAndStatus;
+    private StrategyObject strategyObject;
 
     private String nameStrategy;
     private String tradingPair;
@@ -343,28 +343,28 @@ public class SettingPageController {
 
     // создаем и заполняем обект стратегии
     private void createAndFillAnObject() {
-        strategySettingAndStatus = new StrategySettingAndStatus();
-        strategySettingAndStatus.setNameStrategy(nameStrategy);
-        strategySettingAndStatus.setTradingPair(tradingPair);
+        strategyObject = new StrategyObject();
+        strategyObject.setNameStrategy(nameStrategy);
+        strategyObject.setTradingPair(tradingPair);
 
-        strategySettingAndStatus.setAmountOfCoins(numberOfCoins);
-        strategySettingAndStatus.setTrailingStop(trailingStop);
-        strategySettingAndStatus.setTakePrice(takePrice);
-        strategySettingAndStatus.setStopPrice(stopPrice);
-        strategySettingAndStatus.setPrice(price);
+        strategyObject.setAmountOfCoins(numberOfCoins);
+        strategyObject.setTrailingStop(trailingStop);
+        strategyObject.setTakePrice(takePrice);
+        strategyObject.setStopPrice(stopPrice);
+        strategyObject.setPrice(price);
 
-        strategySettingAndStatus.setFractionalParts(fractionalParts);
-        strategySettingAndStatus.setBuyOrSell(buyOrSell);
-        strategySettingAndStatus.setOnOrOffFP(onOrOffFP);
-        strategySettingAndStatus.setOnOrOffTS(onOrOffTS);
+        strategyObject.setFractionalParts(fractionalParts);
+        strategyObject.setBuyOrSell(buyOrSell);
+        strategyObject.setOnOrOffFP(onOrOffFP);
+        strategyObject.setOnOrOffTS(onOrOffTS);
 
-        strategySettingAndStatus.setClassID();
+        strategyObject.setClassID();
     }
 
 
     // добавляем торговый объект в коллекцию стратегий
     private void addTheFinishedObjectToTheListOfStrategies() {
-        Agent.getArraysOfStrategies().addToAllStrategyList(strategySettingAndStatus);
+        Agent.getArraysOfStrategies().addToAllStrategyList(strategyObject);
     }
 }
 

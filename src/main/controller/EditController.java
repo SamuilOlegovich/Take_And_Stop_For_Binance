@@ -15,12 +15,12 @@ import javafx.stage.Stage;
 import main.model.Agent;
 import main.model.EndPair;
 import javafx.scene.text.Text;
-import main.model.StrategySettingAndStatus;
+import main.model.StrategyObject;
 import main.model.Lines;
 
 
 public class EditController {
-    private StrategySettingAndStatus strategySettingAndStatus;
+    private StrategyObject strategyObject;
 
     private String nameStrategy;
     private String tradingPair;
@@ -377,47 +377,47 @@ public class EditController {
 
     // создаем и заполняем обект стратегии
     private void createAndFillAnObject() {
-        strategySettingAndStatus.setNameStrategy(nameStrategy);
-        strategySettingAndStatus.setTradingPair(tradingPair);
+        strategyObject.setNameStrategy(nameStrategy);
+        strategyObject.setTradingPair(tradingPair);
 
-        strategySettingAndStatus.setAmountOfCoins(numberOfCoins);
-        strategySettingAndStatus.setTrailingStop(trailingStop);
-        strategySettingAndStatus.setTakePrice(takePrice);
-        strategySettingAndStatus.setStopPrice(stopPrice);
-        strategySettingAndStatus.setPrice(price);
+        strategyObject.setAmountOfCoins(numberOfCoins);
+        strategyObject.setTrailingStop(trailingStop);
+        strategyObject.setTakePrice(takePrice);
+        strategyObject.setStopPrice(stopPrice);
+        strategyObject.setPrice(price);
 
-        strategySettingAndStatus.setFractionalParts(fractionalParts);
-        strategySettingAndStatus.setBuyOrSell(buyOrSell);
-        strategySettingAndStatus.setOnOrOffFP(onOrOffFP);
-        strategySettingAndStatus.setOnOrOffTS(onOrOffTS);
+        strategyObject.setFractionalParts(fractionalParts);
+        strategyObject.setBuyOrSell(buyOrSell);
+        strategyObject.setOnOrOffFP(onOrOffFP);
+        strategyObject.setOnOrOffTS(onOrOffTS);
 
-        strategySettingAndStatus.setClassID();
+        strategyObject.setClassID();
     }
 
 
     // Заменить стратегию
     private void replaceStrategy() {
-        Agent.getArraysOfStrategies().replaceStrategy(strategySettingAndStatus);
+        Agent.getArraysOfStrategies().replaceStrategy(strategyObject);
     }
 
 
 
     // получить объект и данные из него
     private void getAnObjectAndDataFromIt() {
-        strategySettingAndStatus = Agent.getArraysOfStrategies().getStrategySettingAndStatus();
+        strategyObject = Agent.getArraysOfStrategies().getStrategySettingAndStatus();
 
-        nameStrategy = strategySettingAndStatus.getNameStrategy();
-        tradingPair = strategySettingAndStatus.getTradingPair();
+        nameStrategy = strategyObject.getNameStrategy();
+        tradingPair = strategyObject.getTradingPair();
 
-        numberOfCoins = strategySettingAndStatus.getAmountOfCoins();
-        trailingStop = strategySettingAndStatus.getTrailingStop();
-        takePrice = strategySettingAndStatus.getTakePrice();
-        stopPrice = strategySettingAndStatus.getStopPrice();
-        price  = strategySettingAndStatus.getPrice();
+        numberOfCoins = strategyObject.getAmountOfCoins();
+        trailingStop = strategyObject.getTrailingStop();
+        takePrice = strategyObject.getTakePrice();
+        stopPrice = strategyObject.getStopPrice();
+        price  = strategyObject.getPrice();
 
-        fractionalParts = strategySettingAndStatus.getFractionalParts();
-        buyOrSell = strategySettingAndStatus.getBuyOrSell();
-        onOrOffFP = strategySettingAndStatus.getOnOrOffFP();
-        onOrOffTS = strategySettingAndStatus.getOnOrOffTS();
+        fractionalParts = strategyObject.getFractionalParts();
+        buyOrSell = strategyObject.getBuyOrSell();
+        onOrOffFP = strategyObject.getOnOrOffFP();
+        onOrOffTS = strategyObject.getOnOrOffTS();
     }
 }

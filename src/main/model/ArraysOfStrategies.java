@@ -3,10 +3,10 @@ package main.model;
 import java.util.ArrayList;
 
 public class ArraysOfStrategies {
-    private ArrayList<StrategySettingAndStatus> stoppedStrategyList;
-    private ArrayList<StrategySettingAndStatus> tradedStrategyList;
+    private ArrayList<StrategyObject> stoppedStrategyList;
+    private ArrayList<StrategyObject> tradedStrategyList;
 
-    private StrategySettingAndStatus strategySettingAndStatus;
+    private StrategyObject strategyObject;
 
 
 
@@ -17,25 +17,25 @@ public class ArraysOfStrategies {
 
 
 
-    public void addToAllStrategyList(StrategySettingAndStatus in) {
+    public void addToAllStrategyList(StrategyObject in) {
         // в зависимости от объекта добавим его в тот или иной лист
     }
 
 
-    public void replaceStrategy(StrategySettingAndStatus in) {
-        // находит по стратегие - strategySettingAndStatus - удаляем е и вставляем новую
+    public void replaceStrategy(StrategyObject in) {
+        // находит по стратегие - strategyObject - удаляем е и вставляем новую
         // для новой будет новый айди - его находим и все ее обслуживание переводим теперь на него
         // это делаем везде где она может быть
 
     }
 
 
-    public StrategySettingAndStatus getStrategySettingAndStatus() {
-        return strategySettingAndStatus;
+    public StrategyObject getStrategySettingAndStatus() {
+        return strategyObject;
     }
 
-//    public void setStrategySettingAndStatus(StrategySettingAndStatus strategySettingAndStatus) {
-//        this.strategySettingAndStatus = strategySettingAndStatus;
+//    public void setStrategySettingAndStatus(StrategyObject strategyObject) {
+//        this.strategyObject = strategyObject;
 //    }
 
     // найти стратегию
@@ -49,11 +49,11 @@ public class ArraysOfStrategies {
         // разбираем строку и по основным данным находим стратегию и удаляем ее отовсюду
     }
 
-    public ArrayList<StrategySettingAndStatus> getStoppedStrategyList() {
+    public ArrayList<StrategyObject> getStoppedStrategyList() {
         return stoppedStrategyList;
     }
 
-    public ArrayList<StrategySettingAndStatus> getTradedStrategyList() {
+    public ArrayList<StrategyObject> getTradedStrategyList() {
         return tradedStrategyList;
     }
 }

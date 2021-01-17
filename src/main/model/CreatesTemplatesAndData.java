@@ -2,6 +2,8 @@ package main.model;
 
 import java.util.ArrayList;
 
+
+
 public class CreatesTemplatesAndData {
     private ArraysOfStrategies arraysOfStrategies;
 
@@ -62,12 +64,12 @@ public class CreatesTemplatesAndData {
 
 
     public String getRealSettingsAndStates() {
-        ArrayList<StrategySettingAndStatus> stoppedStrategyList = arraysOfStrategies.getStoppedStrategyList();
-        ArrayList<StrategySettingAndStatus> tradedStrategyList = arraysOfStrategies.getTradedStrategyList();
+        ArrayList<StrategyObject> stoppedStrategyList = arraysOfStrategies.getStoppedStrategyList();
+        ArrayList<StrategyObject> tradedStrategyList = arraysOfStrategies.getTradedStrategyList();
         StringBuilder sB = new StringBuilder(getStringPatternForSettingsAndStates());
         sB.delete(sB.length() - 4, sB.length());
         sB.append(Enums.NEXT).append(Lines.newline);
-        for (StrategySettingAndStatus s : stoppedStrategyList) {
+        for (StrategyObject s : stoppedStrategyList) {
             sB.append(Enums.ID).append(Lines.delimiter).append(s.getClassID()).append(Lines.newline);
             sB.append(Enums.POSITION).append(Lines.delimiter).append(s.getPosition()).append(Lines.newline);
             sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks()).append(Lines.newline);
@@ -85,7 +87,7 @@ public class CreatesTemplatesAndData {
             sB.append(Enums.NAME_STRATEGY).append(Lines.delimiter).append(s.getNameStrategy()).append(Lines.newline);
             sB.append(Enums.NEXT).append(Lines.newline);
         }
-        for (StrategySettingAndStatus s : tradedStrategyList) {
+        for (StrategyObject s : tradedStrategyList) {
             sB.append(Enums.ID).append(Lines.delimiter).append(s.getClassID()).append(Lines.newline);
             sB.append(Enums.POSITION).append(Lines.delimiter).append(s.getPosition()).append(Lines.newline);
             sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks()).append(Lines.newline);

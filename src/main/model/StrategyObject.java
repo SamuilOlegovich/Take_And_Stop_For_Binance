@@ -1,6 +1,6 @@
 package main.model;
 
-public class StrategySettingAndStatus {
+public class StrategyObject {
     private String nameStrategy;
     private String tradingPair;
     private String classID;
@@ -23,7 +23,7 @@ public class StrategySettingAndStatus {
 
 
 
-    public StrategySettingAndStatus() {
+    public StrategyObject() {
         this.buyOrSellCoins = 0.0;
         this.works = 0;
     }

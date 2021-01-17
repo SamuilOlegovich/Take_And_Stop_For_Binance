@@ -5,9 +5,14 @@ import java.util.ArrayList;
 public class DecryptAndCustomize {
     private ArrayList<String> listSettings;
 
+
+
     public DecryptAndCustomize(ArrayList<String> inList) {
         this.listSettings = new ArrayList<>(inList);
+        parseAndSetting();
     }
+
+
 
     private void parseAndSetting() {
         for (String s : listSettings) {
