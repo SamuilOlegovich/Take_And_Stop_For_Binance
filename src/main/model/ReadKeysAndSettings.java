@@ -2,14 +2,20 @@ package main.model;
 
 import java.util.ArrayList;
 
-public class ReadKeysAndSettings {
-    private WriterAndReadFile writerAndReadFile;
 
+
+public class ReadKeysAndSettings {
+    private WriteKeysAndSettings writeKeysAndSettings;
+    private FilesAndPathCreator filesAndPathCreator;
+    private WriterAndReadFile writerAndReadFile;
+    private API api;
 
 
     public ReadKeysAndSettings() {
-        this.writerAndReadFile = new WriterAndReadFile();
-        Agent.setWriterAndReadFile(writerAndReadFile);
+        this.writeKeysAndSettings = Agent.getWriteKeysAndSettings();
+        this.filesAndPathCreator = Agent.getFilesAndPathCreator();
+        this.writerAndReadFile = Agent.getWriterAndReadFile();
+        this.api = Agent.getApi();
         readAPIAndSecretKeys();
         readSettingsAndStatus();
     }
@@ -17,70 +23,80 @@ public class ReadKeysAndSettings {
 
 
     private void readSettingsAndStatus() {
-        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<String> inList = new ArrayList<>();
         try {
-            arrayList.addAll(writerAndReadFile.readFile(Agent.getFilesAndPathCreator().getPathSettingsAndStatus()));
-        } catch (Exception e) {
-            enterPatternForSettingsAndStates();
-        }
-        if (arrayList.size() < 1) {
-            enterPatternForSettingsAndStates();
+            inList.addAll(writerAndReadFile.readFile(filesAndPathCreator.getPathSettingsAndStatus()));
+        } catch (Exception e) { writeKeysAndSettings.enterPatternForSettingsAndStates(); }
+
+        if (inList.size() < 1 || !inList.get(0).equals(Enums.SETTINGS.toString())
+                || !inList.get(inList.size() - 1).equals(Enums.END)
+                || !inList.contains(Enums.STATUS)) {
+            writeKeysAndSettings.enterPatternForSettingsAndStates();
+            inList.clear();
+            return;
         }
 
-        /////////
-        /////////
-        /////////
-
-        arrayList.clear();
+        ArrayList<ArrayList<String>> listStrategy = getStrategy(inList);
+        ArrayList<String> listSettings = getSettings(inList);
+        if (listStrategy == null) {
+            writeKeysAndSettings.enterPatternForSettingsAndStates();
+        } else {
+            new DecipherAndCreateStrategies(listStrategy);
+        }
+        if (listSettings == null) {
+            writeKeysAndSettings.enterPatternForSettingsAndStates();
+        } else {
+            new DecryptAndCustomize(listSettings);
+        }
+        listSettings.clear();
+        listStrategy.clear();
+        inList.clear();
     }
 
 
-    // вписать шаблон настроек и состояния
-    private void enterPatternForSettingsAndStates() {
-        String string = Enums.SETTINGS + "\n"
-                + Enums.DATE_DIFFERENCE + "===" + Agent.getDateDifference() + "\n"
-                + Enums.STATUS + "\n"
-                + Enums.ID + "===" + Enums.IF_IT_WAS_NOT_CREATED_THROUGH_THE_PROGRAM_THEM_WE_WRITE_DONE_BY_HAND + "\n"
-                + Enums.WORKS + "===" + Enums.FALSE + "\n"
-                + Enums.TRADING_PAIR + "===ETHBTC\n"
-                + Enums.BUY_OR_SELL + "===" + Enums.BUY + "\n"
-                + Enums.AMOUNT_OF_COINS + "===12.890\n"
-                + Enums.PRICE + "===0.03498738\n"
-                + Enums.TAKE_PRICE + "===0.04889889\n"
-                + Enums.STOP_PRICE + "===0.03389889\n"
-                + Enums.TRAILING_STOP + "===3.7\n"
-                + Enums.ON_OR_OFF_TRAILING_STOP + "===" + Enums.OFF + "\n"
-                + Enums.FRACTIONAL_PARTS + "===5\n"
-                + Enums.ON_OR_OFF_FRACTIONAL_PARTS + "===" + Enums.OFF + "\n"
-                + Enums.BUY_OR_SELL_COINS + "===123.608\n"
-                + Enums.POSITION + "===" + Position.TAKE_OR_STOP_POSITION + "\n"
-                + Enums.NAME_STRATEGY + "===" + Enums.AN_EXAMPLE_OF_CREATING_AND_FILLING_IN_STRATEGIES_IN_MANUAL_MODE_IN_A_FILE + "\n"
-                + Enums.NEXT + "\n"
-                + Enums.ID + "===" + Enums.IF_IT_WAS_NOT_CREATED_THROUGH_THE_PROGRAM_THEM_WE_WRITE_DONE_BY_HAND + "\n"
-                + Enums.WORKS + "===" + Enums.TRUE + "\n"
-                + Enums.TRADING_PAIR + "===LTCBTC\n"
-                + Enums.BUY_OR_SELL + "===" + Enums.SELL + "\n"
-                + Enums.AMOUNT_OF_COINS + "===0.890\n"
-                + Enums.PRICE + "===0.00349873\n"
-                + Enums.TAKE_PRICE + "===0.00304889\n"
-                + Enums.STOP_PRICE + "===0.03589889\n"
-                + Enums.TRAILING_STOP + "===0.7\n"
-                + Enums.ON_OR_OFF_TRAILING_STOP + "===" + Enums.OFF + "\n"
-                + Enums.FRACTIONAL_PARTS + "===0\n"
-                + Enums.ON_OR_OFF_FRACTIONAL_PARTS + "===" + Enums.OFF + "\n"
-                + Enums.BUY_OR_SELL_COINS + "===0.0\n"
-                + Enums.POSITION + "===" + Position.STARTED_POSITION + "\n"
-                + Enums.NAME_STRATEGY + "===" + Enums.AN_EXAMPLE_OF_CREATING_AND_FILLING_IN_STRATEGIES_IN_MANUAL_MODE_IN_A_FILE + "\n"
-                + Enums.END.toString() + "\n";
-        writerAndReadFile.writerFile(string, Agent.getFilesAndPathCreator().getPathSettingsAndStatus(),false);
+    // получаем лист строк с стратегиями без всякого разделительного мусора
+    private ArrayList<ArrayList<String>> getStrategy(ArrayList<String> inList) {
+        ArrayList<ArrayList<String>> outList = new ArrayList<>();
+        ArrayList<String> statusList = new ArrayList<>();
+        int index = inList.indexOf(Enums.STATUS.toString());
+        for (int i = index; i >= 0; i--) {
+            inList.remove(i);
+        }
+        for (String s : inList) {
+            if (!s.equals(Enums.STATUS.toString())
+                    && !s.equals(Enums.NEXT.toString())
+                    && !s.equals(Enums.END.toString())) {
+                statusList.add(s);
+            } else if (s.equals(Enums.NEXT)) {
+                outList.add(statusList);
+                statusList = new ArrayList<>();
+            } else {
+                outList.add(statusList);
+                break;
+            }
+        }
+        if (outList.size() > 0) return outList;
+        return null;
+    }
+
+
+    // получаем лист строк с настройками без всякого разделительного мусора
+    private ArrayList<String> getSettings(ArrayList<String> inList) {
+        ArrayList<String> outList = new ArrayList<>();
+        for (String s : inList) {
+            if (!s.equals(Enums.SETTINGS) && !s.equals(Enums.STATUS)) outList.add(s);
+            if (s.equals(Enums.STATUS)) break;
+        }
+        if (outList.size() > 0) return outList;
+        return null;
     }
 
 
 
     private void readAPIAndSecretKeys() {
         ArrayList<String> arrayList = new ArrayList<>();
-        try { arrayList.addAll(writerAndReadFile.readFile(Agent.getFilesAndPathCreator().getPathAPIAndSecretKeys())); }
-        catch (Exception e) { enterPatternForKeys(); }
+        try { arrayList.addAll(writerAndReadFile.readFile(filesAndPathCreator.getPathAPIAndSecretKeys())); }
+        catch (Exception e) { writeKeysAndSettings.enterPatternForKeys(); }
         if (arrayList.size() >= 4) {
             String start = arrayList.get(0).trim();
             String APIkey = arrayList.get(1).trim();
@@ -88,40 +104,16 @@ public class ReadKeysAndSettings {
             String end = arrayList.get(3).trim();
             if (start.equals(Enums.START.toString()) && end.equals(Enums.END.toString())) {
                 if (APIkey.startsWith(APIandSecretKeys.API_KEY.toString())) {
-                    Agent.getApi().setAPI_KEY(APIkey.split("===")[1]);
+                    api.setAPI_KEY(APIkey.split("===")[1]);
                 }
                 if (SecretKey.startsWith(APIandSecretKeys.SECRET_KEY.toString())) {
-                    Agent.getApi().setSECRET_KEY(SecretKey.split("===")[1]);
+                    api.setSECRET_KEY(SecretKey.split("===")[1]);
                 }
             }
         }
-        if (Agent.getApi().getAPI_KEY().length() > 20 && Agent.getApi().getSECRET_KEY().length() > 20)
+        if (api.getAPI_KEY().length() > 20 && api.getSECRET_KEY().length() > 20)
             Agent.setYesOrNotAPIKey(true);
-        else enterPatternForKeys();
+        else writeKeysAndSettings.enterPatternForKeys();
         arrayList.clear();
-    }
-
-
-
-    // вписать шаблон для ключей
-    public void enterPatternForKeys() {
-        Agent.setYesOrNotAPIKey(false);
-        String string = Enums.START.toString() + "\n"
-                + APIandSecretKeys.API_KEY.toString() + "===\n"
-                + APIandSecretKeys.SECRET_KEY.toString() + "===\n"
-                + Enums.END.toString() + "\n";
-        writerAndReadFile.writerFile(string, Agent.getFilesAndPathCreator().getPathAPIAndSecretKeys(),false);
-    }
-
-
-
-    // записать новые ключи
-    public void writeNewKeys() {
-        Agent.setYesOrNotAPIKey(true);
-        String string = Enums.START.toString() + "\n"
-                + APIandSecretKeys.API_KEY.toString() + "===" + Agent.getApi().getAPI_KEY() + "\n"
-                + APIandSecretKeys.SECRET_KEY.toString() + "===" + Agent.getApi().getSECRET_KEY() + "\n"
-                + Enums.END.toString() + "\n";
-        writerAndReadFile.writerFile(string, Agent.getFilesAndPathCreator().getPathAPIAndSecretKeys(), false);
     }
 }

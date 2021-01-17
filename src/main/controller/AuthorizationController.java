@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.model.Agent;
 import javafx.scene.text.Text;
-import main.model.WedgeLines;
+import main.model.Lines;
 import main.animations.*;
 
 
@@ -48,7 +48,7 @@ public class AuthorizationController {
                     && (secretKey.length() > 10 && APIKey.length() > 10)) {
                 Agent.getApi().setSECRET_KEY(secretKey);
                 Agent.getApi().setAPI_KEY(APIKey);
-                Agent.getReadKeysAndSettings().writeNewKeys();
+                Agent.getWriteKeysAndSettings().writeNewKeys();
                 openNewScene("/main/view/main.fxml");
             } else {
                 // потрусить полями если что-то не верно
@@ -57,8 +57,8 @@ public class AuthorizationController {
                 shakePassword.playAnim();
                 shakeLogin.playAnim();
 
-                textField.setText(WedgeLines.s6);
-                Agent.getReadKeysAndSettings().enterPatternForKeys();
+                textField.setText(Lines.s6);
+                Agent.getWriteKeysAndSettings().enterPatternForKeys();
             }
         });
     }

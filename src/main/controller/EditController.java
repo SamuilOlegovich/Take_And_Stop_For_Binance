@@ -16,7 +16,7 @@ import main.model.Agent;
 import main.model.EndPair;
 import javafx.scene.text.Text;
 import main.model.StrategySettingAndStatus;
-import main.model.WedgeLines;
+import main.model.Lines;
 
 
 public class EditController {
@@ -357,7 +357,7 @@ public class EditController {
         }
 
         textInfoERROR.setText("");
-        textInfoERROR.setText(WedgeLines.s4);
+        textInfoERROR.setText(Lines.s4);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

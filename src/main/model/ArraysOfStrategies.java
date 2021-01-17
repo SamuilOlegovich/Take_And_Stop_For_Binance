@@ -48,4 +48,12 @@ public class ArraysOfStrategies {
     public void removeStrategy(String in) {
         // разбираем строку и по основным данным находим стратегию и удаляем ее отовсюду
     }
+
+    public ArrayList<StrategySettingAndStatus> getStoppedStrategyList() {
+        return stoppedStrategyList;
+    }
+
+    public ArrayList<StrategySettingAndStatus> getTradedStrategyList() {
+        return tradedStrategyList;
+    }
 }

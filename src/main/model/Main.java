@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.checkerframework.checker.units.qual.A;
 
 
 public class Main extends Application {
@@ -26,10 +27,13 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Agent.setApi(new API());
-        // создаем все нужные папки и путя к ним если это надо
-        Agent.setFilesAndPathCreator(new FilesAndPathCreator());
         // создаем класс хранения всех стратегий
         Agent.setArraysOfStrategies(new ArraysOfStrategies());
+        Agent.setCreatesTemplatesAndData(new CreatesTemplatesAndData());
+        // создаем все нужные папки и путя к ним если это надо
+        Agent.setFilesAndPathCreator(new FilesAndPathCreator());
+        Agent.setWriterAndReadFile(new WriterAndReadFile());
+        Agent.setWriteKeysAndSettings(new WriteKeysAndSettings());
         // считываеи все файлы настроек, ключей и состояний
         Agent.setReadKeysAndSettings(new ReadKeysAndSettings());
         // Запускаем визуальную часть в зависимости от того что считалось из файлоф

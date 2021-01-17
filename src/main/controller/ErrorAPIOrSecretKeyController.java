@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
-import main.model.WedgeLines;
+import main.model.Lines;
 
 
 public class ErrorAPIOrSecretKeyController {
@@ -29,7 +29,7 @@ public class ErrorAPIOrSecretKeyController {
 
     @FXML
     void initialize() {
-        errorText.setText(WedgeLines.s0);
+        errorText.setText(Lines.s0);
         enterButton.setOnAction(event -> {
             openNewScene("/main/view/authorization.fxml");
         });

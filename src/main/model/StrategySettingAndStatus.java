@@ -119,7 +119,23 @@ public class StrategySettingAndStatus {
     }
 
     public void setClassID() {
-        classID = "id:" + hashCode();
+        classID = hashCode() + "";
+    }
+
+    public String getClassID() {
+        return classID;
+    }
+
+    public Double getBuyOrSellCoins() {
+        return buyOrSellCoins;
+    }
+
+    public int getWorks() {
+        return works;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     @Override

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class Agent {
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
+    private static CreatesTemplatesAndData createsTemplatesAndData;
+    private static WriteKeysAndSettings writeKeysAndSettings;
     private static ReadKeysAndSettings readKeysAndSettings;
     private static FilesAndPathCreator filesAndPathCreator;
     private static ArraysOfStrategies arraysOfStrategies;
@@ -121,6 +123,22 @@ public class Agent {
 
     public static void setWriterAndReadFile(WriterAndReadFile writerAndReadFile) {
         Agent.writerAndReadFile = writerAndReadFile;
+    }
+
+    public static CreatesTemplatesAndData getCreatesTemplatesAndData() {
+        return createsTemplatesAndData;
+    }
+
+    public static void setCreatesTemplatesAndData(CreatesTemplatesAndData createsTemplatesAndData) {
+        Agent.createsTemplatesAndData = createsTemplatesAndData;
+    }
+
+    public static WriteKeysAndSettings getWriteKeysAndSettings() {
+        return writeKeysAndSettings;
+    }
+
+    public static void setWriteKeysAndSettings(WriteKeysAndSettings writeKeysAndSettings) {
+        Agent.writeKeysAndSettings = writeKeysAndSettings;
     }
 
     public static API getApi() {
