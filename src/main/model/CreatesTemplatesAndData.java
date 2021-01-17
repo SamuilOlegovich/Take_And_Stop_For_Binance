@@ -3,9 +3,11 @@ package main.model;
 import java.util.ArrayList;
 
 public class CreatesTemplatesAndData {
+    private ArraysOfStrategies arraysOfStrategies;
 
 
     public CreatesTemplatesAndData() {
+        this.arraysOfStrategies = Agent.getArraysOfStrategies();
     }
 
 
@@ -60,8 +62,8 @@ public class CreatesTemplatesAndData {
 
 
     public String getRealSettingsAndStates() {
-        ArrayList<StrategySettingAndStatus> stoppedStrategyList = Agent.getArraysOfStrategies().getStoppedStrategyList();
-        ArrayList<StrategySettingAndStatus> tradedStrategyList = Agent.getArraysOfStrategies().getTradedStrategyList();
+        ArrayList<StrategySettingAndStatus> stoppedStrategyList = arraysOfStrategies.getStoppedStrategyList();
+        ArrayList<StrategySettingAndStatus> tradedStrategyList = arraysOfStrategies.getTradedStrategyList();
         StringBuilder sB = new StringBuilder(getStringPatternForSettingsAndStates());
         sB.delete(sB.length() - 4, sB.length());
         sB.append(Enums.NEXT).append(Lines.newline);
