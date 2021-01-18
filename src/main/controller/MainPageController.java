@@ -17,12 +17,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import main.model.Agent;
-import main.model.GetUpToDateDataOnPairs;
+import main.model.*;
 import javafx.scene.text.Text;
 
 
+
+
 public class MainPageController {
+    private CreatesTemplatesAndData createsTemplatesAndData;
+    private ArraysOfStrategies arraysOfStrategies;
+    private Thread threadShow;
+
+
+
+    public MainPageController() { Agent.setMainPageController(this); }
+
+
 
     @FXML
     private ResourceBundle resources;
@@ -66,21 +76,30 @@ public class MainPageController {
         try { thread.join();
         } catch (InterruptedException e) { e.printStackTrace(); }
 
-        ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
-        listViewInMainPage.setItems(observableList);
+        // получить адреса используемых классов
+        getAddressesOfUsedClasses();
+
+        // получаем и выводим список торговых пар
+        getAListOfStrategy();
+
         // позволяет выбирать несколько элементов из списка
 //        listViewInMainPage.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         // двойное нажатие мыши - переходим на страницу детальной информации
         listViewInMainPage.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getClickCount() == 2) {
-                Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
-                openNewScene("/main/view/info.fxml");
+                String stringOfList = getSelectedItem();
+                if (!stringOfList.equals(Enums.ON_LINE_STRATEGY.toString())
+                        && !stringOfList.equals(Enums.OFF_LINE_STRATEGY.toString())
+                        && !stringOfList.equals(Lines.thereAreNoStrategiesNow)) {
+                    arraysOfStrategies.findStrategy(stringOfList);
+                    openNewScene("/main/view/info.fxml");
+                }
             }
         });
 
         startAllButton.setOnAction(event -> {
-            if (Agent.isGetUpToDateDataOnPairs() == false) {
+            if (!Agent.isGetUpToDateDataOnPairs()) {
                 openNewScene("/main/view/error_api_or_secret_key.fxml");
             }
         });
@@ -96,25 +115,70 @@ public class MainPageController {
         });
 
         startButton.setOnAction(event -> {
-            Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
-        });
-
-        editButton.setOnAction(event -> {
-            Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
-            openNewScene("/main/view/edit.fxml");
+            arraysOfStrategies.launchStrategy(getSelectedItem());
         });
 
         stopButton.setOnAction(event -> {
-            Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
+            arraysOfStrategies.stopStrategy(getSelectedItem());
         });
 
         addButton.setOnAction(event -> {
             openNewScene("/main/view/setting.fxml");
         });
 
-        deleteButton.setOnAction(event -> {
-            Agent.getArraysOfStrategies().findStrategy(getSelectedItem());
+        editButton.setOnAction(event -> {
+            String stringOfList = getSelectedItem();
+            if (!stringOfList.equals(Enums.ON_LINE_STRATEGY.toString())
+                    && !stringOfList.equals(Enums.OFF_LINE_STRATEGY.toString())
+                    && !stringOfList.equals(Lines.thereAreNoStrategiesNow)) {
+                arraysOfStrategies.findStrategy(getSelectedItem());
+                openNewScene("/main/view/edit.fxml");
+            }
         });
+
+        deleteButton.setOnAction(event -> {
+            arraysOfStrategies.removeStrategy(getSelectedItem());
+        });
+    }
+
+
+
+    private void getAListOfStrategy() {
+        if (threadShow == null) {
+            threadShow = new Thread(new Show());
+            threadShow.start();
+        } else {
+            threadShow.interrupt();
+            threadShow = new Thread(new Show());
+            threadShow.start();
+        }
+
+
+
+
+//        ObservableList<String> observableList = FXCollections.observableArrayList(Enums.ON_LINE_STRATEGY.toString());
+//        observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
+//        observableList.add(Enums.OFF_LINE_STRATEGY.toString());
+//        observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
+//        listViewInMainPage.setItems(observableList);
+    }
+
+    class Show implements Runnable {
+        @Override
+        public void run() {
+            ObservableList<String> observableList = FXCollections.observableArrayList(Enums.ON_LINE_STRATEGY.toString());
+            observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
+            observableList.add(Enums.OFF_LINE_STRATEGY.toString());
+            observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
+            listViewInMainPage.setItems(observableList);
+        }
+    }
+
+
+
+    private void getAddressesOfUsedClasses() {
+        createsTemplatesAndData = Agent.getCreatesTemplatesAndData();
+        arraysOfStrategies = Agent.getArraysOfStrategies();
     }
 
 
@@ -138,12 +202,20 @@ public class MainPageController {
         Parent parent = fxmlLoader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(parent));
-        stage.showAndWait();
+//        stage.showAndWait();
+        stage.show();
     }
 
+
+
     private String getSelectedItem() {
-        return listViewInMainPage.getSelectionModel().getSelectedItems().toString();
+        return listViewInMainPage.getSelectionModel().getSelectedItems().toString()
+                .replaceAll("\\[", "").replaceAll("]", "");
     }
+
+
+
+
 
     private class Clock implements Runnable {
         DateFormat dateFormat;
@@ -168,4 +240,7 @@ public class MainPageController {
         }
     }
 
+    public void updateListView() {
+        getAListOfStrategy();
+    }
 }

@@ -13,19 +13,26 @@ public class StrategyObject {
     private Double stopPrice;
     private Double price;
 
+    private Position position;
+
     private int fractionalParts;
     private int buyOrSell;
-    private int onOrOffFP;
-    private int onOrOffTS;
-    private int works;
 
-    private Position position;
+    private boolean onOrOffFP;
+    private boolean onOrOffTS;
+    private boolean works;
+
+
 
 
 
     public StrategyObject() {
+        this.position = Position.STARTED_POSITION;
         this.buyOrSellCoins = 0.0;
-        this.works = 0;
+        this.onOrOffFP = false;
+        this.onOrOffTS = false;
+        this.works = false;
+        this.buyOrSell = 0;
     }
 
 
@@ -102,19 +109,19 @@ public class StrategyObject {
         this.buyOrSell = buyOrSell;
     }
 
-    public int getOnOrOffTS() {
+    public boolean getOnOrOffTS() {
         return onOrOffTS;
     }
 
-    public void setOnOrOffTS(int onOrOffTS) {
+    public void setOnOrOffTS(boolean onOrOffTS) {
         this.onOrOffTS = onOrOffTS;
     }
 
-    public int getOnOrOffFP() {
+    public boolean getOnOrOffFP() {
         return onOrOffFP;
     }
 
-    public void setOnOrOffFP(int onOrOffFP) {
+    public void setOnOrOffFP(boolean onOrOffFP) {
         this.onOrOffFP = onOrOffFP;
     }
 
@@ -130,12 +137,28 @@ public class StrategyObject {
         return buyOrSellCoins;
     }
 
-    public int getWorks() {
+    public boolean getWorks() {
         return works;
     }
 
     public Position getPosition() {
         return position;
+    }
+
+    public void setBuyOrSellCoins(Double buyOrSellCoins) {
+        this.buyOrSellCoins = buyOrSellCoins;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void setWorks(boolean works) {
+        this.works = works;
+    }
+
+    public void setClassID(String classID) {
+        this.classID = classID;
     }
 
     @Override
@@ -149,8 +172,8 @@ public class StrategyObject {
                 + price.hashCode()
                 + fractionalParts
                 + buyOrSell
-                + onOrOffFP
-                + onOrOffTS)
+                + (onOrOffFP ? 1 : 0)
+                + (onOrOffTS ? 1 : 0))
                 * 39;
     }
 }

@@ -12,16 +12,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.model.Agent;
-import main.model.EndPair;
+import main.model.*;
 import javafx.scene.text.Text;
-import main.model.StrategyObject;
-import main.model.Lines;
 
 
 
 
 public class SettingPageController {
+    private ArraysOfStrategies arraysOfStrategies;
     private StrategyObject strategyObject;
 
     private String nameStrategy;
@@ -35,8 +33,9 @@ public class SettingPageController {
 
     private int fractionalParts;
     private int buyOrSell;
-    private int onOrOffFP;
-    private int onOrOffTS;
+
+    private boolean onOrOffFP;
+    private boolean onOrOffTS;
 
 
     @FXML
@@ -104,6 +103,8 @@ public class SettingPageController {
 
     @FXML
     void initialize() {
+        // получить адреса используемых классов
+        getAddressesOfUsedClasses();
         // получаем и выводим список торговых пар
         getAListOfTradingPairs();
         // установка группы
@@ -119,19 +120,19 @@ public class SettingPageController {
         });
 
         onTSRadioButton.setOnAction(event -> {
-            onOrOffTS = 1;
+            onOrOffTS = true;
         });
 
         offTSRadioButton.setOnAction(event -> {
-            onOrOffTS = -1;
+            onOrOffTS = false;
         });
 
         onFPRadioButton.setOnAction(event -> {
-            onOrOffFP = 1;
+            onOrOffFP = true;
         });
 
         offFPRadioButton.setOnAction(event -> {
-            onOrOffFP = -1;
+            onOrOffFP = false;
         });
 
         okButton.setOnAction(event -> {
@@ -153,10 +154,19 @@ public class SettingPageController {
         });
     }
 
+
+
+    private void getAddressesOfUsedClasses() {
+        arraysOfStrategies = Agent.getArraysOfStrategies();
+    }
+
+
+
     private void getAListOfTradingPairs() {
         ObservableList<String> observableList = FXCollections.observableArrayList(Agent.getAllCoinPairList());
         listViewInSettingPage.setItems(observableList);
     }
+
 
 
     private void openNewScene(String window) {
@@ -179,6 +189,7 @@ public class SettingPageController {
         Stage stage = new Stage();
         stage.setScene(new Scene(parent));
         stage.showAndWait();
+        stage.show();
     }
 
 
@@ -303,27 +314,27 @@ public class SettingPageController {
             blankFields.append("· Number of coins\n");
             flag = false;
         }
-        if (price == -1 && onOrOffTS != 1) {
+        if (price == -1 && !onOrOffTS) {
             blankFields.append("· Price\n");
             flag = false;
         }
         // Уберите цену, включен трайлирующий стоп, или выключите стоп
-        if (price > 0 && onOrOffTS == 1) {
+        if (price > 0 && onOrOffTS) {
             blankFields.append("· Remove price, turn on trailing stop, or turn off stop\n");
             flag = false;
         }
         // проверить что-то тут не так ----------------------------------------------------
-        if (trailingStop == -1 && onOrOffTS == 1) {
+        if (trailingStop == -1 && onOrOffTS ) {
             blankFields.append("· Trailing stop\n");
             flag = false;
         }
         // указан но выключен
-        if (trailingStop > 0 && onOrOffTS <= 0) {
+        if (trailingStop > 0 && !onOrOffTS) {
             blankFields.append("· Trailing stop specified but disabled\n");
             flag = false;
         }
 
-        if (flag == false) {
+        if (!flag) {
             textInfoERROR.setText("");
             textInfoERROR.setText(blankFields.toString());
             return false;
@@ -331,11 +342,8 @@ public class SettingPageController {
 
         textInfoERROR.setText("");
         textInfoERROR.setText(Lines.s4);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        try { Thread.sleep(2000);
+        } catch (InterruptedException e) { e.printStackTrace(); }
         return true;
     }
 
@@ -344,27 +352,27 @@ public class SettingPageController {
     // создаем и заполняем обект стратегии
     private void createAndFillAnObject() {
         strategyObject = new StrategyObject();
-        strategyObject.setNameStrategy(nameStrategy);
-        strategyObject.setTradingPair(tradingPair);
-
+        strategyObject.setPosition(Position.STARTED_POSITION);
+        strategyObject.setFractionalParts(fractionalParts);
         strategyObject.setAmountOfCoins(numberOfCoins);
         strategyObject.setTrailingStop(trailingStop);
+        strategyObject.setNameStrategy(nameStrategy);
+        strategyObject.setTradingPair(tradingPair);
         strategyObject.setTakePrice(takePrice);
         strategyObject.setStopPrice(stopPrice);
-        strategyObject.setPrice(price);
-
-        strategyObject.setFractionalParts(fractionalParts);
         strategyObject.setBuyOrSell(buyOrSell);
         strategyObject.setOnOrOffFP(onOrOffFP);
         strategyObject.setOnOrOffTS(onOrOffTS);
-
+        strategyObject.setPrice(price);
+        strategyObject.setWorks(false);
         strategyObject.setClassID();
     }
 
 
+
     // добавляем торговый объект в коллекцию стратегий
     private void addTheFinishedObjectToTheListOfStrategies() {
-        Agent.getArraysOfStrategies().addToAllStrategyList(strategyObject);
+        arraysOfStrategies.addToAllStrategyList(strategyObject);
     }
 }
 

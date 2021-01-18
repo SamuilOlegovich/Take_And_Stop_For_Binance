@@ -28,7 +28,7 @@ public class CreatesTemplatesAndData {
                 + Enums.DATE_DIFFERENCE + Lines.delimiter + Agent.getDateDifference() + Lines.newline
                 + Enums.STATUS + Lines.newline
                 + Enums.ID + Lines.delimiter + Enums.IF_IT_WAS_NOT_CREATED_THROUGH_THE_PROGRAM_THEM_WE_WRITE_DONE_BY_HAND + Lines.newline
-                + Enums.POSITION + Lines.delimiter + Position.TAKE_OR_STOP_POSITION + Lines.newline
+                + Enums.POSITION + Lines.delimiter + Position.EXAMPLE_POSITION + Lines.newline
                 + Enums.WORKS + Lines.delimiter + Enums.FALSE + Lines.newline
                 + Enums.TRADING_PAIR + Lines.delimiter +"ETHBTC" + Lines.newline
                 + Enums.BUY_OR_SELL + Lines.delimiter + Enums.BUY + Lines.newline
@@ -37,15 +37,15 @@ public class CreatesTemplatesAndData {
                 + Enums.TAKE_PRICE + Lines.delimiter + "0.04889889" + Lines.newline
                 + Enums.STOP_PRICE + Lines.delimiter + "0.03389889" + Lines.newline
                 + Enums.TRAILING_STOP + Lines.delimiter + "3.7" + Lines.newline
-                + Enums.ON_OR_OFF_TRAILING_STOP + Lines.delimiter + Enums.OFF + Lines.newline
+                + Enums.ON_OR_OFF_TRAILING_STOP + Lines.delimiter + Enums.FALSE + Lines.newline
                 + Enums.FRACTIONAL_PARTS + Lines.delimiter + "5" + Lines.newline
-                + Enums.ON_OR_OFF_FRACTIONAL_PARTS + Lines.delimiter + Enums.OFF + Lines.newline
+                + Enums.ON_OR_OFF_FRACTIONAL_PARTS + Lines.delimiter + Enums.FALSE + Lines.newline
                 + Enums.BUY_OR_SELL_COINS + Lines.delimiter + "123.608" + Lines.newline
                 + Enums.NAME_STRATEGY + Lines.delimiter + Enums.AN_EXAMPLE_OF_CREATING_AND_FILLING_IN_STRATEGIES_IN_MANUAL_MODE_IN_A_FILE + Lines.newline
                 + Enums.NEXT + Lines.newline
                 + Enums.ID + Lines.delimiter + Enums.IF_IT_WAS_NOT_CREATED_THROUGH_THE_PROGRAM_THEM_WE_WRITE_DONE_BY_HAND + Lines.newline
-                + Enums.POSITION + Lines.delimiter + Position.STARTED_POSITION + Lines.newline
-                + Enums.WORKS + Lines.delimiter + Enums.TRUE + Lines.newline
+                + Enums.POSITION + Lines.delimiter + Position.EXAMPLE_POSITION + Lines.newline
+                + Enums.WORKS + Lines.delimiter + Enums.FALSE + Lines.newline
                 + Enums.TRADING_PAIR + Lines.delimiter + "LTCBTC" + Lines.newline
                 + Enums.BUY_OR_SELL + Lines.delimiter + Enums.SELL + Lines.newline
                 + Enums.AMOUNT_OF_COINS + Lines.delimiter + "0.890" + Lines.newline
@@ -53,9 +53,9 @@ public class CreatesTemplatesAndData {
                 + Enums.TAKE_PRICE + Lines.delimiter + "0.00304889" + Lines.newline
                 + Enums.STOP_PRICE + Lines.delimiter + "0.03589889" + Lines.newline
                 + Enums.TRAILING_STOP + Lines.delimiter + "0.7" + Lines.newline
-                + Enums.ON_OR_OFF_TRAILING_STOP + Lines.delimiter + Enums.OFF + Lines.newline
+                + Enums.ON_OR_OFF_TRAILING_STOP + Lines.delimiter + Enums.TRUE + Lines.newline
                 + Enums.FRACTIONAL_PARTS + Lines.delimiter +"0" + Lines.newline
-                + Enums.ON_OR_OFF_FRACTIONAL_PARTS + Lines.delimiter + Enums.OFF + Lines.newline
+                + Enums.ON_OR_OFF_FRACTIONAL_PARTS + Lines.delimiter + Enums.TRUE + Lines.newline
                 + Enums.BUY_OR_SELL_COINS + Lines.delimiter + "0.0" + Lines.newline
                 + Enums.NAME_STRATEGY + Lines.delimiter + Enums.AN_EXAMPLE_OF_CREATING_AND_FILLING_IN_STRATEGIES_IN_MANUAL_MODE_IN_A_FILE + Lines.newline
                 + Enums.END.toString() + Lines.newline;
@@ -64,8 +64,8 @@ public class CreatesTemplatesAndData {
 
 
     public String getRealSettingsAndStates() {
-        ArrayList<StrategyObject> stoppedStrategyList = arraysOfStrategies.getStoppedStrategyList();
-        ArrayList<StrategyObject> tradedStrategyList = arraysOfStrategies.getTradedStrategyList();
+        ArrayList<StrategyObject> stoppedStrategyList = arraysOfStrategies.getStoppedStrategyListObject();
+        ArrayList<StrategyObject> tradedStrategyList = arraysOfStrategies.getTradedStrategyListObject();
         StringBuilder sB = new StringBuilder(getStringPatternForSettingsAndStates());
         sB.delete(sB.length() - 4, sB.length());
         sB.append(Enums.NEXT).append(Lines.newline);
@@ -74,7 +74,7 @@ public class CreatesTemplatesAndData {
             sB.append(Enums.POSITION).append(Lines.delimiter).append(s.getPosition()).append(Lines.newline);
             sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks()).append(Lines.newline);
             sB.append(Enums.TRADING_PAIR).append(Lines.delimiter).append(s.getTradingPair()).append(Lines.newline);
-            sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell()).append(Lines.newline);
+            sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.newline);
             sB.append(Enums.AMOUNT_OF_COINS).append(Lines.delimiter).append(s.getAmountOfCoins()).append(Lines.newline);
             sB.append(Enums.PRICE).append(Lines.delimiter).append(s.getPrice()).append(Lines.newline);
             sB.append(Enums.TAKE_PRICE).append(Lines.delimiter).append(s.getTakePrice()).append(Lines.newline);
@@ -92,7 +92,7 @@ public class CreatesTemplatesAndData {
             sB.append(Enums.POSITION).append(Lines.delimiter).append(s.getPosition()).append(Lines.newline);
             sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks()).append(Lines.newline);
             sB.append(Enums.TRADING_PAIR).append(Lines.delimiter).append(s.getTradingPair()).append(Lines.newline);
-            sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell()).append(Lines.newline);
+            sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.newline);
             sB.append(Enums.AMOUNT_OF_COINS).append(Lines.delimiter).append(s.getAmountOfCoins()).append(Lines.newline);
             sB.append(Enums.PRICE).append(Lines.delimiter).append(s.getPrice()).append(Lines.newline);
             sB.append(Enums.TAKE_PRICE).append(Lines.delimiter).append(s.getTakePrice()).append(Lines.newline);
@@ -108,6 +108,37 @@ public class CreatesTemplatesAndData {
         sB.delete(sB.length() - 5, sB.length()).append(Enums.END).append(Lines.newline);
         stoppedStrategyList.clear();
         tradedStrategyList.clear();
+        return sB.toString();
+    }
+
+
+
+    public ArrayList<String> getTradedStrategyList() {
+        ArrayList<String> out = new ArrayList<>();
+        for (StrategyObject s : arraysOfStrategies.getTradedStrategyListObject()) {
+            out.add(transformObjectToString(s));
+        }
+        if (out.size() < 1) out.add(Lines.thereAreNoStrategiesNow);
+        return out;
+    }
+
+
+
+    public ArrayList<String> getStoppedStrategyList() {
+        ArrayList<String> out = new ArrayList<>();
+        for (StrategyObject s : arraysOfStrategies.getStoppedStrategyListObject()) {
+            out.add(transformObjectToString(s));
+        }
+        if (out.size() < 1) out.add(Lines.thereAreNoStrategiesNow);
+        return out;
+    }
+
+
+    private String transformObjectToString(StrategyObject in) {
+        StringBuilder sB = new StringBuilder()
+                .append(in.getClassID()).append(Lines.space).append(in.getTradingPair()).append(Lines.space)
+                .append(in.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.space)
+                .append(in.getPosition()).append(Lines.space).append(in.getNameStrategy());
         return sB.toString();
     }
 }

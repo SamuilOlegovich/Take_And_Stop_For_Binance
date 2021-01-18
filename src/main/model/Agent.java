@@ -1,5 +1,6 @@
 package main.model;
 
+import main.controller.MainPageController;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.datatype.BinanceEventDepthUpdate;
 
@@ -11,6 +12,7 @@ public class Agent {
     private static WriteKeysAndSettings writeKeysAndSettings;
     private static ReadKeysAndSettings readKeysAndSettings;
     private static FilesAndPathCreator filesAndPathCreator;
+    private static MainPageController mainPageController;
     private static ArraysOfStrategies arraysOfStrategies;
     private static WriterAndReadFile writerAndReadFile;
     private static BinanceAPI binanceAPI;
@@ -139,6 +141,14 @@ public class Agent {
 
     public static void setWriteKeysAndSettings(WriteKeysAndSettings writeKeysAndSettings) {
         Agent.writeKeysAndSettings = writeKeysAndSettings;
+    }
+
+    public static MainPageController getMainPageController() {
+        return mainPageController;
+    }
+
+    public static void setMainPageController(MainPageController mainPageController) {
+        Agent.mainPageController = mainPageController;
     }
 
     public static API getApi() {

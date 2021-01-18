@@ -7,12 +7,14 @@ public class WriteKeysAndSettings {
     private final API api;
 
 
+
     public WriteKeysAndSettings() {
         this.createsTemplatesAndData = Agent.getCreatesTemplatesAndData();
         this.filesAndPathCreator = Agent.getFilesAndPathCreator();
         this.writerAndReadFile = Agent.getWriterAndReadFile();
         this.api = Agent.getApi();
     }
+
 
 
     // записать новые ключи
@@ -26,6 +28,7 @@ public class WriteKeysAndSettings {
     }
 
 
+
     // вписать шаблон для ключей
     public void enterPatternForKeys() {
         Agent.setYesOrNotAPIKey(false);
@@ -34,9 +37,18 @@ public class WriteKeysAndSettings {
     }
 
 
+
     // вписать шаблон настроек и состояния
     public void enterPatternForSettingsAndStates() {
-        Agent.getWriterAndReadFile().writerFile(createsTemplatesAndData.getStringPatternForSettingsAndStates(),
+        writerAndReadFile.writerFile(createsTemplatesAndData.getStringPatternForSettingsAndStates(),
+                filesAndPathCreator.getPathSettingsAndStatus(),false);
+    }
+
+
+
+    // вписать новые настройки и состояния
+    public void writeNewSettingsAndStates() {
+        writerAndReadFile.writerFile(createsTemplatesAndData.getRealSettingsAndStates(),
                 filesAndPathCreator.getPathSettingsAndStatus(),false);
     }
 }

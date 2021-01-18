@@ -4,49 +4,64 @@ import java.util.ArrayList;
 
 public class DecipherAndCreateStrategies {
     private ArrayList<ArrayList<String>> listStrategy;
+    private ArraysOfStrategies arraysOfStrategies;
 
     public DecipherAndCreateStrategies(ArrayList<ArrayList<String>> inList) {
+        this.arraysOfStrategies = Agent.getArraysOfStrategies();
         this.listStrategy = new ArrayList<>(inList);
     }
 
 
     private void parseAndCreateStrategyObjects() {
-
+        for (ArrayList<String> arrayList : listStrategy) {
+            StrategyObject strategyObject = new StrategyObject();
+            for (String s : arrayList) {
+                String name = s.split(Lines.delimiter)[0];
+                String value = s.split(Lines.delimiter)[1];
+                if (name.equals(Enums.ID.toString())) {
+                    strategyObject.setClassID(value);
+                } else if (name.equals(Enums.WORKS.toString())) {
+                    strategyObject.setWorks(value.equals(Enums.TRUE.toString()));
+                } else if (name.equals(Enums.TRADING_PAIR.toString())) {
+                    strategyObject.setTradingPair(value);
+                } else if (name.equals(Enums.BUY_OR_SELL.toString())) {
+                    strategyObject.setBuyOrSell(value.equals(Enums.BUY.toString()) ? 1 : -1);
+                } else if (name.equals(Enums.AMOUNT_OF_COINS.toString())) {
+                    strategyObject.setAmountOfCoins(Double.parseDouble(value));
+                } else if (name.equals(Enums.PRICE.toString())) {
+                    strategyObject.setPrice(Double.parseDouble(value));
+                } else if (name.equals(Enums.TAKE_PRICE.toString())) {
+                    strategyObject.setTakePrice(Double.parseDouble(value));
+                } else if (name.equals(Enums.STOP_PRICE.toString())) {
+                    strategyObject.setStopPrice(Double.parseDouble(value));
+                } else if (name.equals(Enums.TRAILING_STOP.toString())) {
+                    strategyObject.setTrailingStop(Double.parseDouble(value));
+                } else if (name.equals(Enums.ON_OR_OFF_TRAILING_STOP.toString())) {
+                    strategyObject.setOnOrOffTS(value.equals(Enums.TRUE.toString()));
+                } else if (name.equals(Enums.FRACTIONAL_PARTS.toString())) {
+                    strategyObject.setFractionalParts(Integer.parseInt(value));
+                } else if (name.equals(Enums.ON_OR_OFF_FRACTIONAL_PARTS.toString())) {
+                    strategyObject.setOnOrOffFP(value.equals(Enums.TRUE.toString()));
+                } else if (name.equals(Enums.BUY_OR_SELL_COINS.toString())) {
+                    strategyObject.setBuyOrSellCoins(Double.parseDouble(value));
+                } else if (name.equals(Enums.POSITION.toString())) {
+                    for (Position p : Position.values()) {
+                        if (value.equals(p.toString())) {
+                            strategyObject.setPosition(p);
+                            break;
+                        }
+                    }
+                } else if (name.equals(Enums.NAME_STRATEGY.toString())) {
+                    strategyObject.setNameStrategy(value);
+                }
+            }
+            if (strategyObject.getClassID().equals(Enums.DONE_BY_HAND)) {
+                strategyObject.setPosition(Position.STARTED_POSITION);
+                strategyObject.setClassID();
+            }
+            if (!strategyObject.getPosition().equals(Position.EXAMPLE_POSITION)) {
+                arraysOfStrategies.addToAllStrategyList(strategyObject);
+            }
+        }
     }
-
-    /*SETTINGS
-        DATE_DIFFERENCE===0
-        STATUS
-        ID===IF_IT_WAS_NOT_CREATED_THROUGH_THE_PROGRAM_THEM_WE_WRITE_DONE_BY_HAND
-        WORKS===FALSE
-        TRADING_PAIR===ETHBTC
-        BUY_OR_SELL===BUY
-        AMOUNT_OF_COINS===12.890
-        PRICE===0.03498738
-        TAKE_PRICE===0.04889889
-        STOP_PRICE===0.03389889
-        TRAILING_STOP===3.7
-        ON_OR_OFF_TRAILING_STOP===OFF
-        FRACTIONAL_PARTS===5
-        ON_OR_OFF_FRACTIONAL_PARTS===OFF
-        BUY_OR_SELL_COINS===123.608
-        POSITION===TAKE_OR_STOP_POSITION
-        NAME_STRATEGY===AN_EXAMPLE_OF_CREATING_AND_FILLING_IN_STRATEGIES_IN_MANUAL_MODE_IN_A_FILE
-        NEXT
-        ID===IF_IT_WAS_NOT_CREATED_THROUGH_THE_PROGRAM_THEM_WE_WRITE_DONE_BY_HAND
-        WORKS===TRUE
-        TRADING_PAIR===LTCBTC
-        BUY_OR_SELL===SELL
-        AMOUNT_OF_COINS===0.890
-        PRICE===0.00349873
-        TAKE_PRICE===0.00304889
-        STOP_PRICE===0.03589889
-        TRAILING_STOP===0.7
-        ON_OR_OFF_TRAILING_STOP===OFF
-        FRACTIONAL_PARTS===0
-        ON_OR_OFF_FRACTIONAL_PARTS===OFF
-        BUY_OR_SELL_COINS===0.0
-        POSITION===STARTED_POSITION
-        NAME_STRATEGY===AN_EXAMPLE_OF_CREATING_AND_FILLING_IN_STRATEGIES_IN_MANUAL_MODE_IN_A_FILE
-        END*/
 }
