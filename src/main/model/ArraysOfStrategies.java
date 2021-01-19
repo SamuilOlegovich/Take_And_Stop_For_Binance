@@ -10,15 +10,17 @@ public class ArraysOfStrategies {
     private final ArrayList<StrategyObject> stoppedStrategyList;
     private final ArrayList<StrategyObject> tradedStrategyList;
 
-    private final MainPageController mainPageController;
+//    private final MainPageController.RefreshListView refreshListView;
+    private MainPageController mainPageController;
     private StrategyObject strategyObject;
 
 
 
     public ArraysOfStrategies() {
-        this.mainPageController = Agent.getMainPageController();
+//        this.refreshListView = Agent.getRefreshListView();
         this.stoppedStrategyList = new ArrayList<>();
         this.tradedStrategyList = new ArrayList<>();
+        this.mainPageController = null;
     }
 
 
@@ -157,6 +159,10 @@ public class ArraysOfStrategies {
     }
 
 
+
+    public void setMainPageController(MainPageController mainPageController) {
+        this.mainPageController = mainPageController;
+    }
 
     public StrategyObject getStrategySettingAndStatus() { return strategyObject; }
 

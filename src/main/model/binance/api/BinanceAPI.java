@@ -40,9 +40,6 @@ import java.util.Map;
 import java.net.URI;
 
 
-
-
-
 //@Slf4j
 @Data
 public class BinanceAPI {
@@ -72,7 +69,8 @@ public class BinanceAPI {
     /**
      * Base URL for websockets
      */
-    public String websocketBaseUrl = "wss://stream.test.resources.model.binance.com:9443/ws/";
+//    public String websocketBaseUrl = "wss://stream.test.resources.model.binance.com:9443/ws/";
+    public String websocketBaseUrl = "wss://stream.binance.com:9443/ws/";
 
     /**
      * Guava Class Instance for escaping

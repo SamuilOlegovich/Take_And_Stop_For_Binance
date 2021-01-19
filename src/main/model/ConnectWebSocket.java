@@ -19,13 +19,16 @@ public class ConnectWebSocket implements Runnable {
 
     private void started() {
         try {
-            new WriteKeysAndSettings();
+//            new WriteKeysAndSettings();
             BinanceSymbol binanceSymbol = new BinanceSymbol("ETHBTC");
             Session session = Agent.getBinanceAPI().webSocketDepth(binanceSymbol,
                     new BinanceWebSocketAdapterDepth() {
                         @Override
                         public void onMessage(BinanceEventDepthUpdate message) {
-                            System.out.println(message.toString());
+//                            System.out.println(message.toString());
+
+
+
                         }
                     });
             try {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Clock;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -26,11 +27,12 @@ import javafx.scene.text.Text;
 public class MainPageController {
     private CreatesTemplatesAndData createsTemplatesAndData;
     private ArraysOfStrategies arraysOfStrategies;
+    private ObservableList<String> observableList;
     private Thread threadShow;
 
 
 
-    public MainPageController() { Agent.setMainPageController(this); }
+//    public MainPageController() { Agent.setMainPageController(this); }
 
 
 
@@ -67,14 +69,24 @@ public class MainPageController {
     @FXML
     private Button deleteButton;
 
+
+
     @FXML
     void initialize() {
         Thread thread = new Thread(new GetUpToDateDataOnPairs());
         Thread clock = new Thread(new Clock());
+
         thread.start();
         clock.start();
+
         try { thread.join();
         } catch (InterruptedException e) { e.printStackTrace(); }
+
+        Agent.getArraysOfStrategies().setMainPageController(this);
+        Agent.setMainPageController(this);
+
+        observableList = FXCollections.observableArrayList();
+        listViewInMainPage.setItems(observableList);
 
         // получить адреса используемых классов
         getAddressesOfUsedClasses();
@@ -144,17 +156,25 @@ public class MainPageController {
 
 
     private void getAListOfStrategy() {
-        if (threadShow == null) {
-            threadShow = new Thread(new Show());
-            threadShow.start();
-        } else {
-            threadShow.interrupt();
-            threadShow = new Thread(new Show());
-            threadShow.start();
-        }
+//        RefreshListView refreshListView = new RefreshListView();
+//        Agent.setRefreshListView(refreshListView);
+
+//        refreshListView.updateListView();
+        observableList.clear();
+        observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
+        observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
+        observableList.add(Enums.OFF_LINE_STRATEGY.toString());
+        observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
+        listViewInMainPage.refresh();
 
 
-
+//        observableList.clear();
+//        observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
+//        observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
+//        observableList.add(Enums.OFF_LINE_STRATEGY.toString());
+//        observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
+//        listViewInMainPage.refresh();
+//        System.out.println("refresh");
 
 //        ObservableList<String> observableList = FXCollections.observableArrayList(Enums.ON_LINE_STRATEGY.toString());
 //        observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
@@ -163,14 +183,18 @@ public class MainPageController {
 //        listViewInMainPage.setItems(observableList);
     }
 
-    class Show implements Runnable {
-        @Override
-        public void run() {
-            ObservableList<String> observableList = FXCollections.observableArrayList(Enums.ON_LINE_STRATEGY.toString());
+
+
+    public class RefreshListView {
+        public void updateListView() {
+            observableList.clear();
+            observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
             observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
             observableList.add(Enums.OFF_LINE_STRATEGY.toString());
             observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
-            listViewInMainPage.setItems(observableList);
+            listViewInMainPage.refresh();
+            System.out.println("refresh");
+//        getAListOfStrategy();
         }
     }
 

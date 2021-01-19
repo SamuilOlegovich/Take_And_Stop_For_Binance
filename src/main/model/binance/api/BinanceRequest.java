@@ -218,7 +218,7 @@ public class BinanceRequest {
             url = new URL(requestUrl);
             log.debug("{} {}", getMethod(), url);
         } catch (MalformedURLException e) {
-            throw new BinanceApiException("Mail formed URL => method connect : " + e.getMessage()); //////////////////////////
+            throw new BinanceApiException("Malformed URL => method connect : " + e.getMessage()); //////////////////////////
         }
 
         try {

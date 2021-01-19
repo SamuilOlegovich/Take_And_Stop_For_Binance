@@ -45,6 +45,7 @@ public abstract class BinanceWebSocketAdapterDepth extends WebSocketAdapter {
             onMessage(new BinanceEventDepthUpdate(operation));
         } catch ( BinanceApiException e ) {
             log.error("Error in websocket message {}", e.getMessage());
+            System.out.println("Error in websocket message {}  " +  e.getMessage());
         }
     }
 

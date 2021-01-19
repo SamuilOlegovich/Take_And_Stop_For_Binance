@@ -8,6 +8,8 @@ package test.model.binance;
  * Released under the MIT License
  * ============================================================ */
 
+import main.model.API;
+import main.model.Agent;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
 import main.model.binance.datatype.BinanceEventDepthLevelUpdate;
@@ -35,12 +37,14 @@ public class DepthStreamTest {
 
     @Before
     public void setUp() throws Exception, BinanceApiException {
+        Agent.setApi(new API());
         binanceApi = new BinanceAPI();
         symbol = BinanceSymbol.valueOf("ETHBTC");
     }
 
     @Test
     public void testDepthStreamWatcher() throws Exception, BinanceApiException {
+
         Session session = binanceApi.webSocketDepth(symbol, new BinanceWebSocketAdapterDepth() {
             @Override
             public void onMessage(BinanceEventDepthUpdate message) {
