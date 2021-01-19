@@ -57,7 +57,6 @@ public class InfoPageController {
         Parent parent = fxmlLoader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(parent));
-//        stage.showAndWait();
         stage.show();
     }
 }

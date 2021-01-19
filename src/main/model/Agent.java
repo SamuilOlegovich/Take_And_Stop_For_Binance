@@ -6,8 +6,9 @@ import main.model.binance.datatype.BinanceEventDepthUpdate;
 
 import java.util.ArrayList;
 
+
+
 public class Agent {
-    private static MainPageController.RefreshListView refreshListView;
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
     private static CreatesTemplatesAndData createsTemplatesAndData;
     private static WriteKeysAndSettings writeKeysAndSettings;
@@ -158,13 +159,5 @@ public class Agent {
 
     public static void setApi(API api) {
         Agent.api = api;
-    }
-
-    public static MainPageController.RefreshListView getRefreshListView() {
-        return refreshListView;
-    }
-
-    public static void setRefreshListView(MainPageController.RefreshListView refreshListView) {
-        Agent.refreshListView = refreshListView;
     }
 }

@@ -156,46 +156,12 @@ public class MainPageController {
 
 
     private void getAListOfStrategy() {
-//        RefreshListView refreshListView = new RefreshListView();
-//        Agent.setRefreshListView(refreshListView);
-
-//        refreshListView.updateListView();
         observableList.clear();
         observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
         observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
         observableList.add(Enums.OFF_LINE_STRATEGY.toString());
         observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
         listViewInMainPage.refresh();
-
-
-//        observableList.clear();
-//        observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
-//        observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
-//        observableList.add(Enums.OFF_LINE_STRATEGY.toString());
-//        observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
-//        listViewInMainPage.refresh();
-//        System.out.println("refresh");
-
-//        ObservableList<String> observableList = FXCollections.observableArrayList(Enums.ON_LINE_STRATEGY.toString());
-//        observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
-//        observableList.add(Enums.OFF_LINE_STRATEGY.toString());
-//        observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
-//        listViewInMainPage.setItems(observableList);
-    }
-
-
-
-    public class RefreshListView {
-        public void updateListView() {
-            observableList.clear();
-            observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
-            observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
-            observableList.add(Enums.OFF_LINE_STRATEGY.toString());
-            observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
-            listViewInMainPage.refresh();
-            System.out.println("refresh");
-//        getAListOfStrategy();
-        }
     }
 
 
@@ -226,7 +192,6 @@ public class MainPageController {
         Parent parent = fxmlLoader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(parent));
-//        stage.showAndWait();
         stage.show();
     }
 
@@ -263,6 +228,8 @@ public class MainPageController {
             return dateFormat.format(date);
         }
     }
+
+
 
     public void updateListView() {
         getAListOfStrategy();
