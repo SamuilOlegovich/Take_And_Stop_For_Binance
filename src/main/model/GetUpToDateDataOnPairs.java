@@ -14,9 +14,9 @@ public class GetUpToDateDataOnPairs implements Runnable {
     @Override
     public void run() {
         get();
-        Thread thread = new Thread(new ConnectWebSocket());
-        thread.start();
     }
+
+
 
     private void get() {
         try {

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Clock;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -26,14 +25,9 @@ import javafx.scene.text.Text;
 
 public class MainPageController {
     private CreatesTemplatesAndData createsTemplatesAndData;
+    private ArraysOfWebSockets arraysOfWebSockets;
     private ArraysOfStrategies arraysOfStrategies;
     private ObservableList<String> observableList;
-    private Thread threadShow;
-
-
-
-//    public MainPageController() { Agent.setMainPageController(this); }
-
 
 
     @FXML
@@ -86,6 +80,7 @@ public class MainPageController {
         Agent.setMainPageController(this);
 
         observableList = FXCollections.observableArrayList();
+        arraysOfWebSockets = Agent.getArraysOfWebSockets();
         listViewInMainPage.setItems(observableList);
 
         // получить адреса используемых классов
@@ -113,11 +108,13 @@ public class MainPageController {
         startAllButton.setOnAction(event -> {
             if (!Agent.isGetUpToDateDataOnPairs()) {
                 openNewScene("/main/view/error_api_or_secret_key.fxml");
+            } else {
+                arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
             }
         });
 
         stopAllButton.setOnAction(event -> {
-
+            arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
         });
 
         timeText.setOnMouseClicked(mouseEvent -> {
@@ -142,7 +139,8 @@ public class MainPageController {
             String stringOfList = getSelectedItem();
             if (!stringOfList.equals(Enums.ON_LINE_STRATEGY.toString())
                     && !stringOfList.equals(Enums.OFF_LINE_STRATEGY.toString())
-                    && !stringOfList.equals(Lines.thereAreNoStrategiesNow)) {
+                    && !stringOfList.equals(Lines.thereAreNoStrategiesNow)
+                    && !stringOfList.equals("")) {
                 arraysOfStrategies.findStrategy(getSelectedItem());
                 openNewScene("/main/view/edit.fxml");
             }
@@ -224,6 +222,9 @@ public class MainPageController {
 
         private String getDate() {
             Date date = new Date();
+            date.setTime(Agent.getDateDifference() > 0
+                    ? date.getTime() + (1000 * 60 * 60 * Math.abs(Agent.getDateDifference()))
+                    : date.getTime() - (1000 * 60 * 60 * Math.abs(Agent.getDateDifference())));
             dateFormat.format(date);
             return dateFormat.format(date);
         }

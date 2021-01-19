@@ -1,5 +1,7 @@
 package main.model;
 
+import java.math.BigDecimal;
+
 public class StrategyObject {
     private String nameStrategy;
     private String tradingPair;
@@ -15,13 +17,15 @@ public class StrategyObject {
 
     private Position position;
 
+    private BigDecimal priceAskNow;
+    private BigDecimal priceBidNow;
+
     private int fractionalParts;
     private int buyOrSell;
 
     private boolean onOrOffFP;
     private boolean onOrOffTS;
     private boolean works;
-
 
 
 
@@ -137,9 +141,7 @@ public class StrategyObject {
         return buyOrSellCoins;
     }
 
-    public boolean getWorks() {
-        return works;
-    }
+    public boolean getWorks() { return works; }
 
     public Position getPosition() {
         return position;
@@ -153,8 +155,21 @@ public class StrategyObject {
         this.position = position;
     }
 
+
     public void setWorks(boolean works) {
         this.works = works;
+    }
+
+
+    public synchronized void setPriceAskAndBidNow(BigDecimal ask, BigDecimal bid) {
+        this.priceAskNow = ask;
+        this.priceBidNow = bid;
+        doSomethingOrNot();
+    }
+
+    // делаем что-то или нет
+    private void doSomethingOrNot() {
+
     }
 
     public void setClassID(String classID) {

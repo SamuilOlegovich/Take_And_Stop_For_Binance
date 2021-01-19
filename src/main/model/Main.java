@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.checkerframework.checker.units.qual.A;
 
 
 public class Main extends Application {
@@ -29,6 +28,7 @@ public class Main extends Application {
         Agent.setApi(new API());
         // создаем класс хранения всех стратегий
         Agent.setArraysOfStrategies(new ArraysOfStrategies());
+        Agent.setArraysOfWebSockets(new ArraysOfWebSockets());
         Agent.setCreatesTemplatesAndData(new CreatesTemplatesAndData());
         // создаем все нужные папки и путя к ним если это надо
         Agent.setFilesAndPathCreator(new FilesAndPathCreator());

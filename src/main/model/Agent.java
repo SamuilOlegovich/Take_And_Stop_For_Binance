@@ -12,6 +12,7 @@ public class Agent {
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
     private static CreatesTemplatesAndData createsTemplatesAndData;
     private static WriteKeysAndSettings writeKeysAndSettings;
+    private static ArraysOfWebSockets arraysOfWebSockets;
     private static ReadKeysAndSettings readKeysAndSettings;
     private static FilesAndPathCreator filesAndPathCreator;
     private static MainPageController mainPageController;
@@ -159,5 +160,13 @@ public class Agent {
 
     public static void setApi(API api) {
         Agent.api = api;
+    }
+
+    public static ArraysOfWebSockets getArraysOfWebSockets() {
+        return arraysOfWebSockets;
+    }
+
+    public static void setArraysOfWebSockets(ArraysOfWebSockets arraysOfWebSockets) {
+        Agent.arraysOfWebSockets = arraysOfWebSockets;
     }
 }
