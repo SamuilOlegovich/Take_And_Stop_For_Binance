@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Clock;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -14,8 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.model.*;
 import javafx.scene.text.Text;
@@ -67,14 +68,12 @@ public class MainPageController {
 
     @FXML
     void initialize() {
+        if (!Agent.isYesOrNotAPIKey()) openNewScene("/main/view/authorization.fxml");
         Thread thread = new Thread(new GetUpToDateDataOnPairs());
         Thread clock = new Thread(new Clock());
-
         thread.start();
         clock.start();
-
-        try { thread.join();
-        } catch (InterruptedException e) { e.printStackTrace(); }
+        try { thread.join(); } catch (InterruptedException e) { e.printStackTrace(); }
 
         Agent.getArraysOfStrategies().setMainPageController(this);
         Agent.setMainPageController(this);
@@ -118,9 +117,7 @@ public class MainPageController {
         });
 
         timeText.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() == 2) {
-                openNewScene("/main/view/time.fxml");
-            }
+            if (mouseEvent.getClickCount() == 2) { openNewScene("/main/view/time.fxml"); }
         });
 
         startButton.setOnAction(event -> {
@@ -165,8 +162,9 @@ public class MainPageController {
 
 
     private void getAddressesOfUsedClasses() {
-        createsTemplatesAndData = Agent.getCreatesTemplatesAndData();
         arraysOfStrategies = Agent.getArraysOfStrategies();
+        createsTemplatesAndData = Agent.getCreatesTemplatesAndData();
+        arraysOfStrategies.setWriteKeysAndSettings(Agent.getWriteKeysAndSettings());
     }
 
 
@@ -176,7 +174,7 @@ public class MainPageController {
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится
         // и дальше уже это окно уже прячем
-        startAllButton.getScene().getWindow().hide();
+//        startAllButton.getScene().getWindow().hide();
         // далее нам нужно отобразить следующее нужное нам окно
         FXMLLoader fxmlLoader = new FXMLLoader();
         // устанавливаем локацию файла который нам надо загрузить
@@ -191,6 +189,36 @@ public class MainPageController {
         Stage stage = new Stage();
         stage.setScene(new Scene(parent));
         stage.show();
+
+
+
+//        Alert alert = new Alert(AlertType.CONFIRMATION);
+//        alert.setTitle("Select");
+//        alert.setHeaderText("Choose the sport you like:");
+//
+//        ButtonType football = new ButtonType("Football");
+//        ButtonType badminton = new ButtonType("Badminton");
+//        ButtonType volleyball = new ButtonType("Volleyball");
+//
+//        // Remove default ButtonTypes
+//        alert.getButtonTypes().clear();
+//
+//        alert.getButtonTypes().addAll(football, badminton, volleyball);
+//
+//        // option != null.
+//        Optional<ButtonType> option = alert.showAndWait();
+
+//        if (option.get() == null) {
+//            this.label.setText("No selection!");
+//        } else if (option.get() == football) {
+//            this.label.setText("You like Football");
+//        } else if (option.get() == badminton) {
+//            this.label.setText("You like Badminton");
+//        } else if (option.get() == volleyball) {
+//            this.label.setText("You like Volleyball");
+//        } else {
+//            this.label.setText("-");
+//        }
     }
 
 

@@ -32,6 +32,7 @@ public class CreatesTemplatesAndData {
                 + Enums.WORKS + Lines.delimiter + Enums.FALSE + Lines.newline
                 + Enums.TRADING_PAIR + Lines.delimiter +"ETHBTC" + Lines.newline
                 + Enums.BUY_OR_SELL + Lines.delimiter + Enums.BUY + Lines.newline
+                + Enums.LOWER_OR_HIGHER_PRICE + Lines.delimiter + Enums.HIGHER + Lines.newline
                 + Enums.AMOUNT_OF_COINS + Lines.delimiter + "12.890" + Lines.newline
                 + Enums.PRICE + Lines.delimiter + "0.03498738" + Lines.newline
                 + Enums.TAKE_PRICE + Lines.delimiter + "0.04889889" + Lines.newline
@@ -48,6 +49,7 @@ public class CreatesTemplatesAndData {
                 + Enums.WORKS + Lines.delimiter + Enums.FALSE + Lines.newline
                 + Enums.TRADING_PAIR + Lines.delimiter + "LTCBTC" + Lines.newline
                 + Enums.BUY_OR_SELL + Lines.delimiter + Enums.SELL + Lines.newline
+                + Enums.LOWER_OR_HIGHER_PRICE + Lines.delimiter + Enums.LOWER + Lines.newline
                 + Enums.AMOUNT_OF_COINS + Lines.delimiter + "0.890" + Lines.newline
                 + Enums.PRICE + Lines.delimiter + "0.00349873" + Lines.newline
                 + Enums.TAKE_PRICE + Lines.delimiter + "0.00304889" + Lines.newline
@@ -75,6 +77,7 @@ public class CreatesTemplatesAndData {
             sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks()).append(Lines.newline);
             sB.append(Enums.TRADING_PAIR).append(Lines.delimiter).append(s.getTradingPair()).append(Lines.newline);
             sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.newline);
+            sB.append(Enums.LOWER_OR_HIGHER_PRICE).append(Lines.delimiter).append(s.isLowerOrHigherPrices() ? Enums.HIGHER : Enums.LOWER).append(Lines.newline);
             sB.append(Enums.AMOUNT_OF_COINS).append(Lines.delimiter).append(s.getAmountOfCoins()).append(Lines.newline);
             sB.append(Enums.PRICE).append(Lines.delimiter).append(s.getPrice()).append(Lines.newline);
             sB.append(Enums.TAKE_PRICE).append(Lines.delimiter).append(s.getTakePrice()).append(Lines.newline);
@@ -93,6 +96,7 @@ public class CreatesTemplatesAndData {
             sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks()).append(Lines.newline);
             sB.append(Enums.TRADING_PAIR).append(Lines.delimiter).append(s.getTradingPair()).append(Lines.newline);
             sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.newline);
+            sB.append(Enums.LOWER_OR_HIGHER_PRICE).append(Lines.delimiter).append(s.isLowerOrHigherPrices() ? Enums.HIGHER : Enums.LOWER).append(Lines.newline);
             sB.append(Enums.AMOUNT_OF_COINS).append(Lines.delimiter).append(s.getAmountOfCoins()).append(Lines.newline);
             sB.append(Enums.PRICE).append(Lines.delimiter).append(s.getPrice()).append(Lines.newline);
             sB.append(Enums.TAKE_PRICE).append(Lines.delimiter).append(s.getTakePrice()).append(Lines.newline);

@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 
+
+
 public class InfoPageController {
 
     @FXML
@@ -27,13 +29,9 @@ public class InfoPageController {
 
     @FXML
     void initialize() {
-        backButton.setOnAction(event -> {
-            openNewScene("/main/view/edit.fxml");
-        });
+        backButton.setOnAction(event -> { openNewScene("/main/view/edit.fxml"); });
 
-        backButton.setOnAction(event -> {
-            openNewScene("/main/view/main.fxml");
-        });
+        backButton.setOnAction(event -> { openNewScene("/main/view/main.fxml"); });
     }
 
 
@@ -49,11 +47,9 @@ public class InfoPageController {
         // устанавливаем локацию файла который нам надо загрузить
         fxmlLoader.setLocation(getClass().getResource(window));
         // а теперь запускаем его отображение
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        try { fxmlLoader.load(); }
+        catch (IOException e) { e.printStackTrace(); }
+
         Parent parent = fxmlLoader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(parent));

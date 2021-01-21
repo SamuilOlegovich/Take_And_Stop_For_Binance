@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import main.animations.Shake;
 import main.model.*;
 import javafx.scene.text.Text;
 
@@ -34,6 +35,7 @@ public class EditController {
     private int fractionalParts;
     private int buyOrSell;
 
+    private boolean lowerOrHigher;
     private boolean onOrOffFP;
     private boolean onOrOffTS;
 
@@ -103,6 +105,12 @@ public class EditController {
     private RadioButton offTSRadioButton;
 
     @FXML
+    private RadioButton higherButton;
+
+    @FXML
+    private RadioButton lowerButton;
+
+    @FXML
     void initialize() {
         arraysOfStrategies = Agent.getArraysOfStrategies();
         // получаем и выводим список торговых пар
@@ -121,6 +129,14 @@ public class EditController {
 
         sellRadioButton.setOnAction(event -> {
             buyOrSell = -1;
+        });
+
+        higherButton.setOnAction(event -> {
+            lowerOrHigher = true;
+        });
+
+        lowerButton.setOnAction(event -> {
+            lowerOrHigher = false;
         });
 
         onTSRadioButton.setOnAction(event -> {
@@ -191,6 +207,12 @@ public class EditController {
         if (buyOrSell == 1) buyRadioButton.setSelected(true);
         else sellRadioButton.setSelected(true);
 
+        ToggleGroup groupLowerOrHigher = new ToggleGroup();
+        lowerButton.setToggleGroup(groupLowerOrHigher);
+        higherButton.setToggleGroup(groupLowerOrHigher);
+        if (lowerOrHigher) higherButton.setSelected(true);
+        else lowerButton.setSelected(true);
+
         ToggleGroup groupOnOrOffFp = new ToggleGroup();
         onFPRadioButton.setToggleGroup(groupOnOrOffFp);
         offFPRadioButton.setToggleGroup(groupOnOrOffFp);
@@ -258,54 +280,30 @@ public class EditController {
             }
             if (flag) tradingPair = tradingPairText;
             else tradingPair = null;
-        } else {
-            tradingPair = null;
-        }
+        } else { tradingPair = null; }
 
-        if (nameStrategyText.length() >= 1) {
-            nameStrategy = nameStrategyText;
-        } else {
-            nameStrategy = null;
-        }
+        if (nameStrategyText.length() >= 1) { nameStrategy = nameStrategyText; }
+        else { nameStrategy = null; }
 
-        if (numberOfCoinsText.length() >= 1) {
-            numberOfCoins = Double.parseDouble(numberOfCoinsText);
-        } else {
-            numberOfCoins = -1.0;
-        }
+        if (numberOfCoinsText.length() >= 1) { numberOfCoins = Double.parseDouble(numberOfCoinsText); }
+        else { numberOfCoins = -1.0; }
 
-        if (priceText.length() >= 1) {
-            price = Double.parseDouble(priceText);
-        } else {
-            price = -1.0;
-        }
+        if (priceText.length() >= 1) { price = Double.parseDouble(priceText); }
+        else { price = -1.0; }
 
-        if (takePriceText.length() > 1) {
-            takePrice = Double.parseDouble(takePriceText);
-        } else {
-            takePrice = -1.0;
-        }
+        if (takePriceText.length() > 1) { takePrice = Double.parseDouble(takePriceText); }
+        else { takePrice = -1.0; }
 
-        if (stopPriceText.length() > 1) {
-            stopPrice = Double.parseDouble(stopPriceText);
-        } else {
-            stopPrice = -1.0;
-        }
+        if (stopPriceText.length() > 1) { stopPrice = Double.parseDouble(stopPriceText); }
+        else { stopPrice = -1.0; }
 
         if (fractionalPartsText.length() > 1) {
             int i = Integer.parseInt(fractionalPartsText);
-            if (i > 1 && i < 11) {
-                fractionalParts = i;
-            } else {
-                fractionalParts = -1;
-            }
-        } else {
-            fractionalParts = -1;
-        }
+            if (i > 1 && i < 11) { fractionalParts = i; }
+            else { fractionalParts = -1; }
+        } else { fractionalParts = -1; }
 
-        if (trailingStopText.length() > 3) {
-            trailingStop = Double.parseDouble(trailingStopText);
-        }
+        if (trailingStopText.length() > 3) { trailingStop = Double.parseDouble(trailingStopText); }
     }
 
 
@@ -316,37 +314,95 @@ public class EditController {
         StringBuilder blankFields = new StringBuilder("You have not completed!\n");
         if (tradingPair == null) {
             blankFields.append("· Trading pair\n");
+            Shake shake = new Shake(tradingPairField);
+            shake.playAnim();
             flag = false;
         }
+
         if (buyOrSell == 0) {
             blankFields.append("· Not chosen BUY or SELL\n");
+            Shake shake2 = new Shake(sellRadioButton);
+            Shake shake = new Shake(buyRadioButton);
+            shake2.playAnim();
+            shake.playAnim();
             flag = false;
         }
+
         if (nameStrategy == null) {
             blankFields.append("· Name strategy\n");
+            Shake shake = new Shake(nameStrategyField);
+            shake.playAnim();
             flag = false;
         }
+
         if (numberOfCoins == -1) {
             blankFields.append("· Number of coins\n");
+            Shake shake = new Shake(numberOfCoinsField);
+            shake.playAnim();
             flag = false;
         }
+
         if (price == -1 && !onOrOffTS) {
             blankFields.append("· Price\n");
+            Shake shake = new Shake(priceField);
+            shake.playAnim();
             flag = false;
         }
         // Уберите цену, включен трайлирующий стоп, или выключите стоп
         if (price > 0 && onOrOffTS) {
             blankFields.append("· Remove price, turn on trailing stop, or turn off stop\n");
+            Shake shake3 = new Shake(offTSRadioButton);
+            Shake shake2 = new Shake(onTSRadioButton);
+            Shake shake = new Shake(priceField);
+            shake3.playAnim();
+            shake2.playAnim();
+            shake.playAnim();
             flag = false;
         }
         // проверить что-то тут не так ----------------------------------------------------
         if (trailingStop == -1 && onOrOffTS) {
             blankFields.append("· Trailing stop\n");
+            Shake shake3 = new Shake(offTSRadioButton);
+            Shake shake2 = new Shake(onTSRadioButton);
+            Shake shake = new Shake(trailingStopField);
+            shake3.playAnim();
+            shake2.playAnim();
+            shake.playAnim();
             flag = false;
         }
         // указан но выключен
         if (trailingStop > 0 && !onOrOffTS) {
             blankFields.append("· Trailing stop specified but disabled\n");
+            Shake shake3 = new Shake(offTSRadioButton);
+            Shake shake2 = new Shake(onTSRadioButton);
+            Shake shake = new Shake(trailingStopField);
+            shake3.playAnim();
+            shake2.playAnim();
+            shake.playAnim();
+            flag = false;
+        }
+
+        if ((buyOrSell == 1 && (price > takePrice && takePrice > 0))
+                || (buyOrSell == 1 && (price < stopPrice && stopPrice > 0))) {
+            blankFields.append("· Something is wrong with the price, stop and take\n");
+            Shake shake3 = new Shake(stopPriceField);
+            Shake shake2 = new Shake(takePriceField);
+            Shake shake = new Shake(priceField);
+            shake3.playAnim();
+            shake2.playAnim();
+            shake.playAnim();
+            flag = false;
+        }
+
+        if ((buyOrSell == -1 && (price < takePrice && takePrice > 0))
+                || (buyOrSell == -1 && (price > stopPrice && stopPrice > 0))) {
+            blankFields.append("· Something is wrong with the price, stop and take\n");
+            Shake shake3 = new Shake(stopPriceField);
+            Shake shake2 = new Shake(takePriceField);
+            Shake shake = new Shake(priceField);
+            shake3.playAnim();
+            shake2.playAnim();
+            shake.playAnim();
             flag = false;
         }
 
@@ -358,11 +414,8 @@ public class EditController {
 
         textInfoERROR.setText("");
         textInfoERROR.setText(Lines.s4);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        try { Thread.sleep(2000);
+        } catch (InterruptedException e) { e.printStackTrace(); }
         return true;
     }
 
@@ -411,6 +464,7 @@ public class EditController {
             stopPrice = strategyObject.getStopPrice();
             price = strategyObject.getPrice();
 
+            lowerOrHigher = strategyObject.isLowerOrHigherPrices();
             fractionalParts = strategyObject.getFractionalParts();
             buyOrSell = strategyObject.getBuyOrSell();
             onOrOffFP = strategyObject.getOnOrOffFP();

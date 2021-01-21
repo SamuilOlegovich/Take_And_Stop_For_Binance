@@ -10,8 +10,9 @@ public class ArraysOfStrategies {
     private final ArrayList<StrategyObject> stoppedStrategyList;
     private final ArrayList<StrategyObject> tradedStrategyList;
 
+    private final ArraysOfWebSockets arraysOfWebSockets;
+    private WriteKeysAndSettings writeKeysAndSettings;
     private MainPageController mainPageController;
-    private ArraysOfWebSockets arraysOfWebSockets;
     private StrategyObject strategyObject;
 
 
@@ -20,6 +21,7 @@ public class ArraysOfStrategies {
         this.arraysOfWebSockets = Agent.getArraysOfWebSockets();
         this.stoppedStrategyList = new ArrayList<>();
         this.tradedStrategyList = new ArrayList<>();
+        this.writeKeysAndSettings = null;
         this.mainPageController = null;
     }
 
@@ -56,6 +58,7 @@ public class ArraysOfStrategies {
         stoppedStrategyList.add(in);
         mainPageController.updateListView();
         strategyObject = null;
+        writeKeysAndSettings.writeNewSettingsAndStates();
     }
 
 
@@ -103,6 +106,7 @@ public class ArraysOfStrategies {
         tradedStrategyList.add(strategyObject);
         mainPageController.updateListView();
         arraysOfWebSockets.addOneStrategyToWiretap(strategyObject);
+        writeKeysAndSettings.writeNewSettingsAndStates();
     }
 
 
@@ -123,6 +127,7 @@ public class ArraysOfStrategies {
         strategyObject.setWorks(false);
         stoppedStrategyList.add(strategyObject);
         mainPageController.updateListView();
+        writeKeysAndSettings.writeNewSettingsAndStates();
     }
 
 
@@ -133,9 +138,10 @@ public class ArraysOfStrategies {
         String id = in.split(Lines.space)[0];
         int index = -1;
 
-        for (StrategyObject s : tradedStrategyList) {
-            if (id.equals(s.getClassID())) {
-                index = tradedStrategyList.indexOf(s);
+        for (StrategyObject object : tradedStrategyList) {
+            if (id.equals(object.getClassID())) {
+                index = tradedStrategyList.indexOf(object);
+                object.setWorks(false);
                 break;
             }
         }
@@ -144,21 +150,25 @@ public class ArraysOfStrategies {
             mainPageController.updateListView();
             return;
         }
-        for (StrategyObject s : stoppedStrategyList) {
-            if (id.equals(s.getClassID())) {
-                index = stoppedStrategyList.indexOf(s);
+        for (StrategyObject object : stoppedStrategyList) {
+            if (id.equals(object.getClassID())) {
+                index = stoppedStrategyList.indexOf(object);
                 break;
             }
         }
         if (index >= 0 ) {
-            tradedStrategyList.remove(index);
+            stoppedStrategyList.remove(index);
             mainPageController.updateListView();
         }
+        writeKeysAndSettings.writeNewSettingsAndStates();
     }
 
 
 
+
     public void setMainPageController(MainPageController mainPageController) { this.mainPageController = mainPageController; }
+
+    public void setWriteKeysAndSettings(WriteKeysAndSettings in) { this.writeKeysAndSettings = in; }
 
     public ArrayList<StrategyObject> getStoppedStrategyListObject() { return stoppedStrategyList; }
 

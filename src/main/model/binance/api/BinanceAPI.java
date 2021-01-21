@@ -57,7 +57,6 @@ public class BinanceAPI {
      * API Base URL
      */
     public String baseUrl = "https://www.binance.com/api/";
-//    public String baseUrl = "https://api1.binance.com/api/";
     /**
      * Old W-API Base URL. Might not function well at that moment, please use modern wapi3 API instead
      */
@@ -69,8 +68,7 @@ public class BinanceAPI {
     /**
      * Base URL for websockets
      */
-//    public String websocketBaseUrl = "wss://stream.test.resources.model.binance.com:9443/ws/";
-    public String websocketBaseUrl = "wss://stream.binance.com:9443/ws/";
+    public String webSocketBaseUrl = "wss://stream.binance.com:9443/ws/";
 
     /**
      * Guava Class Instance for escaping
@@ -84,8 +82,8 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public BinanceAPI(String apiKey, String secretKey) throws BinanceApiException {
-        this.apiKey = apiKey;
         this.secretKey = secretKey;
+        this.apiKey = apiKey;
         validateCredentials();
     }
 
@@ -129,8 +127,7 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public JsonObject ping() throws BinanceApiException {
-        return (new BinanceRequest(baseUrl + "v1/ping"))
-                .read().asJsonObject();
+        return (new BinanceRequest(baseUrl + "v1/ping")).read().asJsonObject();
     }
 
     /**
@@ -139,8 +136,7 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public JsonObject time() throws BinanceApiException {
-        return (new BinanceRequest(baseUrl + "v1/time"))
-                .read().asJsonObject();
+        return (new BinanceRequest(baseUrl + "v1/time")).read().asJsonObject();
     }
 
 
@@ -161,8 +157,7 @@ public class BinanceAPI {
      * глубина
      */
     public JsonObject depth(BinanceSymbol symbol) throws BinanceApiException {
-        return (new BinanceRequest(baseUrl + "v1/depth?symbol=" + symbol.get()))
-                .read().asJsonObject();
+        return (new BinanceRequest(baseUrl + "v1/depth?symbol=" + symbol.get())).read().asJsonObject();
     }
 
     /**
@@ -202,17 +197,14 @@ public class BinanceAPI {
         String u = baseUrl + "v1/aggTrades?symbol=" + symbol.get() + "&limit=" + limit;
         if (options != null) {
             for (String optionKey : options.keySet()) {
-                if (!optionKey.equals("fromId") &&
-                        !optionKey.equals("startTime") &&
-                        !optionKey.equals("endTime")) {
+                if (!optionKey.equals("fromId") && !optionKey.equals("startTime") && !optionKey.equals("endTime")) {
                     throw new BinanceApiException("Invalid aggTrades option, only fromId, startTime, endTime are allowed");
                 }
                 u += "&" + optionKey + "=" + options.get(optionKey);
             }
         }
         String lastResponse = (new BinanceRequest(u)).read().getLastResponse();
-        Type listType = new TypeToken<List<BinanceAggregatedTrades>>() {
-        }.getType();
+        Type listType = new TypeToken<List<BinanceAggregatedTrades>>() {}.getType();
         return new Gson().fromJson(lastResponse, listType);
     }
 
@@ -294,7 +286,7 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public BinanceExchangeStats publicStats() throws BinanceApiException {
-        JsonObject jsonObject = (new BinanceRequest("https://www.binance.com/exchange/public/product"))
+        JsonObject jsonObject = new BinanceRequest("https://www.binance.com/exchange/public/product")
                 .read().asJsonObject();
         return new BinanceExchangeStats(jsonObject);
     }
@@ -307,8 +299,7 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public BinanceExchangeInfo exchangeInfo() throws BinanceApiException {
-        JsonObject jsonObject = (new BinanceRequest(baseUrl + "v1/exchangeInfo"))
-                .read().asJsonObject();
+        JsonObject jsonObject = (new BinanceRequest(baseUrl + "v1/exchangeInfo")).read().asJsonObject();
         return new BinanceExchangeInfo(jsonObject);
     }
 
@@ -320,8 +311,7 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public JsonArray ticker24hr() throws BinanceApiException {
-        return (new BinanceRequest(baseUrl + "v1/ticker/24hr" ))
-                .read().asJsonArray();
+        return (new BinanceRequest(baseUrl + "v1/ticker/24hr" )).read().asJsonArray();
     }
 
     /**
@@ -333,8 +323,7 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public JsonObject ticker24hr(BinanceSymbol symbol) throws BinanceApiException {
-        return (new BinanceRequest(baseUrl + "v1/ticker/24hr?symbol=" + symbol.get()))
-                .read().asJsonObject();
+        return (new BinanceRequest(baseUrl + "v1/ticker/24hr?symbol=" + symbol.get())).read().asJsonObject();
     }
 
 
@@ -346,8 +335,7 @@ public class BinanceAPI {
      * @throws BinanceApiException  in case of any error
      */
     public JsonArray allPrices() throws BinanceApiException {
-        return (new BinanceRequest(baseUrl + "v1/ticker/allPrices"))
-                .read().asJsonArray();
+        return (new BinanceRequest(baseUrl + "v1/ticker/allPrices")).read().asJsonArray();
     }
 
     /**
@@ -374,8 +362,7 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public JsonArray allBookTickers() throws BinanceApiException {
-        return (new BinanceRequest(baseUrl + "v1/ticker/allBookTickers"))
-                .read().asJsonArray();
+        return (new BinanceRequest(baseUrl + "v1/ticker/allBookTickers")).read().asJsonArray();
     }
 
     /**
@@ -387,14 +374,11 @@ public class BinanceAPI {
      */
     public Map<String, BinanceTicker> allBookTickersMap() throws BinanceApiException {
         String lastResponse = (new BinanceRequest(baseUrl + "v1/ticker/allBookTickers")).read().getLastResponse();
-        Type listType = new TypeToken<List<BinanceTicker>>() {
-        }.getType();
+        Type listType = new TypeToken<List<BinanceTicker>>() {}.getType();
 
         Map<String, BinanceTicker> mapTickers = new ConcurrentHashMap<>();
         List<BinanceTicker> ticker = new Gson().fromJson(lastResponse, listType);
-        for (BinanceTicker t : ticker) {
-            mapTickers.put(t.getSymbol(), t);
-        }
+        for (BinanceTicker t : ticker) { mapTickers.put(t.getSymbol(), t); }
         return mapTickers;
     }
 
@@ -403,11 +387,8 @@ public class BinanceAPI {
         try {
             BinanceExchangeStats binanceExchangeStats = this.publicStats();
             return binanceExchangeStats.getCoinsOf(coin.toUpperCase());
-        } catch (Exception e) {
-            log.error("BINANCE UNCAUGHT EXCEPTION {}", e);
-        } catch (BinanceApiException e) {
-            log.warn("BINANCE ERROR {}", e.getMessage());
-        }
+        } catch (Exception e) { log.error("BINANCE UNCAUGHT EXCEPTION {}", e);
+        } catch (BinanceApiException e) { log.warn("BINANCE ERROR {}", e.getMessage()); }
         return ImmutableSet.of();
     }
 
@@ -428,16 +409,8 @@ public class BinanceAPI {
      * @throws BinanceApiException in case of any error
      */
     public JsonObject account() throws BinanceApiException {
-        BinanceRequest binanceRequest = new BinanceRequest(baseUrl + "v3/account");
-        binanceRequest.sign(apiKey, secretKey, null);
-//        System.out.println(binanceRequest.toString());
-        binanceRequest.read();
-//        System.out.println(binanceRequest.toString());
-        JsonObject jsonObject = binanceRequest.asJsonObject();
-//        System.out.println(jsonObject.toString());
-//        return (new BinanceRequest(baseUrl + "v3/account"))
-//                .sign(apiKey, secretKey, null).read().asJsonObject();
-        return jsonObject;
+        return new BinanceRequest(baseUrl + "v3/account")
+                .sign(apiKey, secretKey, null).read().asJsonObject();
     }
 
     /**
@@ -479,8 +452,7 @@ public class BinanceAPI {
 	public List<BinanceOrder> allOpenOrders() throws BinanceApiException {
 		String u = baseUrl + "v3/openOrders";
 		String lastResponse = (new BinanceRequest(u)).sign(apiKey, secretKey, null).read().getLastResponse();
-		Type listType = new TypeToken<List<BinanceOrder>>() {
-		}.getType();
+		Type listType = new TypeToken<List<BinanceOrder>>() {}.getType();
 		return new Gson().fromJson(lastResponse, listType);
 	}
     
@@ -495,8 +467,7 @@ public class BinanceAPI {
     public List<BinanceOrder> openOrders(BinanceSymbol symbol) throws BinanceApiException {
         String u = baseUrl + "v3/openOrders?symbol=" + symbol.toString();
         String lastResponse = (new BinanceRequest(u)).sign(apiKey, secretKey, null).read().getLastResponse();
-        Type listType = new TypeToken<List<BinanceOrder>>() {
-        }.getType();
+        Type listType = new TypeToken<List<BinanceOrder>>() {}.getType();
         return new Gson().fromJson(lastResponse, listType);
     }
     /**
@@ -516,7 +487,6 @@ public class BinanceAPI {
     public List<BinanceOrder> allOrders(BinanceSymbol symbol, Long orderId, int limit) throws BinanceApiException {
         String u = baseUrl + "v3/allOrders?symbol=" + symbol.toString() + "&limit=" + limit;
         if (orderId != null && orderId > 0) u += "&orderId=" + orderId;
-
         String lastResponse = (new BinanceRequest(u)).sign(apiKey, secretKey, null).read().getLastResponse();
         Type listType = new TypeToken<List<BinanceOrder>>() {}.getType();
         return new Gson().fromJson(lastResponse, listType);
@@ -759,17 +729,14 @@ public class BinanceAPI {
      */
     public Session getWebSocketSession(String url, WebSocketAdapter adapter) throws BinanceApiException {
         try {
-            URI uri = new URI(websocketBaseUrl + url);
+            URI uri = new URI(webSocketBaseUrl + url);
             SslContextFactory sslContextFactory = new SslContextFactory();
             sslContextFactory.setTrustAll(true); // The magic
             WebSocketClient client = new WebSocketClient(sslContextFactory);
             client.start();
             return client.connect(adapter, uri).get();
-        } catch (URISyntaxException e) {
-            throw new BinanceApiException("URL Syntax error: " + e.getMessage());
-        } catch (Throwable e) {
-            throw new BinanceApiException("Websocket error: " + e.getMessage());
-        }
+        } catch (URISyntaxException e) { throw new BinanceApiException("URL Syntax error: " + e.getMessage());
+        } catch (Throwable e) { throw new BinanceApiException("Websocket error: " + e.getMessage()); }
     }
 
     /**
@@ -877,13 +844,9 @@ public class BinanceAPI {
      */
     public JsonObject withdraw(String asset, String address, long amount, String name) throws BinanceApiException {
         String u = baseWapiUrl + "/v1/withdraw.html?asset=" + esc.escape(asset) +
-                "&address=" + esc.escape(address) +
-                "&amount=" + amount;
-        if (!Strings.isNullOrEmpty(name)) {
-            u += "name=" + esc.escape(name);
-        }
-        return (new BinanceRequest(u))
-                .sign(apiKey).post().read().asJsonObject();
+                "&address=" + esc.escape(address) + "&amount=" + amount;
+        if (!Strings.isNullOrEmpty(name)) { u += "name=" + esc.escape(name); }
+        return (new BinanceRequest(u)).sign(apiKey).post().read().asJsonObject();
     }
 
     /**
@@ -934,19 +897,13 @@ public class BinanceAPI {
         return (new BinanceRequest(u)).read().asJsonObject();
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof BinanceAPI;
-    }
+    protected boolean canEqual(final Object other) { return other instanceof BinanceAPI; }
 
     /////////////////////////////////////    I had to add == пришлось добавить   ///////////////////////////////////////
 
-    private String getSecretKey() {
-        return secretKey;
-    }
+    private String getSecretKey() { return secretKey; }
 
-    private String getApiKey() {
-        return apiKey;
-    }
+    private String getApiKey() { return apiKey; }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

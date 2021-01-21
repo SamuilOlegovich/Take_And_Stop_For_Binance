@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ArraysOfWebSockets {
     private final ArraysOfStrategies arraysOfStrategies;
-    private final Map<String, ConnectWebSocket> map;
+    private final Map<String, WebSocket> map;
 
 
 
@@ -29,10 +29,9 @@ public class ArraysOfWebSockets {
 
     // Остановить все розетки для рабочих пар
     public void stopAllWebSocketsForWorkingCouples() {
-        String[] keys = map.keySet().toArray(new String[map.size()]);
-
-
-
+        String[] keys = map.keySet().toArray(new String[0]);
+        for (String key : keys) { map.get(key).getThread().interrupt(); }
+        map.clear();
     }
 
 
@@ -46,12 +45,8 @@ public class ArraysOfWebSockets {
 
     public synchronized void closeWebSocket(String key) {
         map.get(key).getThread().interrupt();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        map.remove(key, map.get(key));
+        try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }
+        map.remove(key);
     }
 
 
@@ -59,6 +54,6 @@ public class ArraysOfWebSockets {
     private void addToListener(StrategyObject in) {
         String key = in.getTradingPair();
         if (map.containsKey(key)) map.get(key).addStrategyObject(in);
-        else map.put(key, new ConnectWebSocket(in));
+        else map.put(key, new WebSocket(in));
     }
 }

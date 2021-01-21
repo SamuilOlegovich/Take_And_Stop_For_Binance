@@ -11,7 +11,6 @@ public class WriterAndReadFile {
 
     public void writerFile(String string, String path, boolean reWrite) {
         File file = new File(path);
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, reWrite))) {
             writer.write(string);
             writer.flush();

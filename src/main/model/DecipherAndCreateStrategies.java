@@ -44,6 +44,8 @@ public class DecipherAndCreateStrategies {
                     strategyObject.setOnOrOffFP(value.equals(Enums.TRUE.toString()));
                 } else if (name.equals(Enums.BUY_OR_SELL_COINS.toString())) {
                     strategyObject.setBuyOrSellCoins(Double.parseDouble(value));
+                } else if (name.equals(Enums.LOWER_OR_HIGHER_PRICE.toString())) {
+                    strategyObject.setLowerOrHigherPrices(value.endsWith(Enums.HIGHER.toString()));
                 } else if (name.equals(Enums.POSITION.toString())) {
                     for (Position p : Position.values()) {
                         if (value.equals(p.toString())) {

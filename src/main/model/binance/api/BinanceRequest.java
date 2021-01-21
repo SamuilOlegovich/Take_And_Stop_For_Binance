@@ -99,26 +99,18 @@ public class BinanceRequest {
      */
     public BinanceRequest sign(String apiKey, String secretKey, Map<String, String> options) throws BinanceApiException {
         String humanMessage = "Please check environment variables or VM options";
-        if (Strings.isNullOrEmpty(apiKey))
-            throw new BinanceApiException("Missing BINANCE_API_KEY. " + humanMessage);
-        if (Strings.isNullOrEmpty(secretKey))
-            throw new BinanceApiException("Missing BINANCE_SECRET_KEY. " + humanMessage);
+        if (Strings.isNullOrEmpty(apiKey)) throw new BinanceApiException("Missing BINANCE_API_KEY. " + humanMessage);
+        if (Strings.isNullOrEmpty(secretKey)) throw new BinanceApiException("Missing BINANCE_SECRET_KEY. " + humanMessage);
 
         if (!Strings.isNullOrEmpty(secretKey) && !requestUrl.contains("&signature=")) {
             List<String> list = new LinkedList<>();
-            if (options != null) {
-                for (String key : options.keySet()) {
-                    list.add(key + "=" + options.get(key));
-                }
-            }
+            if (options != null) { for (String key : options.keySet()) { list.add(key + "=" + options.get(key)); } }
             list.add("recvWindow=" + 5000);
             list.add("timestamp=" + String.valueOf(new Date().getTime()));
             String queryToAdd = String.join("&", list);
             String query = "";
             log.debug("Signature: RequestUrl = {}", requestUrl);
-            if (requestUrl.contains("?")) {
-                query = requestUrl.substring(requestUrl.indexOf('?') + 1) + "&";
-            }
+            if (requestUrl.contains("?")) { query = requestUrl.substring(requestUrl.indexOf('?') + 1) + "&"; }
             query = query.concat(queryToAdd);
 
             log.debug("Signature: query to be included  = {} queryToAdd={}", query, queryToAdd);
@@ -127,9 +119,7 @@ public class BinanceRequest {
                 String signature = encode(secretKey, query);
                 String concatenate = requestUrl.contains("?") ? "&" : "?";
                 requestUrl += concatenate + queryToAdd + "&signature=" + signature;
-            } catch (Exception e) {
-                throw new BinanceApiException("Encryption error => method sign : " + e.getMessage());
-            }
+            } catch (Exception e) { throw new BinanceApiException("Encryption error => method sign : " + e.getMessage()); }
         }
         headers.put("X-MBX-APIKEY", apiKey);
         headers.put("Content-Type", "application/x-www-form-urlencoded");
@@ -146,9 +136,7 @@ public class BinanceRequest {
      */
     public BinanceRequest sign(String apiKey) throws BinanceApiException {
         String humanMessage = "Please check environment variables or VM options";
-        if (Strings.isNullOrEmpty(apiKey)) {
-            throw new BinanceApiException("Missing BINANCE_API_KEY. " + humanMessage);
-        }
+        if (Strings.isNullOrEmpty(apiKey)) { throw new BinanceApiException("Missing BINANCE_API_KEY. " + humanMessage); }
         headers.put("X-MBX-APIKEY", apiKey);
         headers.put("Content-Type", " application/x-www-form-urlencoded");
         return this;
@@ -202,15 +190,9 @@ public class BinanceRequest {
 
         TrustManager[] trustAllCerts = new TrustManager[] {
             new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-                public void checkClientTrusted(
-                    java.security.cert.X509Certificate[] certs, String authType) {
-                }
-                public void checkServerTrusted(
-                    java.security.cert.X509Certificate[] certs, String authType) {
-                }
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() { return null; }
+                public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) { }
+                public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) { }
             }
         };
 
@@ -225,29 +207,17 @@ public class BinanceRequest {
             sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, new java.security.SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (NoSuchAlgorithmException e) {
-            throw new BinanceApiException("SSL Error " + e.getMessage() );
-        } catch (KeyManagementException e) {
-            throw new BinanceApiException("Key Management Error " + e.getMessage() );
-        }
+        } catch (NoSuchAlgorithmException e) { throw new BinanceApiException("SSL Error " + e.getMessage() );
+        } catch (KeyManagementException e) { throw new BinanceApiException("Key Management Error " + e.getMessage() ); }
 
-        try {
-            conn = (HttpsURLConnection)url.openConnection();
-        } catch (IOException e) {
-            throw new BinanceApiException("HTTPS Connection error " + e.getMessage());
-        }
+        try { conn = (HttpsURLConnection)url.openConnection();
+        } catch (IOException e) { throw new BinanceApiException("HTTPS Connection error " + e.getMessage()); }
 
-        try {
-            conn.setRequestMethod(method);
-            System.out.println(conn); //////////////////////////////////////////////////////////////////////////////////
-        } catch (ProtocolException e) {
-            throw new BinanceApiException("HTTP method error " + e.getMessage());
-        }
+        try { conn.setRequestMethod(method);
+        } catch (ProtocolException e) { throw new BinanceApiException("HTTP method error " + e.getMessage()); }
 
         conn.setRequestProperty("User-Agent", getUserAgent());
-        for(String header: headers.keySet()) {
-            conn.setRequestProperty(header, headers.get(header));
-        }
+        for(String header: headers.keySet()) { conn.setRequestProperty(header, headers.get(header)); }
         return this;
     }
 

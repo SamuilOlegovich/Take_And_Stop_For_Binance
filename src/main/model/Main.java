@@ -11,15 +11,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        if (Agent.isYesOrNotAPIKey() == true) {
+//        if (Agent.isYesOrNotAPIKey() == true) {
             Parent root = FXMLLoader.load(getClass().getResource("/main/view/main.fxml"));
             primaryStage.setTitle("Take and Loss for Binance");
             primaryStage.setScene(new Scene(root, 1200, 700));
-        } else {
-            Parent root = FXMLLoader.load(getClass().getResource("/main/view/authorization.fxml"));
-            primaryStage.setTitle("Take and Loss for Binance");
-            primaryStage.setScene(new Scene(root, 800, 500));
-        }
+//        } else {
+//            Parent root = FXMLLoader.load(getClass().getResource("/main/view/authorization.fxml"));
+//            primaryStage.setTitle("Take and Loss for Binance");
+//            primaryStage.setScene(new Scene(root, 800, 500));
+//        }
         primaryStage.show();
     }
 
@@ -27,8 +27,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         Agent.setApi(new API());
         // создаем класс хранения всех стратегий
-        Agent.setArraysOfStrategies(new ArraysOfStrategies());
         Agent.setArraysOfWebSockets(new ArraysOfWebSockets());
+        Agent.setArraysOfStrategies(new ArraysOfStrategies());
         Agent.setCreatesTemplatesAndData(new CreatesTemplatesAndData());
         // создаем все нужные папки и путя к ним если это надо
         Agent.setFilesAndPathCreator(new FilesAndPathCreator());
