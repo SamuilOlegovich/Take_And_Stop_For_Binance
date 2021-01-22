@@ -298,91 +298,6 @@ public class BinanceRequest {
         return (JsonArray)jsonParser.parse(getLastResponse());
     }
 
-    public HttpsURLConnection getConn() {
-        return this.conn;
-    }
-
-    public String getRequestUrl() {
-        return this.requestUrl;
-    }
-
-    public String getMethod() {
-        return this.method;
-    }
-
-    public String getApiKey() {
-        return this.apiKey;
-    }
-
-    public String getSecretKey() {
-        return this.secretKey;
-    }
-
-    public Map<String, String> getHeaders() {
-        return this.headers;
-    }
-
-    public JsonParser getJsonParser() {
-        return this.jsonParser;
-    }
-
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
-    }
-
-    public void setConn(HttpsURLConnection conn) {
-        this.conn = conn;
-    }
-
-    public void setRequestUrl(String requestUrl) {
-        this.requestUrl = requestUrl;
-    }
-
-    public void setLastResponse(String lastResponse) {
-        this.lastResponse = lastResponse;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
-    }
-
-    public void setJsonParser(JsonParser jsonParser) {
-        this.jsonParser = jsonParser;
-    }
-
-    public void setRequestBody(String requestBody) {
-        this.requestBody = requestBody;
-    }
-
-    /////////////////////////////////////    I had to add == пришлось добавить   ///////////////////////////////////////
-
-    private void setMethod(String string) {
-        this.method = string;
-    }
-
-    private String getUserAgent() {
-        return this.userAgent;
-    }
-
-        // получить тело запроса
-    private String getRequestBody() {
-        return this.requestBody;
-    }
-
-        // получить последний ответ
-    protected String getLastResponse() {
-        return this.lastResponse;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public boolean equals(final Object o) {
         if (o == this) return true;
@@ -465,4 +380,93 @@ public class BinanceRequest {
                 + this.getJsonParser() + ", requestBody="
                 + this.getRequestBody() + ")";
     }
+
+
+
+
+    public HttpsURLConnection getConn() {
+        return this.conn;
+    }
+
+    public String getRequestUrl() {
+        return this.requestUrl;
+    }
+
+    public String getMethod() {
+        return this.method;
+    }
+
+    public String getApiKey() {
+        return this.apiKey;
+    }
+
+    public String getSecretKey() {
+        return this.secretKey;
+    }
+
+    public Map<String, String> getHeaders() {
+        return this.headers;
+    }
+
+    public JsonParser getJsonParser() {
+        return this.jsonParser;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    public void setConn(HttpsURLConnection conn) {
+        this.conn = conn;
+    }
+
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
+    }
+
+    public void setLastResponse(String lastResponse) {
+        this.lastResponse = lastResponse;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
+
+    public void setJsonParser(JsonParser jsonParser) {
+        this.jsonParser = jsonParser;
+    }
+
+    public void setRequestBody(String requestBody) {
+        this.requestBody = requestBody;
+    }
+
+    /////////////////////////////////////    I had to add == пришлось добавить   ///////////////////////////////////////
+
+    private void setMethod(String string) {
+        this.method = string;
+    }
+
+    private String getUserAgent() {
+        return this.userAgent;
+    }
+
+    // получить тело запроса
+    private String getRequestBody() {
+        return this.requestBody;
+    }
+
+    // получить последний ответ
+    protected String getLastResponse() {
+        return this.lastResponse;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

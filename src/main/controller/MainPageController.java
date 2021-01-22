@@ -121,11 +121,13 @@ public class MainPageController {
         });
 
         startButton.setOnAction(event -> {
-            arraysOfStrategies.launchStrategy(getSelectedItem());
+            String string = getSelectedItem();
+            if (string.length() > 5) arraysOfStrategies.launchStrategy(string);
         });
 
         stopButton.setOnAction(event -> {
-            arraysOfStrategies.stopStrategy(getSelectedItem());
+            String string = getSelectedItem();
+            if (string.length() > 5) arraysOfStrategies.stopStrategy(string);
         });
 
         addButton.setOnAction(event -> {
@@ -144,7 +146,8 @@ public class MainPageController {
         });
 
         deleteButton.setOnAction(event -> {
-            arraysOfStrategies.removeStrategy(getSelectedItem());
+            String string = getSelectedItem();
+            if (string.length() > 5) arraysOfStrategies.removeStrategy(string);
         });
     }
 
@@ -174,7 +177,7 @@ public class MainPageController {
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится
         // и дальше уже это окно уже прячем
-//        startAllButton.getScene().getWindow().hide();
+        startAllButton.getScene().getWindow().hide();
         // далее нам нужно отобразить следующее нужное нам окно
         FXMLLoader fxmlLoader = new FXMLLoader();
         // устанавливаем локацию файла который нам надо загрузить
@@ -189,7 +192,6 @@ public class MainPageController {
         Stage stage = new Stage();
         stage.setScene(new Scene(parent));
         stage.show();
-
 
 
 //        Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -257,8 +259,6 @@ public class MainPageController {
             return dateFormat.format(date);
         }
     }
-
-
 
     public void updateListView() {
         getAListOfStrategy();

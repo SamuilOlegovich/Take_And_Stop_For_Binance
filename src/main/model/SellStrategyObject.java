@@ -7,7 +7,7 @@ public class SellStrategyObject implements Runnable {
 
     public SellStrategyObject(StrategyObject strategyObject) {
         this.strategyObject = strategyObject;
-//        new Thread(this).start();
+        new Thread(this).start();
     }
 
     @Override

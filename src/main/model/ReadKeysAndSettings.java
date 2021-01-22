@@ -29,8 +29,8 @@ public class ReadKeysAndSettings {
         } catch (Exception e) { writeKeysAndSettings.enterPatternForSettingsAndStates(); }
 
         if (inList.size() < 1 || !inList.get(0).equals(Enums.SETTINGS.toString())
-                || !inList.get(inList.size() - 1).equals(Enums.END)
-                || !inList.contains(Enums.STATUS)) {
+                || !inList.get(inList.size() - 1).equals(Enums.END.toString())
+                || !inList.contains(Enums.STATUS.toString())) {
             writeKeysAndSettings.enterPatternForSettingsAndStates();
             inList.clear();
             return;
@@ -67,7 +67,7 @@ public class ReadKeysAndSettings {
                     && !s.equals(Enums.NEXT.toString())
                     && !s.equals(Enums.END.toString())) {
                 statusList.add(s);
-            } else if (s.equals(Enums.NEXT)) {
+            } else if (s.equals(Enums.NEXT.toString())) {
                 outList.add(statusList);
                 statusList = new ArrayList<>();
             } else {
@@ -84,8 +84,8 @@ public class ReadKeysAndSettings {
     private ArrayList<String> getSettings(ArrayList<String> inList) {
         ArrayList<String> outList = new ArrayList<>();
         for (String s : inList) {
-            if (!s.equals(Enums.SETTINGS) && !s.equals(Enums.STATUS)) outList.add(s);
-            if (s.equals(Enums.STATUS)) break;
+            if (!s.equals(Enums.SETTINGS.toString()) && !s.equals(Enums.STATUS.toString())) outList.add(s);
+            if (s.equals(Enums.STATUS.toString())) break;
         }
         if (outList.size() > 0) return outList;
         return null;
@@ -104,10 +104,10 @@ public class ReadKeysAndSettings {
             String end = arrayList.get(3).trim();
             if (start.equals(Enums.START.toString()) && end.equals(Enums.END.toString())) {
                 if (APIkey.startsWith(APIandSecretKeys.API_KEY.toString())) {
-                    api.setAPI_KEY(APIkey.split("===")[1]);
+                    api.setAPI_KEY(APIkey.split(Lines.delimiter)[1]);
                 }
                 if (SecretKey.startsWith(APIandSecretKeys.SECRET_KEY.toString())) {
-                    api.setSECRET_KEY(SecretKey.split("===")[1]);
+                    api.setSECRET_KEY(SecretKey.split(Lines.delimiter)[1]);
                 }
             }
         }

@@ -3,6 +3,8 @@ package main.model.binance.datatype;
 import com.google.common.base.Strings;
 import main.model.binance.api.BinanceApiException;
 
+
+
 public class BinanceSymbol {
 
     String symbol = "";

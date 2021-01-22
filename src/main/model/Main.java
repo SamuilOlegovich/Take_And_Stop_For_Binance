@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 //        if (Agent.isYesOrNotAPIKey() == true) {
@@ -26,14 +27,23 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Agent.setApi(new API());
+
         // создаем класс хранения всех стратегий
-        Agent.setArraysOfWebSockets(new ArraysOfWebSockets());
-        Agent.setArraysOfStrategies(new ArraysOfStrategies());
+        ArraysOfStrategies arraysOfStrategies = new ArraysOfStrategies();
+        ArraysOfWebSockets arraysOfWebSockets = new ArraysOfWebSockets();
+        arraysOfStrategies.setArraysOfWebSockets(arraysOfWebSockets);
+        arraysOfWebSockets.setArraysOfStrategies(arraysOfStrategies);
+        Agent.setArraysOfStrategies(arraysOfStrategies);
+        Agent.setArraysOfWebSockets(arraysOfWebSockets);
+
         Agent.setCreatesTemplatesAndData(new CreatesTemplatesAndData());
         // создаем все нужные папки и путя к ним если это надо
         Agent.setFilesAndPathCreator(new FilesAndPathCreator());
         Agent.setWriterAndReadFile(new WriterAndReadFile());
-        Agent.setWriteKeysAndSettings(new WriteKeysAndSettings());
+
+        WriteKeysAndSettings writeKeysAndSettings = new WriteKeysAndSettings();
+        arraysOfStrategies.setWriteKeysAndSettings(writeKeysAndSettings);
+        Agent.setWriteKeysAndSettings(writeKeysAndSettings);
         // считываеи все файлы настроек, ключей и состояний
         Agent.setReadKeysAndSettings(new ReadKeysAndSettings());
         // Запускаем визуальную часть в зависимости от того что считалось из файлоф

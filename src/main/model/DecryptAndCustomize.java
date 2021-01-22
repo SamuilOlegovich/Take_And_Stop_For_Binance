@@ -16,9 +16,10 @@ public class DecryptAndCustomize {
 
     private void parseAndSetting() {
         for (String s : listSettings) {
-            String name = s.split(Lines.delimiter)[0];
-            String value = s.split(Lines.delimiter)[1];
-            if (name.equals(Enums.DATE_DIFFERENCE.toString())) Agent.setDateDifference(Integer.parseInt(value));
+            if (s.startsWith(Enums.DATE_DIFFERENCE.toString())) {
+                String value = s.split(Lines.delimiter)[1];
+                Agent.setDateDifference(Integer.parseInt(value));
+            }
         }
     }
 

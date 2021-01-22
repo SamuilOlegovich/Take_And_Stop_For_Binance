@@ -1,5 +1,6 @@
 package main.model;
 
+import javafx.stage.Stage;
 import main.controller.MainPageController;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.datatype.BinanceEventDepthUpdate;

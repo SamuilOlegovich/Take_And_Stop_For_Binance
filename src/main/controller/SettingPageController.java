@@ -164,6 +164,10 @@ public class SettingPageController {
             openNewScene("/main/view/main.fxml");
         });
 
+        listViewInSettingPage.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) { getSelectedItem(); }
+        });
+
         addPairButton.setOnAction(event -> {
             tradingPairField.undo();
             tradingPairField.insertText(0, getSelectedItem());
@@ -190,7 +194,7 @@ public class SettingPageController {
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится
         // и дальше уже это окно уже прячем
-        backButton.getScene().getWindow().hide();
+        okButton.getScene().getWindow().hide();
         // далее нам нужно отобразить следующее нужное нам окно
         FXMLLoader fxmlLoader = new FXMLLoader();
         // устанавливаем локацию файла который нам надо загрузить
@@ -438,7 +442,8 @@ public class SettingPageController {
 
     // добавляем торговый объект в коллекцию стратегий
     private void addTheFinishedObjectToTheListOfStrategies() {
-        arraysOfStrategies.addToAllStrategyList(strategyObject);
+        arraysOfStrategies.addToAllStrategyList(strategyObject, true);
+
     }
 }
 

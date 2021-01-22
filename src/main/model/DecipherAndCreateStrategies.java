@@ -9,6 +9,7 @@ public class DecipherAndCreateStrategies {
     public DecipherAndCreateStrategies(ArrayList<ArrayList<String>> inList) {
         this.arraysOfStrategies = Agent.getArraysOfStrategies();
         this.listStrategy = new ArrayList<>(inList);
+        parseAndCreateStrategyObjects();
     }
 
 
@@ -18,8 +19,10 @@ public class DecipherAndCreateStrategies {
             for (String s : arrayList) {
                 String name = s.split(Lines.delimiter)[0];
                 String value = s.split(Lines.delimiter)[1];
+                System.out.println("1");
                 if (name.equals(Enums.ID.toString())) {
                     strategyObject.setClassID(value);
+                    System.out.println("1.0");
                 } else if (name.equals(Enums.WORKS.toString())) {
                     strategyObject.setWorks(value.equals(Enums.TRUE.toString()));
                 } else if (name.equals(Enums.TRADING_PAIR.toString())) {
@@ -57,12 +60,15 @@ public class DecipherAndCreateStrategies {
                     strategyObject.setNameStrategy(value);
                 }
             }
-            if (strategyObject.getClassID().equals(Enums.DONE_BY_HAND)) {
+
+            if (strategyObject.getClassID().equals(Enums.DONE_BY_HAND.toString())) {
                 strategyObject.setPosition(Position.STARTED_POSITION);
                 strategyObject.setClassID();
             }
+
             if (!strategyObject.getPosition().equals(Position.EXAMPLE_POSITION)) {
-                arraysOfStrategies.addToAllStrategyList(strategyObject);
+                System.out.println();
+                arraysOfStrategies.addToAllStrategyList(strategyObject, false);
             }
         }
     }

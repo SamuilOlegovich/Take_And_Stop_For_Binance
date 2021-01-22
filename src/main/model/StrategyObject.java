@@ -20,6 +20,7 @@ public class StrategyObject {
     private Double maxPrice;
     private Double price;
 
+    private Position preliminaryPosition;
     private Position position;
 
     private volatile BigDecimal priceAskNow;
@@ -42,6 +43,7 @@ public class StrategyObject {
         this.writeKeysAndSettings = Agent.getWriteKeysAndSettings();
         this.position = Position.STARTED_POSITION;
         this.lowerOrHigherPrices = false;
+        this.preliminaryPosition = null;
         this.priceStopTrailing = 0.0;
         this.buyOrSellCoins = 0.0;
         this.onOrOffFP = false;
@@ -95,22 +97,26 @@ public class StrategyObject {
             priceStopTrailing = (maxPrice - ((maxPrice / 100.0) * trailingStop));
         }
         if (buyOrSell == 1 && priceStopTrailing <= priceAskNow.doubleValue()) {
+            preliminaryPosition = position;
             position = Position.BUY_TRAILING_STOP_COMPLETED_POSITION;
-            new Thread(new BuyStrategyObject(this)).start();
+            new BuyStrategyObject(this);
             works = false;
         } else if (buyOrSell == -1 && priceStopTrailing >= priceBidNow.doubleValue()) {
+            preliminaryPosition = position;
             position = Position.SELL_TRAILING_STOP_COMPLETED_POSITION;
-            new Thread(new SellStrategyObject(this)).start();
+            new SellStrategyObject(this);
             works = false;
         }
     }
 
     private void buyTakeOrStopPosition() {
         if (takePrice <= priceAskNow.doubleValue()) {
+            preliminaryPosition = position;
             position = Position.SELL_TAKE_COMPLETED_POSITION;
             new SellStrategyObject(this);
             works = false;
         } else if (stopPrice >= priceAskNow.doubleValue()) {
+            preliminaryPosition = position;
             position = Position.SELL_STOP_COMPLETED_POSITION;
             new SellStrategyObject(this);
             works = false;
@@ -119,10 +125,12 @@ public class StrategyObject {
 
     private void sellTakeOrStopPosition() {
         if (takePrice >= priceBidNow.doubleValue()) {
+            preliminaryPosition = position;
             position = Position.BUY_TAKE_COMPLETED_POSITION;
             new BuyStrategyObject(this);
             works = false;
         } else if (stopPrice <= priceBidNow.doubleValue()) {
+            preliminaryPosition = position;
             position = Position.BUY_STOP_COMPLETED_POSITION;
             new BuyStrategyObject(this);
             works = false;
@@ -132,20 +140,24 @@ public class StrategyObject {
     private void easyPosition() {
         if (buyOrSell == 1) {
             if (lowerOrHigherPrices && price <= priceBidNow.doubleValue()) {
+                preliminaryPosition = position;
                 position = Position.BUY_COMPLETED_POSITION;
                 new BuyStrategyObject(this);
                 works = false;
             } else if (price >= priceBidNow.doubleValue()) {
+                preliminaryPosition = position;
                 position = Position.BUY_COMPLETED_POSITION;
                 new BuyStrategyObject(this);
                 works = false;
             }
         } else if (buyOrSell == -1) {
             if (lowerOrHigherPrices && price <= priceBidNow.doubleValue()) {
+                preliminaryPosition = position;
                 position = Position.SELL_COMPLETED_POSITION;
                 new SellStrategyObject(this);
                 works = false;
             } else if (price >= priceBidNow.doubleValue()) {
+                preliminaryPosition = position;
                 position = Position.SELL_COMPLETED_POSITION;
                 new SellStrategyObject(this);
                 works = false;
@@ -157,20 +169,24 @@ public class StrategyObject {
     private void normalPosition() {
         if (buyOrSell == 1) {
             if (lowerOrHigherPrices && price <= priceBidNow.doubleValue()) {
+                preliminaryPosition = position;
                 position = Position.BUY_TAKE_OR_STOP_POSITION;
                 writeKeysAndSettings.writeNewSettingsAndStates();
                 new BuyStrategyObject(this);
             } else if (price >= priceBidNow.doubleValue()) {
+                preliminaryPosition = position;
                 position = Position.BUY_TAKE_OR_STOP_POSITION;
                 writeKeysAndSettings.writeNewSettingsAndStates();
                 new BuyStrategyObject(this);
             }
         } else if (buyOrSell == -1) {
             if (lowerOrHigherPrices && price <= priceBidNow.doubleValue()) {
+                preliminaryPosition = position;
                 position = Position.SELL_TAKE_OR_STOP_POSITION;
                 writeKeysAndSettings.writeNewSettingsAndStates();
                 new SellStrategyObject(this);
             } else if (price >= priceBidNow.doubleValue()) {
+                preliminaryPosition = position;
                 position = Position.SELL_TAKE_OR_STOP_POSITION;
                 writeKeysAndSettings.writeNewSettingsAndStates();
                 new SellStrategyObject(this);
@@ -279,9 +295,11 @@ public class StrategyObject {
     }
 
 
+    public void setPreliminaryPosition(Position preliminaryPosition) { this.preliminaryPosition = preliminaryPosition; }
     public void setLowerOrHigherPrices(boolean lowerOrHigherPrices) { this.lowerOrHigherPrices = lowerOrHigherPrices; }
     public void setBuyOrSellCoins(Double buyOrSellCoins) { this.buyOrSellCoins = buyOrSellCoins; }
     public void setOnOrOffFP(boolean onOrOffFP) { this.onOrOffFP = onOrOffFP; }
+    public Position getPreliminaryPosition() { return preliminaryPosition; }
     public void setPosition(Position position) { this.position = position; }
     public boolean isLowerOrHigherPrices() { return lowerOrHigherPrices; }
     public void setClassID(String classID) { this.classID = classID; }

@@ -2,6 +2,8 @@ package main.model;
 
 public class Lines {
     public static final String thereAreNoStrategiesNow = " *** There are no strategies now *** ";
+    public static final String delimiterErrorFR = "===ERROR===FR===";
+    public static final String delimiterError = "===ERROR===";
     public static final String delimiter = "===";
     public static final String newline = "\n";
     public static final String space = " ";

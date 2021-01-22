@@ -19,6 +19,7 @@ public class WebSocket implements Runnable {
     private final ArrayList<StrategyObject> arrayList;
     private final String symbol;
     private final Thread thread;
+    private String id;
 
 
 
@@ -53,9 +54,8 @@ public class WebSocket implements Runnable {
                             sendMessagesToAll(message);
                         }
                     });
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) { session.close(); }
+            try { Thread.sleep(5000); }
+            catch (InterruptedException e) { session.close(); }
         } catch (BinanceApiException e) {
 //            throw new BinanceApiException("Сокет не подключился => " + e);
         }
@@ -65,19 +65,28 @@ public class WebSocket implements Runnable {
     private synchronized void sendMessagesToAll(BinanceEventDepthUpdate message) {
         BigDecimal priceAsk = message.asks.get(0).price;
         BigDecimal priceBid = message.bids.get(0).price;
+        String string = "";
         int index = -1;
         for (StrategyObject strategyObject : arrayList) {
-            if (strategyObject.getWorks()) { strategyObject.setPriceAskAndBidNow(priceAsk, priceBid); }
-            else { index = arrayList.indexOf(strategyObject); }
+            if (strategyObject.getWorks() && !strategyObject.getClassID().equals(id)) {
+                strategyObject.setPriceAskAndBidNow(priceAsk, priceBid);
+            } else {
+                index = arrayList.indexOf(strategyObject);
+                string = strategyObject.getClassID();
+            }
         }
-        if (index >= 0) {
+
+        if (index >= 0 && !string.equals(id) ) {
             arraysOfStrategies.replaceStrategy(arrayList.get(index));
+            arrayList.remove(index);
+        } else {
             arrayList.remove(index);
         }
         if (arrayList.size() == 0) arraysOfWebSockets.closeWebSocket(symbol);
     }
 
 
+    public void removeStrategyObject(StrategyObject strategyObject) { this.id = strategyObject.getClassID(); }
     public void addStrategyObject(StrategyObject strategyObject) { arrayList.add(strategyObject); }
     public Thread getThread() { return thread; }
 }

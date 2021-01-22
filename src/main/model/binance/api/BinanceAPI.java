@@ -40,6 +40,8 @@ import java.util.Map;
 import java.net.URI;
 
 
+
+
 //@Slf4j
 @Data
 public class BinanceAPI {
@@ -103,9 +105,12 @@ public class BinanceAPI {
 
     /**
      * Validation we have API keys set up
+     * Проверка у нас настроены ключи API
+     *
      * @throws BinanceApiException in case of any error
      */
     protected void  validateCredentials() throws BinanceApiException {
+        // Пожалуйста, проверьте переменные среды или параметры виртуальной машины
         String humanMessage = "Please check environment variables or VM options";
         if (Strings.isNullOrEmpty(this.getApiKey()))
             throw new BinanceApiException("Missing BINANCE_API_KEY. " + humanMessage);
@@ -123,6 +128,8 @@ public class BinanceAPI {
 
     /**
      * Checking connectivity,
+     * Проверка подключения
+     *
      * @return empty object
      * @throws BinanceApiException in case of any error
      */
@@ -132,6 +139,8 @@ public class BinanceAPI {
 
     /**
      * Checking server time,
+     * Проверка времени сервера
+     *
      * @return JsonObject, expected { serverTime: 00000 }
      * @throws BinanceApiException in case of any error
      */
@@ -143,6 +152,7 @@ public class BinanceAPI {
 
     // - - - - - - - - - - - - - - - - - - - - - - - -
     // MARKET ENDPOINTS
+    // КОНЕЧНЫЕ ТОЧКИ РЫНКА
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
 

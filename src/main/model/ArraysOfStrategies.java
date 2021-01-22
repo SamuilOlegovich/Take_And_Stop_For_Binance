@@ -10,7 +10,7 @@ public class ArraysOfStrategies {
     private final ArrayList<StrategyObject> stoppedStrategyList;
     private final ArrayList<StrategyObject> tradedStrategyList;
 
-    private final ArraysOfWebSockets arraysOfWebSockets;
+    private ArraysOfWebSockets arraysOfWebSockets;
     private WriteKeysAndSettings writeKeysAndSettings;
     private MainPageController mainPageController;
     private StrategyObject strategyObject;
@@ -18,7 +18,6 @@ public class ArraysOfStrategies {
 
 
     public ArraysOfStrategies() {
-        this.arraysOfWebSockets = Agent.getArraysOfWebSockets();
         this.stoppedStrategyList = new ArrayList<>();
         this.tradedStrategyList = new ArrayList<>();
         this.writeKeysAndSettings = null;
@@ -27,16 +26,21 @@ public class ArraysOfStrategies {
 
 
 
-    public void addToAllStrategyList(StrategyObject in) {
+    public void addToAllStrategyList(StrategyObject in, boolean b) {
         // в зависимости от объекта добавим его в тот или иной лист
+        System.out.println();
         if (in.getWorks()) tradedStrategyList.add(in);
         else stoppedStrategyList.add(in);
+        if (b) {
+            mainPageController.updateListView();
+            writeKeysAndSettings.writeNewSettingsAndStates();
+        }
     }
 
 
 
     public void replaceStrategy(StrategyObject in) {
-        // находит по стратегие - strategyObject - удаляем е и вставляем новую
+        // находит по стратегие - strategyObject - удаляем её и вставляем новую
         // для новой будет новый айди - его находим и все ее обслуживание переводим теперь на него
         // это делаем везде где она может быть
         String id = in.getClassID();
@@ -45,8 +49,10 @@ public class ArraysOfStrategies {
 
         for (StrategyObject object : works ? tradedStrategyList : stoppedStrategyList) {
             if (id.equals(object.getClassID())) {
-                if (works) index = tradedStrategyList.indexOf(object);
-                else index = stoppedStrategyList.indexOf(object);
+                if (works) {
+                    index = tradedStrategyList.indexOf(object);
+                    arraysOfWebSockets.deleteStrategy(object);
+                } else index = stoppedStrategyList.indexOf(object);
             }
         }
 
@@ -115,6 +121,7 @@ public class ArraysOfStrategies {
     public void stopStrategy(String in) {
         // разбираем строку и по основным данным находим стратегию
         String id = in.split(Lines.space)[0];
+        System.out.println(id);
         int index = -1;
         for (StrategyObject s : tradedStrategyList) {
             if (id.equals(s.getClassID())) {
@@ -123,7 +130,9 @@ public class ArraysOfStrategies {
                 break;
             }
         }
-        tradedStrategyList.remove(index);
+        if (index >= 0) {
+            tradedStrategyList.remove(index);
+        }
         strategyObject.setWorks(false);
         stoppedStrategyList.add(strategyObject);
         mainPageController.updateListView();
@@ -167,12 +176,9 @@ public class ArraysOfStrategies {
 
 
     public void setMainPageController(MainPageController mainPageController) { this.mainPageController = mainPageController; }
-
+    public void setArraysOfWebSockets(ArraysOfWebSockets arraysOfWebSockets) { this.arraysOfWebSockets = arraysOfWebSockets; }
     public void setWriteKeysAndSettings(WriteKeysAndSettings in) { this.writeKeysAndSettings = in; }
-
     public ArrayList<StrategyObject> getStoppedStrategyListObject() { return stoppedStrategyList; }
-
     public ArrayList<StrategyObject> getTradedStrategyListObject() { return tradedStrategyList; }
-
     public StrategyObject getStrategySettingAndStatus() { return strategyObject; }
 }

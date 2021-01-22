@@ -74,7 +74,7 @@ public class CreatesTemplatesAndData {
         for (StrategyObject s : stoppedStrategyList) {
             sB.append(Enums.ID).append(Lines.delimiter).append(s.getClassID()).append(Lines.newline);
             sB.append(Enums.POSITION).append(Lines.delimiter).append(s.getPosition()).append(Lines.newline);
-            sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks()).append(Lines.newline);
+            sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks() ? Enums.TRUE : Enums.FALSE).append(Lines.newline);
             sB.append(Enums.TRADING_PAIR).append(Lines.delimiter).append(s.getTradingPair()).append(Lines.newline);
             sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.newline);
             sB.append(Enums.LOWER_OR_HIGHER_PRICE).append(Lines.delimiter).append(s.isLowerOrHigherPrices() ? Enums.HIGHER : Enums.LOWER).append(Lines.newline);
@@ -83,9 +83,9 @@ public class CreatesTemplatesAndData {
             sB.append(Enums.TAKE_PRICE).append(Lines.delimiter).append(s.getTakePrice()).append(Lines.newline);
             sB.append(Enums.STOP_PRICE).append(Lines.delimiter).append(s.getStopPrice()).append(Lines.newline);
             sB.append(Enums.TRAILING_STOP).append(Lines.delimiter).append(s.getTrailingStop()).append(Lines.newline);
-            sB.append(Enums.ON_OR_OFF_TRAILING_STOP).append(Lines.delimiter).append(s.getOnOrOffTS()).append(Lines.newline);
+            sB.append(Enums.ON_OR_OFF_TRAILING_STOP).append(Lines.delimiter).append(s.getOnOrOffTS() ? Enums.TRUE : Enums.FALSE).append(Lines.newline);
             sB.append(Enums.FRACTIONAL_PARTS).append(Lines.delimiter).append(s.getFractionalParts()).append(Lines.newline);
-            sB.append(Enums.ON_OR_OFF_FRACTIONAL_PARTS).append(Lines.delimiter).append(s.getOnOrOffFP()).append(Lines.newline);
+            sB.append(Enums.ON_OR_OFF_FRACTIONAL_PARTS).append(Lines.delimiter).append(s.getOnOrOffFP() ? Enums.TRUE : Enums.FALSE).append(Lines.newline);
             sB.append(Enums.BUY_OR_SELL_COINS).append(Lines.delimiter).append(s.getBuyOrSellCoins()).append(Lines.newline);
             sB.append(Enums.NAME_STRATEGY).append(Lines.delimiter).append(s.getNameStrategy()).append(Lines.newline);
             sB.append(Enums.NEXT).append(Lines.newline);
@@ -93,7 +93,7 @@ public class CreatesTemplatesAndData {
         for (StrategyObject s : tradedStrategyList) {
             sB.append(Enums.ID).append(Lines.delimiter).append(s.getClassID()).append(Lines.newline);
             sB.append(Enums.POSITION).append(Lines.delimiter).append(s.getPosition()).append(Lines.newline);
-            sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks()).append(Lines.newline);
+            sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks() ? Enums.TRUE : Enums.FALSE).append(Lines.newline);
             sB.append(Enums.TRADING_PAIR).append(Lines.delimiter).append(s.getTradingPair()).append(Lines.newline);
             sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.newline);
             sB.append(Enums.LOWER_OR_HIGHER_PRICE).append(Lines.delimiter).append(s.isLowerOrHigherPrices() ? Enums.HIGHER : Enums.LOWER).append(Lines.newline);
@@ -102,9 +102,9 @@ public class CreatesTemplatesAndData {
             sB.append(Enums.TAKE_PRICE).append(Lines.delimiter).append(s.getTakePrice()).append(Lines.newline);
             sB.append(Enums.STOP_PRICE).append(Lines.delimiter).append(s.getStopPrice()).append(Lines.newline);
             sB.append(Enums.TRAILING_STOP).append(Lines.delimiter).append(s.getTrailingStop()).append(Lines.newline);
-            sB.append(Enums.ON_OR_OFF_TRAILING_STOP).append(Lines.delimiter).append(s.getOnOrOffTS()).append(Lines.newline);
+            sB.append(Enums.ON_OR_OFF_TRAILING_STOP).append(Lines.delimiter).append(s.getOnOrOffTS() ? Enums.TRUE : Enums.FALSE).append(Lines.newline);
             sB.append(Enums.FRACTIONAL_PARTS).append(Lines.delimiter).append(s.getFractionalParts()).append(Lines.newline);
-            sB.append(Enums.ON_OR_OFF_FRACTIONAL_PARTS).append(Lines.delimiter).append(s.getOnOrOffFP()).append(Lines.newline);
+            sB.append(Enums.ON_OR_OFF_FRACTIONAL_PARTS).append(Lines.delimiter).append(s.getOnOrOffFP() ? Enums.TRUE : Enums.FALSE).append(Lines.newline);
             sB.append(Enums.BUY_OR_SELL_COINS).append(Lines.delimiter).append(s.getBuyOrSellCoins()).append(Lines.newline);
             sB.append(Enums.NAME_STRATEGY).append(Lines.delimiter).append(s.getNameStrategy()).append(Lines.newline);
             sB.append(Enums.NEXT).append(Lines.newline);

@@ -6,13 +6,12 @@ import java.util.Map;
 
 
 public class ArraysOfWebSockets {
-    private final ArraysOfStrategies arraysOfStrategies;
+    private ArraysOfStrategies arraysOfStrategies;
     private final Map<String, WebSocket> map;
 
 
 
     public ArraysOfWebSockets() {
-        this.arraysOfStrategies = Agent.getArraysOfStrategies();
         this.map = new HashMap<>();
     }
 
@@ -56,4 +55,14 @@ public class ArraysOfWebSockets {
         if (map.containsKey(key)) map.get(key).addStrategyObject(in);
         else map.put(key, new WebSocket(in));
     }
+
+
+    public void deleteStrategy(StrategyObject in) {
+        String key = in.getTradingPair();
+        map.get(key).removeStrategyObject(in);
+    }
+
+
+
+    public void setArraysOfStrategies(ArraysOfStrategies arraysOfStrategies) { this.arraysOfStrategies = arraysOfStrategies; }
 }
