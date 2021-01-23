@@ -3,8 +3,8 @@ package main.model;
 import java.util.ArrayList;
 
 public class DecipherAndCreateStrategies {
-    private ArrayList<ArrayList<String>> listStrategy;
-    private ArraysOfStrategies arraysOfStrategies;
+    private final ArrayList<ArrayList<String>> listStrategy;
+    private final ArraysOfStrategies arraysOfStrategies;
 
     public DecipherAndCreateStrategies(ArrayList<ArrayList<String>> inList) {
         this.arraysOfStrategies = Agent.getArraysOfStrategies();
@@ -17,12 +17,13 @@ public class DecipherAndCreateStrategies {
         for (ArrayList<String> arrayList : listStrategy) {
             StrategyObject strategyObject = new StrategyObject();
             for (String s : arrayList) {
+                if (arrayList.indexOf(s) == 0) {
+                    System.out.println(s);
+                }
                 String name = s.split(Lines.delimiter)[0];
                 String value = s.split(Lines.delimiter)[1];
-                System.out.println("1");
                 if (name.equals(Enums.ID.toString())) {
                     strategyObject.setClassID(value);
-                    System.out.println("1.0");
                 } else if (name.equals(Enums.WORKS.toString())) {
                     strategyObject.setWorks(value.equals(Enums.TRUE.toString()));
                 } else if (name.equals(Enums.TRADING_PAIR.toString())) {
@@ -56,9 +57,7 @@ public class DecipherAndCreateStrategies {
                             break;
                         }
                     }
-                } else if (name.equals(Enums.NAME_STRATEGY.toString())) {
-                    strategyObject.setNameStrategy(value);
-                }
+                } else if (name.equals(Enums.NAME_STRATEGY.toString())) { strategyObject.setNameStrategy(value); }
             }
 
             if (strategyObject.getClassID().equals(Enums.DONE_BY_HAND.toString())) {
@@ -67,7 +66,12 @@ public class DecipherAndCreateStrategies {
             }
 
             if (!strategyObject.getPosition().equals(Position.EXAMPLE_POSITION)) {
-                System.out.println();
+//                System.out.println(strategyObject.getClassID()
+//                        + " " + strategyObject.getWorks()
+//                        + " " + strategyObject.getPosition()
+//                        + " " + strategyObject.getTradingPair()
+//                        + " " + strategyObject.getNameStrategy()
+//                );
                 arraysOfStrategies.addToAllStrategyList(strategyObject, false);
             }
         }

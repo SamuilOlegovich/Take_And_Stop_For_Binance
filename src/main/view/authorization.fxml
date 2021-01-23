@@ -35,7 +35,7 @@
                         <Font name="System Bold" size="44.0" />
                     </font>
                 </Label>
-            <AnchorPane layoutX="261.0" layoutY="300.0" prefHeight="80.0" prefWidth="230.0" style="-fx-background-color: #bab6b6 #bab6b6 #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0">
+            <AnchorPane layoutX="261.0" layoutY="300.0" prefHeight="80.0" prefWidth="230.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="280.0">
                <children>
                       <Button fx:id="enterButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2E3348 #2E3348; -fx-background-radius: 10;" text="Enter" textFill="#fcfbfa" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                           <font>

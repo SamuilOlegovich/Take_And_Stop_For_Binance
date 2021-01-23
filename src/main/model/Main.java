@@ -12,15 +12,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        if (Agent.isYesOrNotAPIKey() == true) {
+        if (Agent.isYesOrNotAPIKey() && Agent.isGetUpToDateDataOnPairs()) {
             Parent root = FXMLLoader.load(getClass().getResource("/main/view/main.fxml"));
             primaryStage.setTitle("Take and Loss for Binance");
             primaryStage.setScene(new Scene(root, 1200, 700));
-//        } else {
-//            Parent root = FXMLLoader.load(getClass().getResource("/main/view/authorization.fxml"));
-//            primaryStage.setTitle("Take and Loss for Binance");
-//            primaryStage.setScene(new Scene(root, 800, 500));
-//        }
+        } else {
+            Parent root = FXMLLoader.load(getClass().getResource("/main/view/authorization.fxml"));
+            primaryStage.setTitle("Take and Loss for Binance");
+            primaryStage.setScene(new Scene(root, 800, 500));
+        }
         primaryStage.show();
     }
 
@@ -46,6 +46,12 @@ public class Main extends Application {
         Agent.setWriteKeysAndSettings(writeKeysAndSettings);
         // считываеи все файлы настроек, ключей и состояний
         Agent.setReadKeysAndSettings(new ReadKeysAndSettings());
+
+        Thread thread = new Thread(new GetUpToDateDataOnPairs());
+        thread.start();
+        try { thread.join(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+
         // Запускаем визуальную часть в зависимости от того что считалось из файлоф
         launch(args);
     }

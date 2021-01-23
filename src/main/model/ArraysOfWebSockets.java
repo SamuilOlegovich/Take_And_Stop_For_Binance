@@ -30,13 +30,14 @@ public class ArraysOfWebSockets {
     public void stopAllWebSocketsForWorkingCouples() {
         String[] keys = map.keySet().toArray(new String[0]);
         for (String key : keys) { map.get(key).getThread().interrupt(); }
+        try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }
         map.clear();
     }
 
 
 
     // добавить одну стратегию на прослушку
-    public void addOneStrategyToWiretap(StrategyObject in) {
+    public synchronized void addOneStrategyToWiretap(StrategyObject in) {
         addToListener(in);
     }
 

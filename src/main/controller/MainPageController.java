@@ -68,12 +68,15 @@ public class MainPageController {
 
     @FXML
     void initialize() {
-        if (!Agent.isYesOrNotAPIKey()) openNewScene("/main/view/authorization.fxml");
-        Thread thread = new Thread(new GetUpToDateDataOnPairs());
+//        if (!Agent.isGetUpToDateDataOnPairs()) {
+//            System.out.println("000");
+//            Thread thread = new Thread(new GetUpToDateDataOnPairs());
+//            thread.start();
+//            try { thread.join(); }
+//            catch (InterruptedException e) { e.printStackTrace(); }
+//        }
         Thread clock = new Thread(new Clock());
-        thread.start();
         clock.start();
-        try { thread.join(); } catch (InterruptedException e) { e.printStackTrace(); }
 
         Agent.getArraysOfStrategies().setMainPageController(this);
         Agent.setMainPageController(this);
@@ -149,6 +152,11 @@ public class MainPageController {
             String string = getSelectedItem();
             if (string.length() > 5) arraysOfStrategies.removeStrategy(string);
         });
+
+
+//        if (!Agent.isGetUpToDateDataOnPairs()) {
+//            openNewScene("/main/view/authorization.fxml");
+//        }
     }
 
 
@@ -172,12 +180,13 @@ public class MainPageController {
 
 
 
-    private void openNewScene(String window) {
+    private void openNewScene(String in) {
+        String window = new String(in);
         // при нажатии на кнопку мы прячем окно
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится
         // и дальше уже это окно уже прячем
-        startAllButton.getScene().getWindow().hide();
+        stopButton.getScene().getWindow().hide();
         // далее нам нужно отобразить следующее нужное нам окно
         FXMLLoader fxmlLoader = new FXMLLoader();
         // устанавливаем локацию файла который нам надо загрузить
@@ -260,7 +269,6 @@ public class MainPageController {
         }
     }
 
-    public void updateListView() {
-        getAListOfStrategy();
-    }
+
+    public void updateListView() { getAListOfStrategy(); }
 }

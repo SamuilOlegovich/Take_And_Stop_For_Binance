@@ -1,8 +1,11 @@
 package main.model;
 
+import main.controller.MainPageController;
+
 public class WriteKeysAndSettings {
     private final CreatesTemplatesAndData createsTemplatesAndData;
     private final FilesAndPathCreator filesAndPathCreator;
+    private final MainPageController mainPageController;
     private final WriterAndReadFile writerAndReadFile;
     private final API api;
 
@@ -11,6 +14,7 @@ public class WriteKeysAndSettings {
     public WriteKeysAndSettings() {
         this.createsTemplatesAndData = Agent.getCreatesTemplatesAndData();
         this.filesAndPathCreator = Agent.getFilesAndPathCreator();
+        this.mainPageController = Agent.getMainPageController();
         this.writerAndReadFile = Agent.getWriterAndReadFile();
         this.api = Agent.getApi();
     }
@@ -30,10 +34,11 @@ public class WriteKeysAndSettings {
 
 
     // вписать шаблон для ключей
-    public void enterPatternForKeys() {
+    public void writePatternForKeys() {
         Agent.setYesOrNotAPIKey(false);
         writerAndReadFile.writerFile(createsTemplatesAndData.getPatternForKeys(),
                 filesAndPathCreator.getPathAPIAndSecretKeys(),false);
+//        mainPageController.setApiKey();
     }
 
 

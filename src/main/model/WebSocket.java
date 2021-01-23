@@ -21,6 +21,11 @@ public class WebSocket implements Runnable {
     private final Thread thread;
     private String id;
 
+    private BinanceEventDepthUpdate binanceEventDepthUpdate = null;
+    private Session session;
+    private Read read;
+    private boolean aBoolean;
+
 
 
     public WebSocket(StrategyObject strategyObject) {
@@ -30,6 +35,8 @@ public class WebSocket implements Runnable {
         this.thread = new Thread(this);
         this.arrayList = new ArrayList<>();
         arrayList.add(strategyObject);
+        this.read = new Read();
+        this.aBoolean = true;
         thread.start();
     }
 
@@ -46,20 +53,55 @@ public class WebSocket implements Runnable {
     private void started() {
         try {
             BinanceSymbol binanceSymbol = new BinanceSymbol(arrayList.get(0).getTradingPair());
-            Session session = Agent.getBinanceAPI().webSocketDepth(binanceSymbol,
+            session = Agent.getBinanceAPI().webSocketDepth(binanceSymbol,
                     new BinanceWebSocketAdapterDepth() {
                         @Override
                         public void onMessage(BinanceEventDepthUpdate message) {
-//                            System.out.println(message.toString());
-                            sendMessagesToAll(message);
+                            if (aBoolean) {
+                                read.start();
+                            }
+                            binanceEventDepthUpdate = message;
+//                            System.out.println(symbol + "===" + message.asks.get(0).price.toString());
+//                            Thread thread = new Thread();
+//                            thread.start();
+//                            sendMessagesToAll(message);
+
                         }
                     });
-            try { Thread.sleep(5000); }
-            catch (InterruptedException e) { session.close(); }
+            try { Thread.sleep(5000);
+                System.out.println("2"); }
+            catch (InterruptedException e) {
+                read.interrupt();
+                System.out.println("3");
+                session.close(); }
         } catch (BinanceApiException e) {
+            System.out.println("3");
+//            session.close();
 //            throw new BinanceApiException("Сокет не подключился => " + e);
         }
     }
+
+    private class Read extends Thread {
+
+        @Override
+        public void run() {
+            aBoolean = false;
+            while (true) {
+                try {
+                    System.out.println(symbol + "===" + binanceEventDepthUpdate.asks.get(0).price.toString());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("310");
+
+                }
+            }
+        }
+    }
+
 
 
     private synchronized void sendMessagesToAll(BinanceEventDepthUpdate message) {
@@ -79,7 +121,7 @@ public class WebSocket implements Runnable {
         if (index >= 0 && !string.equals(id) ) {
             arraysOfStrategies.replaceStrategy(arrayList.get(index));
             arrayList.remove(index);
-        } else {
+        } else if (index >= 0) {
             arrayList.remove(index);
         }
         if (arrayList.size() == 0) arraysOfWebSockets.closeWebSocket(symbol);

@@ -35,7 +35,8 @@ public class ErrorAPIOrSecretKeyController {
         });
     }
 
-    private void openNewScene(String window) {
+    private void openNewScene(String in) {
+        String window = new String(in);
         // при нажатии на кнопку мы прячем окно
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится

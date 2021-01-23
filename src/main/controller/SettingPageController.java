@@ -165,7 +165,9 @@ public class SettingPageController {
         });
 
         listViewInSettingPage.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() == 2) { getSelectedItem(); }
+            if (mouseEvent.getClickCount() == 2) {
+                tradingPairField.undo();
+                tradingPairField.insertText(0, getSelectedItem()); }
         });
 
         addPairButton.setOnAction(event -> {
@@ -289,7 +291,7 @@ public class SettingPageController {
             fractionalParts = -1;
         }
 
-        if (trailingStopText.length() > 3) { trailingStop = Double.parseDouble(trailingStopText); }
+        if (trailingStopText.length() > 1) { trailingStop = Double.parseDouble(trailingStopText); }
         else { trailingStop = -1.0; }
     }
 
@@ -443,7 +445,6 @@ public class SettingPageController {
     // добавляем торговый объект в коллекцию стратегий
     private void addTheFinishedObjectToTheListOfStrategies() {
         arraysOfStrategies.addToAllStrategyList(strategyObject, true);
-
     }
 }
 

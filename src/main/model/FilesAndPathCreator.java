@@ -48,7 +48,6 @@ public class FilesAndPathCreator {
         }
 
         if (strings.length == 2) {
-
             if (System.getProperty("os.name").startsWith("Windows")) {
 
                 Path settingsAndStatus = Paths.get(finish + "SettingsAndStatus");

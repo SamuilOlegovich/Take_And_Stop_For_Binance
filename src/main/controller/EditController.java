@@ -186,18 +186,18 @@ public class EditController {
         tradingPairField.insertText(0, tradingPair);
 
         numberOfCoinsField.undo();
-        numberOfCoinsField.insertText(0, numberOfCoins.toString());
+        numberOfCoinsField.insertText(0, numberOfCoins != -1 ? numberOfCoins.toString() : "");
         trailingStopField.undo();
-        trailingStopField.insertText(0, trailingStop.toString());
+        trailingStopField.insertText(0, trailingStop != -1 ? trailingStop.toString() : "");
         takePriceField.undo();
-        takePriceField.insertText(0, takePrice.toString());
+        takePriceField.insertText(0, takePrice != -1 ? takePrice.toString() : "");
         stopPriceField.undo();
-        stopPriceField.insertText(0, stopPrice.toString());
+        stopPriceField.insertText(0, stopPrice != -1 ? stopPrice.toString() : "");
         priceField.undo();
-        priceField.insertText(0, price.toString());
+        priceField.insertText(0, price != -1 ? price.toString() : "");
 
         fractionalPartsField.undo();
-        fractionalPartsField.insertText(0, fractionalParts + "");
+        fractionalPartsField.insertText(0, fractionalParts != -1 ? fractionalParts + "" : "");
     }
 
     private void setGroupsOfRadioButtons() {
@@ -227,7 +227,8 @@ public class EditController {
     }
 
 
-    private void openNewScene(String window) {
+    private void openNewScene(String in) {
+        String window = new String(in);
         // при нажатии на кнопку мы прячем окно
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится

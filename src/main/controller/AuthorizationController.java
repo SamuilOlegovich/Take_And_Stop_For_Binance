@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.model.Agent;
 import javafx.scene.text.Text;
+import main.model.GetUpToDateDataOnPairs;
 import main.model.Lines;
 import main.animations.*;
 
@@ -44,25 +45,39 @@ public class AuthorizationController {
             String APIKey = APIKeyField.getText().trim();
             String secretKey = secretKeyField.getText().trim();
 
-            if ((!secretKey.equals("") && !APIKey.equals(""))
-                    && (secretKey.length() > 10 && APIKey.length() > 10)) {
+            if ((!secretKey.equals("") && !APIKey.equals("")) && (secretKey.length() > 10 && APIKey.length() > 10)) {
                 Agent.getApi().setSECRET_KEY(secretKey);
                 Agent.getApi().setAPI_KEY(APIKey);
                 Agent.getWriteKeysAndSettings().writeNewKeys();
-                openNewScene("/main/view/main.fxml");
-            } else {
-                // потрусить полями если что-то не верно
-                Shake shakePassword = new Shake(secretKeyField);
-                Shake shakeLogin = new Shake(APIKeyField);
-                shakePassword.playAnim();
-                shakeLogin.playAnim();
 
-                textField.setText(Lines.s6);
-                Agent.getWriteKeysAndSettings().enterPatternForKeys();
+                // проверяем верный ли ключи, за одно и список пар получаем
+                Thread thread = new Thread(new GetUpToDateDataOnPairs());
+                thread.start();
+                try { thread.join(); }
+                catch (InterruptedException e) { e.printStackTrace(); }
+
+                if (Agent.isGetUpToDateDataOnPairs()) {
+                    openNewScene("/main/view/main.fxml");
+                } else {
+                    keyError();
+                }
+            } else {
+                keyError();
             }
         });
     }
 
+
+    private void keyError() {
+        // потрусить полями если что-то не верно
+        Shake shakePassword = new Shake(secretKeyField);
+        Shake shakeLogin = new Shake(APIKeyField);
+        shakePassword.playAnim();
+        shakeLogin.playAnim();
+
+        textField.setText(Lines.s6);
+        Agent.getWriteKeysAndSettings().writePatternForKeys();
+    }
 
 
     private void openNewScene(String window) {

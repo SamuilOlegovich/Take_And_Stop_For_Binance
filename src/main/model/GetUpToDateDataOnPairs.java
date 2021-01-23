@@ -19,6 +19,7 @@ public class GetUpToDateDataOnPairs implements Runnable {
 
 
     private void get() {
+        boolean b = false;
         try {
             // считываем актуальные существующие пары на данный момент на бирже
             Agent.setBinanceAPI(new BinanceAPI(Agent.getApi().getAPI_KEY(), Agent.getApi().getSECRET_KEY()));
@@ -27,10 +28,12 @@ public class GetUpToDateDataOnPairs implements Runnable {
             TreeSet<String> treeSet = new TreeSet<>(Agent.getBinanceAPI().allBookTickersMap().keySet());
             Agent.setAllCoinPairList(new ArrayList<>(treeSet));
             treeSet.clear();
+            b = true;
         } catch (BinanceApiException e) {
-            new DeleteKeysAndSettings();
+            Agent.getWriteKeysAndSettings().writePatternForKeys();
+//            new DeleteKeysAndSettings();
             Agent.setGetUpToDateDataOnPairs(false);
         }
-        Agent.setGetUpToDateDataOnPairs(true);
+        if (b) Agent.setGetUpToDateDataOnPairs(true);
     }
 }
