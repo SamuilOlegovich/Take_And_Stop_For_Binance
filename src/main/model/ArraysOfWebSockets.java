@@ -29,9 +29,7 @@ public class ArraysOfWebSockets {
     // Остановить все розетки для рабочих пар
     public void stopAllWebSocketsForWorkingCouples() {
         String[] keys = map.keySet().toArray(new String[0]);
-        for (String key : keys) { map.get(key).getThread().interrupt(); }
-        try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }
-        map.clear();
+        for (String key : keys) { map.get(key).stopAll(); }
     }
 
 
@@ -44,8 +42,7 @@ public class ArraysOfWebSockets {
 
 
     public synchronized void closeWebSocket(String key) {
-        map.get(key).getThread().interrupt();
-        try { Thread.sleep(5000); } catch (InterruptedException e) { e.printStackTrace(); }
+        map.get(key).setSocket();
         map.remove(key);
     }
 
@@ -53,14 +50,36 @@ public class ArraysOfWebSockets {
 
     private void addToListener(StrategyObject in) {
         String key = in.getTradingPair();
-        if (map.containsKey(key)) map.get(key).addStrategyObject(in);
-        else map.put(key, new WebSocket(in));
+        if (map.containsKey(key)) {
+            map.get(key).addStrategyObject(in);
+            map.get(key).startAll();
+        }
+        else {
+            map.put(key, new WebSocket(in));
+        }
     }
+
 
 
     public void deleteStrategy(StrategyObject in) {
         String key = in.getTradingPair();
         map.get(key).removeStrategyObject(in);
+    }
+
+
+
+    // добавить сокет для визуальных котироваок, без стратегии
+    public void addViewSocket(String in) {
+        map.put(in, new WebSocket(in));
+    }
+
+
+
+    public Double getPriceNow(String in) {
+        if (map.containsKey(in)) {
+            return map.get(in).getPriceNow();
+        }
+        return null;
     }
 
 

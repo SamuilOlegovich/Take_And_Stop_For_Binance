@@ -40,7 +40,16 @@
                 </AnchorPane>
             <AnchorPane layoutX="872.0" layoutY="34.0" prefHeight="51.0" prefWidth="267.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="15.0">
                <children>
-                  <Text id="timeText" fx:id="timeText" fill="#0b2440" layoutX="15.0" layoutY="34.169921875" strokeType="OUTSIDE" strokeWidth="0.0" text="Frayday 17 23:35:00" textAlignment="CENTER" wrappingWidth="236.41015625" AnchorPane.bottomAnchor="11.556640625" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.58984375" AnchorPane.topAnchor="10.0">
+                  <Text id="timeText" fx:id="timeText" fill="#0b2440" layoutX="15.0" layoutY="34.169921875" strokeType="OUTSIDE" strokeWidth="0.0" text="Frayday 17 23:35:00" textAlignment="CENTER" wrappingWidth="236.41015625" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="51.0" layoutY="15.0" prefHeight="51.0" prefWidth="728.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="15.0">
+               <children>
+                  <Text id="startStopPriceText" fx:id="startStopPriceText" fill="#0b2440" strokeType="OUTSIDE" strokeWidth="0.0" text="START   BTCUSD = 34000.50   ETHUSD = 1260.50" wrappingWidth="701.41015625" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
                      <font>
                         <Font name="System Bold" size="25.0" />
                      </font>

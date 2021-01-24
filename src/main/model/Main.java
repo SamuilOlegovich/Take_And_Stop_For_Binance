@@ -13,6 +13,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         if (Agent.isYesOrNotAPIKey() && Agent.isGetUpToDateDataOnPairs()) {
+            Agent.getArraysOfWebSockets().addViewSocket("BTCUSDT");
+            Agent.getArraysOfWebSockets().addViewSocket("ETHUSDT");
+            Agent.addViewPairSockets("BTCUSDT");
+            Agent.addViewPairSockets("ETHUSDT");
             Parent root = FXMLLoader.load(getClass().getResource("/main/view/main.fxml"));
             primaryStage.setTitle("Take and Loss for Binance");
             primaryStage.setScene(new Scene(root, 1200, 700));

@@ -5,10 +5,10 @@ import java.util.Objects;
 
 
 public class ReadKeysAndSettings {
-    private WriteKeysAndSettings writeKeysAndSettings;
-    private FilesAndPathCreator filesAndPathCreator;
-    private WriterAndReadFile writerAndReadFile;
-    private API api;
+    private final WriteKeysAndSettings writeKeysAndSettings;
+    private final FilesAndPathCreator filesAndPathCreator;
+    private final WriterAndReadFile writerAndReadFile;
+    private final API api;
 
 
     public ReadKeysAndSettings() {
@@ -132,9 +132,11 @@ public class ReadKeysAndSettings {
             }
         }
 
-        if (api.getAPI_KEY().length() > 20 && api.getSECRET_KEY().length() > 20)
+        if (api.getAPI_KEY().length() > 20 && api.getSECRET_KEY().length() > 20) {
             Agent.setYesOrNotAPIKey(true);
-        else writeKeysAndSettings.writePatternForKeys();
+        } else {
+            writeKeysAndSettings.writePatternForKeys();
+        }
         arrayList.clear();
     }
 }

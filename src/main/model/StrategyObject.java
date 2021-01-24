@@ -5,7 +5,7 @@ import main.model.binance.datatype.BinanceEventDepthUpdate;
 import java.math.BigDecimal;
 
 public class StrategyObject {
-    private WriteKeysAndSettings writeKeysAndSettings;
+    private final WriteKeysAndSettings writeKeysAndSettings;
     private String nameStrategy;
     private String tradingPair;
     private String classID;
@@ -23,8 +23,8 @@ public class StrategyObject {
     private Position preliminaryPosition;
     private Position position;
 
-    private volatile BigDecimal priceAskNow;
-    private volatile BigDecimal priceBidNow;
+    private volatile Double priceAskNow;
+    private volatile Double priceBidNow;
 
     private int fractionalParts;
     private int buyOrSell;
@@ -58,7 +58,7 @@ public class StrategyObject {
 
 
 
-    public synchronized void setPriceAskAndBidNow(BigDecimal ask, BigDecimal bid) {
+    public synchronized void setPriceAskAndBidNow(Double ask, Double bid) {
         if (count) { determineThePosition(); }
         this.priceAskNow = ask;
         this.priceBidNow = bid;
@@ -92,16 +92,16 @@ public class StrategyObject {
 
 
     private void trailingStopPosition() {
-        if (maxPrice < priceBidNow.doubleValue()) {
-            maxPrice = priceBidNow.doubleValue();
+        if (maxPrice < priceBidNow) {
+            maxPrice = priceBidNow;
             priceStopTrailing = (maxPrice - ((maxPrice / 100.0) * trailingStop));
         }
-        if (buyOrSell == 1 && priceStopTrailing <= priceAskNow.doubleValue()) {
+        if (buyOrSell == 1 && priceStopTrailing <= priceAskNow) {
             preliminaryPosition = position;
             position = Position.BUY_TRAILING_STOP_COMPLETED_POSITION;
             new BuyStrategyObject(this);
             works = false;
-        } else if (buyOrSell == -1 && priceStopTrailing >= priceBidNow.doubleValue()) {
+        } else if (buyOrSell == -1 && priceStopTrailing >= priceBidNow) {
             preliminaryPosition = position;
             position = Position.SELL_TRAILING_STOP_COMPLETED_POSITION;
             new SellStrategyObject(this);
@@ -110,12 +110,12 @@ public class StrategyObject {
     }
 
     private void buyTakeOrStopPosition() {
-        if (takePrice <= priceAskNow.doubleValue()) {
+        if (takePrice <= priceAskNow) {
             preliminaryPosition = position;
             position = Position.SELL_TAKE_COMPLETED_POSITION;
             new SellStrategyObject(this);
             works = false;
-        } else if (stopPrice >= priceAskNow.doubleValue()) {
+        } else if (stopPrice >= priceAskNow) {
             preliminaryPosition = position;
             position = Position.SELL_STOP_COMPLETED_POSITION;
             new SellStrategyObject(this);
@@ -124,12 +124,12 @@ public class StrategyObject {
     }
 
     private void sellTakeOrStopPosition() {
-        if (takePrice >= priceBidNow.doubleValue()) {
+        if (takePrice >= priceBidNow) {
             preliminaryPosition = position;
             position = Position.BUY_TAKE_COMPLETED_POSITION;
             new BuyStrategyObject(this);
             works = false;
-        } else if (stopPrice <= priceBidNow.doubleValue()) {
+        } else if (stopPrice <= priceBidNow) {
             preliminaryPosition = position;
             position = Position.BUY_STOP_COMPLETED_POSITION;
             new BuyStrategyObject(this);
@@ -139,24 +139,24 @@ public class StrategyObject {
 
     private void easyPosition() {
         if (buyOrSell == 1) {
-            if (lowerOrHigherPrices && price <= priceBidNow.doubleValue()) {
+            if (lowerOrHigherPrices && price <= priceBidNow) {
                 preliminaryPosition = position;
                 position = Position.BUY_COMPLETED_POSITION;
                 new BuyStrategyObject(this);
                 works = false;
-            } else if (price >= priceBidNow.doubleValue()) {
+            } else if (price >= priceBidNow) {
                 preliminaryPosition = position;
                 position = Position.BUY_COMPLETED_POSITION;
                 new BuyStrategyObject(this);
                 works = false;
             }
         } else if (buyOrSell == -1) {
-            if (lowerOrHigherPrices && price <= priceBidNow.doubleValue()) {
+            if (lowerOrHigherPrices && price <= priceBidNow) {
                 preliminaryPosition = position;
                 position = Position.SELL_COMPLETED_POSITION;
                 new SellStrategyObject(this);
                 works = false;
-            } else if (price >= priceBidNow.doubleValue()) {
+            } else if (price >= priceBidNow) {
                 preliminaryPosition = position;
                 position = Position.SELL_COMPLETED_POSITION;
                 new SellStrategyObject(this);
@@ -168,24 +168,24 @@ public class StrategyObject {
 
     private void normalPosition() {
         if (buyOrSell == 1) {
-            if (lowerOrHigherPrices && price <= priceBidNow.doubleValue()) {
+            if (lowerOrHigherPrices && price <= priceBidNow) {
                 preliminaryPosition = position;
                 position = Position.BUY_TAKE_OR_STOP_POSITION;
                 writeKeysAndSettings.writeNewSettingsAndStates();
                 new BuyStrategyObject(this);
-            } else if (price >= priceBidNow.doubleValue()) {
+            } else if (price >= priceBidNow) {
                 preliminaryPosition = position;
                 position = Position.BUY_TAKE_OR_STOP_POSITION;
                 writeKeysAndSettings.writeNewSettingsAndStates();
                 new BuyStrategyObject(this);
             }
         } else if (buyOrSell == -1) {
-            if (lowerOrHigherPrices && price <= priceBidNow.doubleValue()) {
+            if (lowerOrHigherPrices && price <= priceBidNow) {
                 preliminaryPosition = position;
                 position = Position.SELL_TAKE_OR_STOP_POSITION;
                 writeKeysAndSettings.writeNewSettingsAndStates();
                 new SellStrategyObject(this);
-            } else if (price >= priceBidNow.doubleValue()) {
+            } else if (price >= priceBidNow) {
                 preliminaryPosition = position;
                 position = Position.SELL_TAKE_OR_STOP_POSITION;
                 writeKeysAndSettings.writeNewSettingsAndStates();
@@ -213,101 +213,39 @@ public class StrategyObject {
     }
 
 
-
-    public String getNameStrategy() {
-        return nameStrategy;
-    }
-
-    public void setNameStrategy(String nameStrategy) {
-        this.nameStrategy = nameStrategy;
-    }
-
-    public String getTradingPair() {
-        return tradingPair;
-    }
-
-    public void setTradingPair(String tradingPair) {
-        this.tradingPair = tradingPair;
-    }
-
-    public Double getAmountOfCoins() {
-        return amountOfCoins;
-    }
-
-    public void setAmountOfCoins(Double amountOfCoins) {
-        this.amountOfCoins = amountOfCoins;
-    }
-
-    public Double getTrailingStop() {
-        return trailingStop;
-    }
-
-    public void setTrailingStop(Double trailingStop) {
-        this.trailingStop = trailingStop;
-    }
-
-    public Double getTakePrice() {
-        return takePrice;
-    }
-
-    public void setTakePrice(Double takePrice) {
-        this.takePrice = takePrice;
-    }
-
-    public Double getStopPrice() {
-        return stopPrice;
-    }
-
-    public void setStopPrice(Double stopPrice) {
-        this.stopPrice = stopPrice;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public int getFractionalParts() {
-        return fractionalParts;
-    }
-
-    public void setFractionalParts(int fractionalParts) {
-        this.fractionalParts = fractionalParts;
-    }
-
-    public int getBuyOrSell() {
-        return buyOrSell;
-    }
-
-    public void setBuyOrSell(int buyOrSell) {
-        this.buyOrSell = buyOrSell;
-    }
-
-    public boolean getOnOrOffTS() {
-        return onOrOffTS;
-    }
-
-    public void setOnOrOffTS(boolean onOrOffTS) {
-        this.onOrOffTS = onOrOffTS;
-    }
-
-
     public void setPreliminaryPosition(Position preliminaryPosition) { this.preliminaryPosition = preliminaryPosition; }
     public void setLowerOrHigherPrices(boolean lowerOrHigherPrices) { this.lowerOrHigherPrices = lowerOrHigherPrices; }
+    public void setFractionalParts(int fractionalParts) { this.fractionalParts = fractionalParts; }
     public void setBuyOrSellCoins(Double buyOrSellCoins) { this.buyOrSellCoins = buyOrSellCoins; }
+    public void setAmountOfCoins(Double amountOfCoins) { this.amountOfCoins = amountOfCoins; }
+    public void setNameStrategy(String nameStrategy) { this.nameStrategy = nameStrategy; }
+    public void setTrailingStop(Double trailingStop) { this.trailingStop = trailingStop; }
+    public void setTradingPair(String tradingPair) { this.tradingPair = tradingPair; }
+    public void setOnOrOffTS(boolean onOrOffTS) { this.onOrOffTS = onOrOffTS; }
     public void setOnOrOffFP(boolean onOrOffFP) { this.onOrOffFP = onOrOffFP; }
+    public void setTakePrice(Double takePrice) { this.takePrice = takePrice; }
+    public void setStopPrice(Double stopPrice) { this.stopPrice = stopPrice; }
     public Position getPreliminaryPosition() { return preliminaryPosition; }
     public void setPosition(Position position) { this.position = position; }
+    public void setBuyOrSell(int buyOrSell) { this.buyOrSell = buyOrSell; }
     public boolean isLowerOrHigherPrices() { return lowerOrHigherPrices; }
     public void setClassID(String classID) { this.classID = classID; }
     public Double getBuyOrSellCoins() { return buyOrSellCoins; }
     public void setWorks(boolean works) { this.works = works; }
+    public int getFractionalParts() { return fractionalParts; }
+    public void setPrice(Double price) { this.price = price; }
+    public Double getAmountOfCoins() { return amountOfCoins; }
+    public Double getTrailingStop() { return trailingStop; }
+    public String getNameStrategy() { return nameStrategy; }
     public void setClassID() { classID = hashCode() + ""; }
+    public String getTradingPair() { return tradingPair; }
+    public boolean getOnOrOffTS() { return onOrOffTS; }
     public boolean getOnOrOffFP() { return onOrOffFP; }
+    public Double getTakePrice() { return takePrice; }
+    public Double getStopPrice() { return stopPrice; }
     public Position getPosition() { return position; }
+    public int getBuyOrSell() { return buyOrSell; }
     public String getClassID() { return classID; }
     public boolean getWorks() { return works; }
+    public Double getPrice() { return price; }
 }

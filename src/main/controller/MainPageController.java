@@ -29,6 +29,7 @@ public class MainPageController {
     private ArraysOfWebSockets arraysOfWebSockets;
     private ArraysOfStrategies arraysOfStrategies;
     private ObservableList<String> observableList;
+    private volatile boolean stopThreads;
 
 
     @FXML
@@ -64,10 +65,14 @@ public class MainPageController {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Text startStopPriceText;
+
 
 
     @FXML
     void initialize() {
+        stopThreads = true;
 //        if (!Agent.isGetUpToDateDataOnPairs()) {
 //            System.out.println("000");
 //            Thread thread = new Thread(new GetUpToDateDataOnPairs());
@@ -77,6 +82,8 @@ public class MainPageController {
 //        }
         Thread clock = new Thread(new Clock());
         clock.start();
+        Thread showExchangeRatesAndStatusBar = new Thread(new ShowExchangeRatesAndStatusBar());
+        showExchangeRatesAndStatusBar.start();
 
         Agent.getArraysOfStrategies().setMainPageController(this);
         Agent.setMainPageController(this);
@@ -111,11 +118,13 @@ public class MainPageController {
             if (!Agent.isGetUpToDateDataOnPairs()) {
                 openNewScene("/main/view/error_api_or_secret_key.fxml");
             } else {
+                Agent.setStartAllOrStopAll(true);
                 arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
             }
         });
 
         stopAllButton.setOnAction(event -> {
+            Agent.setStartAllOrStopAll(false);
             arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
         });
 
@@ -182,6 +191,7 @@ public class MainPageController {
 
     private void openNewScene(String in) {
         String window = new String(in);
+        stopThreads = false;
         // при нажатии на кнопку мы прячем окно
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится
@@ -249,7 +259,7 @@ public class MainPageController {
         @Override
         public void run() {
             dateFormat = new SimpleDateFormat("EEEE HH:mm:ss", Locale.ENGLISH);
-            while (true) {
+            while (stopThreads) {
             timeText.setText(getDate());
                 try {
                     Thread.sleep(1000);
@@ -266,6 +276,32 @@ public class MainPageController {
                     : date.getTime() - (1000 * 60 * 60 * Math.abs(Agent.getDateDifference())));
             dateFormat.format(date);
             return dateFormat.format(date);
+        }
+    }
+
+
+    // Показать курсы валют и строку состояния
+    private class ShowExchangeRatesAndStatusBar implements Runnable {
+        private final ArraysOfWebSockets webSockets;
+
+        public ShowExchangeRatesAndStatusBar() { this.webSockets = Agent.getArraysOfWebSockets(); }
+
+        @Override
+        public void run() {
+            while (stopThreads) {
+                try { Thread.sleep(1000);
+                } catch (InterruptedException e) { e.printStackTrace(); }
+                startStopPriceText.setText(getStingExchangeRatesAndStatus());
+            }
+        }
+
+        private String getStingExchangeRatesAndStatus() {
+            StringBuilder out = new StringBuilder();
+            out.append(Agent.isStartAllOrStopAll() ? Enums.START.toString() : Enums.STOP.toString());
+            for (String s : Agent.getViewPairSockets()) {
+                out.append("   ").append(s).append(" - ").append(webSockets.getPriceNow(s));
+            }
+            return out.toString();
         }
     }
 

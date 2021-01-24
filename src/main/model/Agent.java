@@ -4,12 +4,16 @@ import javafx.stage.Stage;
 import main.controller.MainPageController;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.datatype.BinanceEventDepthUpdate;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 
 
 
 public class Agent {
+    private static final ArrayList<String> allCoinPairList = new ArrayList<>();
+    private static final ArrayList<String> viewPairSockets = new ArrayList<>();
+
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
     private static CreatesTemplatesAndData createsTemplatesAndData;
     private static WriteKeysAndSettings writeKeysAndSettings;
@@ -19,18 +23,20 @@ public class Agent {
     private static MainPageController mainPageController;
     private static ArraysOfStrategies arraysOfStrategies;
     private static WriterAndReadFile writerAndReadFile;
+    private static String keyForWebSocket;
     private static BinanceAPI binanceAPI;
     private static API api;
 
-    private static ArrayList<String> allCoinPairList;
-
     private static boolean getUpToDateDataOnPairs;
+    private static boolean startAllOrStopAll;
     private static boolean connectWebSocket;
     private static boolean yesOrNotAPIKey;
 
-    private static String keyForWebSocket;
 
     private static int DateDifference = 0;
+
+
+
 
 
     public static BinanceEventDepthUpdate getBinanceEventDepthUpdate() {
@@ -46,9 +52,7 @@ public class Agent {
     }
 
     public static void setAllCoinPairList(ArrayList<String> allCoinPairList) {
-        if (Agent.allCoinPairList == null) {
-            Agent.allCoinPairList = new ArrayList<>(allCoinPairList);
-        }
+        Agent.allCoinPairList.addAll(allCoinPairList);
     }
 
     public static boolean isYesOrNotAPIKey() {
@@ -169,5 +173,21 @@ public class Agent {
 
     public static void setArraysOfWebSockets(ArraysOfWebSockets arraysOfWebSockets) {
         Agent.arraysOfWebSockets = arraysOfWebSockets;
+    }
+
+    public static ArrayList<String> getViewPairSockets() {
+        return viewPairSockets;
+    }
+
+    public static void addViewPairSockets(String in) {
+        Agent.viewPairSockets.add(in);
+    }
+
+    public static boolean isStartAllOrStopAll() {
+        return startAllOrStopAll;
+    }
+
+    public static void setStartAllOrStopAll(boolean startAllOrStopAll) {
+        Agent.startAllOrStopAll = startAllOrStopAll;
     }
 }

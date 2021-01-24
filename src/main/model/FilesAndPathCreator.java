@@ -203,8 +203,6 @@ public class FilesAndPathCreator {
 
 
     public String getPathSettingsAndStatus() { return pathSettingsAndStatus; }
-
     public String getPathAPIAndSecretKeys() { return pathAPIAndSecretKeys; }
-
     public String getPathLogs() { return pathLogs; }
 }

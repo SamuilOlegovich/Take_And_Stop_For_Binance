@@ -28,6 +28,7 @@ public enum Enums {
     FALSE,
     PRICE,
     LOWER,
+    STOP,
     SELL,
     TRUE,
     NEXT,
