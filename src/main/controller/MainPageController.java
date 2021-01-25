@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_GREENPeer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import main.model.*;
 import javafx.scene.text.Text;
@@ -115,17 +117,19 @@ public class MainPageController {
         });
 
         startAllButton.setOnAction(event -> {
-            if (!Agent.isGetUpToDateDataOnPairs()) {
-                openNewScene("/main/view/error_api_or_secret_key.fxml");
-            } else {
-                Agent.setStartAllOrStopAll(true);
-                arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
-            }
+            new StartAllButton().start();
+//            if (!Agent.isGetUpToDateDataOnPairs()) {
+//                openNewScene("/main/view/error_api_or_secret_key.fxml");
+//            } else {
+//                Agent.setStartAllOrStopAll(true);
+//                arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
+//            }
         });
 
         stopAllButton.setOnAction(event -> {
-            Agent.setStartAllOrStopAll(false);
-            arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
+            new StopAllButton().start();
+//            Agent.setStartAllOrStopAll(false);
+//            arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
         });
 
         timeText.setOnMouseClicked(mouseEvent -> {
@@ -133,13 +137,17 @@ public class MainPageController {
         });
 
         startButton.setOnAction(event -> {
-            String string = getSelectedItem();
-            if (string.length() > 5) arraysOfStrategies.launchStrategy(string);
+            new StartButton().start();
+//            String string = getSelectedItem();
+//            if (string.length() > 5) arraysOfStrategies.launchStrategy(string);
         });
 
         stopButton.setOnAction(event -> {
-            String string = getSelectedItem();
-            if (string.length() > 5) arraysOfStrategies.stopStrategy(string);
+            new StopButton().start();
+//            String string = getSelectedItem();
+//            if(string.length() > 5) {
+//                arraysOfStrategies.stopStrategy(string);
+//            }
         });
 
         addButton.setOnAction(event -> {
@@ -253,6 +261,54 @@ public class MainPageController {
 
 
 
+    private class StartAllButton extends Thread {
+        @Override
+        public synchronized void start() {
+            if (!Agent.isGetUpToDateDataOnPairs()) {
+                openNewScene("/main/view/error_api_or_secret_key.fxml");
+            } else {
+                Agent.setStartAllOrStopAll(true);
+                arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
+            }
+        }
+    }
+
+
+
+    private class StopAllButton extends Thread {
+        @Override
+        public synchronized void start() {
+            Agent.setStartAllOrStopAll(false);
+            arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
+        }
+    }
+
+
+
+    private class StartButton extends Thread {
+        @Override
+        public synchronized void start() {
+            String string = getSelectedItem();
+            if (string.length() > 5) {
+                arraysOfStrategies.launchStrategy(string);
+            }
+        }
+    }
+
+
+
+    private class StopButton extends Thread {
+        @Override
+        public synchronized void start() {
+            String string = getSelectedItem();
+            if(string.length() > 5) {
+                arraysOfStrategies.stopStrategy(string);
+            }
+        }
+    }
+
+
+
     private class Clock implements Runnable {
         DateFormat dateFormat;
 
@@ -298,8 +354,9 @@ public class MainPageController {
         private String getStingExchangeRatesAndStatus() {
             StringBuilder out = new StringBuilder();
             out.append(Agent.isStartAllOrStopAll() ? Enums.START.toString() : Enums.STOP.toString());
+            out.append("   ");
             for (String s : Agent.getViewPairSockets()) {
-                out.append("   ").append(s).append(" - ").append(webSockets.getPriceNow(s));
+                out.append("  ").append(s).append(" -> ").append(webSockets.getPriceNow(s));
             }
             return out.toString();
         }

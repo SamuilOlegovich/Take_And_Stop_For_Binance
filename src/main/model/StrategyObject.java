@@ -60,6 +60,7 @@ public class StrategyObject {
 
     public synchronized void setPriceAskAndBidNow(Double ask, Double bid) {
         if (count) { determineThePosition(); }
+        System.out.println(tradingPair + "===" + bid.toString());///////////////////////////////////
         this.priceAskNow = ask;
         this.priceBidNow = bid;
         if (works) { doSomethingOrNot();}
@@ -109,6 +110,8 @@ public class StrategyObject {
         }
     }
 
+
+
     private void buyTakeOrStopPosition() {
         if (takePrice <= priceAskNow) {
             preliminaryPosition = position;
@@ -123,6 +126,8 @@ public class StrategyObject {
         }
     }
 
+
+
     private void sellTakeOrStopPosition() {
         if (takePrice >= priceBidNow) {
             preliminaryPosition = position;
@@ -136,6 +141,8 @@ public class StrategyObject {
             works = false;
         }
     }
+
+
 
     private void easyPosition() {
         if (buyOrSell == 1) {
@@ -164,6 +171,7 @@ public class StrategyObject {
             }
         }
     }
+
 
 
     private void normalPosition() {

@@ -52,7 +52,9 @@ public class ArraysOfWebSockets {
         String key = in.getTradingPair();
         if (map.containsKey(key)) {
             map.get(key).addStrategyObject(in);
-            map.get(key).startAll();
+            if (Agent.isStartAllOrStopAll()) {
+                map.get(key).startAll();
+            }
         }
         else {
             map.put(key, new WebSocket(in));

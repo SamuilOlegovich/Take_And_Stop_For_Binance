@@ -93,7 +93,7 @@ public class WebSocket implements Runnable {
                 System.out.println("2"); }
             catch (InterruptedException e) {
                 session.close();
-                System.out.println("3");
+                System.out.println("3");////////////////////////////////////////
                 stopStartThread = true;
             }
         } catch (BinanceApiException e) {
@@ -142,10 +142,9 @@ public class WebSocket implements Runnable {
                 }
                 catch (NullPointerException e) {}
                 catch (IndexOutOfBoundsException e) {
-                    System.out.println("310");
+                    System.out.println("310");////////////////////////////////////////////
                 }
-                try {
-                    Thread.sleep(1000);
+                try { Thread.sleep(1000);
                 } catch (InterruptedException e) { stopStartThread = false; }
             }
             session.close();
@@ -168,8 +167,13 @@ public class WebSocket implements Runnable {
 
 
 
+    public void addStrategyObject(StrategyObject strategyObject) {
+        if (!arrayList.contains(strategyObject)) {
+            arrayList.add(strategyObject);
+        }
+    }
+
     public void removeStrategyObject(StrategyObject strategyObject) { this.id = strategyObject.getClassID(); }
-    public void addStrategyObject(StrategyObject strategyObject) { arrayList.add(strategyObject); }
     public void setSocket() { this.stopStartThread = false; }
     public void stopAll() { this.stopAndStartAll = false; }
     public void startAll() { this.stopAndStartAll = true; }
