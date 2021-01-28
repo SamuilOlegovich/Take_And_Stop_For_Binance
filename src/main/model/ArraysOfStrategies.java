@@ -148,20 +148,6 @@ public class ArraysOfStrategies {
         String id = in.split(Lines.delimiter)[0];
         int index = -1;
 
-//        for (StrategyObject object : tradedStrategyList) {
-//            if (id.equals(object.getClassID())) {
-//                index = tradedStrategyList.indexOf(object);
-//                object.setWorks(false);
-//                break;
-//            }
-//        }
-//
-//        if (index >= 0 ) {
-//            tradedStrategyList.remove(index);
-//            mainPageController.updateListView();
-//            return;
-//        }
-
         for (StrategyObject object : stoppedStrategyList) {
             if (id.equals(object.getClassID())) {
                 index = stoppedStrategyList.indexOf(object);

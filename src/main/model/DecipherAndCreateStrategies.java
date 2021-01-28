@@ -17,9 +17,6 @@ public class DecipherAndCreateStrategies {
         for (ArrayList<String> arrayList : listStrategy) {
             StrategyObject strategyObject = new StrategyObject();
             for (String s : arrayList) {
-//                if (arrayList.indexOf(s) == 0) {
-//                    System.out.println(s);
-//                }
                 String name = s.split(Lines.delimiter)[0];
                 String value = s.split(Lines.delimiter)[1];
                 if (name.equals(Enums.ID.toString())) {
@@ -66,12 +63,6 @@ public class DecipherAndCreateStrategies {
             }
 
             if (!strategyObject.getPosition().equals(Position.EXAMPLE_POSITION)) {
-//                System.out.println(strategyObject.getClassID()
-//                        + " " + strategyObject.getWorks()
-//                        + " " + strategyObject.getPosition()
-//                        + " " + strategyObject.getTradingPair()
-//                        + " " + strategyObject.getNameStrategy()
-//                );
                 arraysOfStrategies.addToAllStrategyList(strategyObject, false);
             }
         }

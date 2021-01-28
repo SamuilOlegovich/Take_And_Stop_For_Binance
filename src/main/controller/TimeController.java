@@ -50,6 +50,8 @@ public class TimeController {
         });
     }
 
+
+
     private void wrongInput() {
         // потрусить полями если что-то не верно
         textField.setText("Incorrect input format");

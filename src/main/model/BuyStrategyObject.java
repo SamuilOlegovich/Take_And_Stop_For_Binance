@@ -19,12 +19,12 @@ public class BuyStrategyObject implements Runnable {
     private Position preliminaryPosition;
     private Position position;
 
-    private String symbol;
-
     private Double fractionsAmountCoins;
     private Double returnAmountCoins;
     private Double amountCoins;
     private Double price;
+
+    private String symbol;
 
     private int executedOrders;
     private int fractions;

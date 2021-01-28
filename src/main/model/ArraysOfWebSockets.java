@@ -5,11 +5,10 @@ import java.util.Map;
 
 
 
+
 public class ArraysOfWebSockets {
     private ArraysOfStrategies arraysOfStrategies;
     private final Map<String, WebSocket> map;
-
-
 
     public ArraysOfWebSockets() {
         this.map = new HashMap<>();

@@ -17,11 +17,11 @@ public class Agent {
     private static BinanceEventDepthUpdate binanceEventDepthUpdate;
     private static CreatesTemplatesAndData createsTemplatesAndData;
     private static WriteKeysAndSettings writeKeysAndSettings;
-    private static ArraysOfWebSockets arraysOfWebSockets;
     private static ReadKeysAndSettings readKeysAndSettings;
     private static FilesAndPathCreator filesAndPathCreator;
     private static MainPageController mainPageController;
     private static ArraysOfStrategies arraysOfStrategies;
+    private static ArraysOfWebSockets arraysOfWebSockets;
     private static WriterAndReadFile writerAndReadFile;
     private static String keyForWebSocket;
     private static BinanceAPI binanceAPI;
@@ -38,10 +38,6 @@ public class Agent {
 
 
 
-
-    public static BinanceEventDepthUpdate getBinanceEventDepthUpdate() {
-        return binanceEventDepthUpdate;
-    }
 
     public static void setBinanceEventDepthUpdate(BinanceEventDepthUpdate binanceEventDepthUpdate) {
         Agent.binanceEventDepthUpdate = binanceEventDepthUpdate;
@@ -61,10 +57,6 @@ public class Agent {
 
     public static void setYesOrNotAPIKey(boolean yesOrNotAPIKey) {
         Agent.yesOrNotAPIKey = yesOrNotAPIKey;
-    }
-
-    public static String getKeyForWebSocket() {
-        return keyForWebSocket;
     }
 
     public static void setKeyForWebSocket(String keyForWebSocket) {
@@ -87,10 +79,6 @@ public class Agent {
         Agent.getUpToDateDataOnPairs = getUpToDateDataOnPairs;
     }
 
-    public static boolean isConnectWebSocket() {
-        return connectWebSocket;
-    }
-
     public static void setConnectWebSocket(boolean connectWebSocket) {
         Agent.connectWebSocket = connectWebSocket;
     }
@@ -111,9 +99,6 @@ public class Agent {
         Agent.filesAndPathCreator = filesAndPathCreator;
     }
 
-    public static ReadKeysAndSettings getReadKeysAndSettings() {
-        return readKeysAndSettings;
-    }
 
     public static void setReadKeysAndSettings(ReadKeysAndSettings readKeysAndSettings) {
         Agent.readKeysAndSettings = readKeysAndSettings;

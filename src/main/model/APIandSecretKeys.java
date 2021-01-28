@@ -1,6 +1,6 @@
 package main.model;
 
 public enum APIandSecretKeys {
-    API_KEY,
-    SECRET_KEY;
+    SECRET_KEY,
+    API_KEY
 }
