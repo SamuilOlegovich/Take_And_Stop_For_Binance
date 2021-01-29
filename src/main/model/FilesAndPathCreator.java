@@ -17,19 +17,10 @@ public class FilesAndPathCreator {
 
 
     public FilesAndPathCreator() {
-//        System.out.println("1");
         createdPath();
-//        System.out.println("2");
         createdFileLog();
-//        System.out.println("3");
         isTheFileInPlace();
-//        System.out.println("4");
         showPath();
-//        System.out.println(pathSettingsAndStatus);
-//        System.out.println(pathAPIAndSecretKeys);
-//        System.out.println(pathLogs);
-//        System.out.println("5");
-
     }
 
 

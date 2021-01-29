@@ -22,9 +22,4 @@ public class DecryptAndCustomize {
             }
         }
     }
-
-    /*SETTINGS
-        DATE_DIFFERENCE===0
-        STATUS
-        */
 }

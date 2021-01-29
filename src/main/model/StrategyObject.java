@@ -1,8 +1,7 @@
 package main.model;
 
-import main.model.binance.datatype.BinanceEventDepthUpdate;
 
-import java.math.BigDecimal;
+
 
 public class StrategyObject {
     private final WriteKeysAndSettings writeKeysAndSettings;

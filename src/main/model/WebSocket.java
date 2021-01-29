@@ -17,8 +17,9 @@ public class WebSocket implements Runnable {
 //    private final ArraysOfWebSockets arraysOfWebSockets;
     private final ArraysOfStrategies arraysOfStrategies;
     private final ReadsAndTransmits readsAndTransmits;
-    private MainPageController mainPageController;
     private final Thread thread;
+
+//    private MainPageController mainPageController;
 
     private final ArrayList<StrategyObject> arrayList;
     private final String symbol;

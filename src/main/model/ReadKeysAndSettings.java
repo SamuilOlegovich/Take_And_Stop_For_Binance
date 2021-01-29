@@ -60,7 +60,6 @@ public class ReadKeysAndSettings {
         for (int i = index; i >= 0; i--) { inList.remove(i); }
 
         for (String s : inList) {
-//            System.out.println(s);
             if (!s.equals(Enums.STATUS.toString()) && !s.equals(Enums.NEXT.toString()) && !s.equals(Enums.END.toString())) {
                 statusList.add(s);
             } else if (s.equals(Enums.NEXT.toString())) {

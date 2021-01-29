@@ -31,7 +31,6 @@ public class GetUpToDateDataOnPairs implements Runnable {
             b = true;
         } catch (BinanceApiException e) {
             Agent.getWriteKeysAndSettings().writePatternForKeys();
-//            new DeleteKeysAndSettings();
             Agent.setGetUpToDateDataOnPairs(false);
         }
         if (b) Agent.setGetUpToDateDataOnPairs(true);

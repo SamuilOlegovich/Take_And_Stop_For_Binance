@@ -1,8 +1,8 @@
 package main.model;
 
 public enum EndPair {
+    BUSD,
     USDT,
-    BUSDT,
     BTC,
     ETH,
     BNB;
