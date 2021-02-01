@@ -69,6 +69,7 @@ public class BuyStrategyObject implements Runnable {
     // отправляем сделку на биржу
     private void createdNewTrade() {
         int fraction = 0;
+
         if (fractions <= 1) {
             try {
                 System.out.println("Вошел в покупку");////////////////////////
@@ -79,8 +80,8 @@ public class BuyStrategyObject implements Runnable {
                 System.out.println("Вошел в покупку 2");
                 writerAndReadFile.writerFile(getTransactionInformation(), filesAndPathCreator.getPathLogs(), true);
                 System.out.println("Вошел в покупку 3");//////////////////
-            }
-            catch (BinanceApiException e) {
+            } catch (BinanceApiException e) {
+
                 System.out.println(e.getMessage());//////////////////////
                 System.out.println("ERROR");/////////////////////////////
 
@@ -136,9 +137,8 @@ public class BuyStrategyObject implements Runnable {
                 createdNewTrade();
             }
         } else {
-            if (attempts <= 0) {
-                understandAndExecute(string, fraction);
-            } else {
+            if (attempts <= 0) { understandAndExecute(string, fraction); }
+            else {
                 try { Thread.sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); }
                 executedOrders = fraction - 1;
                 createdNewTrade();
@@ -210,11 +210,8 @@ public class BuyStrategyObject implements Runnable {
 
 
     private void createBinanceOrderPlacement() {
-        if (fractions > 1) {
-            fractionsAmountCoins = amountCoins / fractions;
-        } else {
-            returnAmountCoins = amountCoins / price;
-        }
+        if (fractions > 1) { fractionsAmountCoins = amountCoins / fractions; }
+        else { returnAmountCoins = amountCoins / price; }
 
         try {
             binanceSymbol = new BinanceSymbol(symbol);
@@ -241,6 +238,7 @@ public class BuyStrategyObject implements Runnable {
 
     private void determineWhatToDo() {
         position = strategyObject.getPosition();
+
         if (position.equals(Position.BUY_COMPLETED_POSITION)) {
             amountCoins = strategyObject.getAmountOfCoins();
 //            fractions = strategyObject.getFractionalParts();

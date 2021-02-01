@@ -18,7 +18,7 @@ public class Main extends Application {
             Agent.addViewPairSockets("BTCUSDT");
             Agent.addViewPairSockets("ETHUSDT");
             Parent root = FXMLLoader.load(getClass().getResource("/main/view/main.fxml"));
-            primaryStage.setTitle("Take and Loss for Binance");
+//            primaryStage.setTitle("Take and Loss for Binance");
             primaryStage.setScene(new Scene(root, 1200, 700));
         } else {
             Parent root = FXMLLoader.load(getClass().getResource("/main/view/authorization.fxml"));

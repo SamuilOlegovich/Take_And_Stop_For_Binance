@@ -17,9 +17,7 @@ public class DatesTimes {
             date.setTime(Agent.getDateDifference() > 0
                     ? date.getTime() + (1000 * 60 * 60 * Math.abs(Agent.getDateDifference()))
                     : date.getTime() - (1000 * 60 * 60 * Math.abs(Agent.getDateDifference())));
-        } else {
-            date.setTime(date.getTime());
-        }
+        } else { date.setTime(date.getTime()); }
         return dateFormat.format(date);
     }
 
@@ -30,9 +28,7 @@ public class DatesTimes {
             date.setTime(Agent.getDateDifference() > 0
                     ? date.getTime() + (1000 * 60 * 60 * Math.abs(Agent.getDateDifference()))
                     : date.getTime() - (1000 * 60 * 60 * Math.abs(Agent.getDateDifference())));
-        } else {
-            date.setTime(date.getTime());
-        }
+        } else { date.setTime(date.getTime()); }
         return date.getTime();
     }
 
@@ -61,21 +57,12 @@ public class DatesTimes {
         if (string.startsWith("\"") && string.endsWith("\"")) {
             String stringIn = string.replaceAll("\"", "").replace("time: ", "");
 
-            try {
-                dateFromString = simpleDateFormat.parse(stringIn);
-            } catch (Exception e) {
-                ConsoleHelper.writeMessage("неверный формат даты --- " + stringIn);
-            }
+            try { dateFromString = simpleDateFormat.parse(stringIn); }
+            catch (Exception e) { ConsoleHelper.writeMessage("неверный формат даты --- " + stringIn); }
             return dateFromString;
-
         } else {
-
-            try {
-                dateFromString = simpleDateFormat.parse(string);
-            } catch (Exception e) {
-                ConsoleHelper.writeMessage("неверный формат даты --- " + string);
-            }
-
+            try { dateFromString = simpleDateFormat.parse(string); }
+            catch (Exception e) { ConsoleHelper.writeMessage("неверный формат даты --- " + string); }
             return dateFromString;
         }
     }

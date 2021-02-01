@@ -53,29 +53,24 @@ public class ArraysOfStrategies {
             }
         }
 
-        if (works) tradedStrategyList.remove(index);
-        else stoppedStrategyList.remove(index);
+        if (works) { tradedStrategyList.remove(index); }
+        else { stoppedStrategyList.remove(index); }
 
         in.setClassID();
         in.setWorks(false);
         stoppedStrategyList.add(in);
-//        mainPageController.updateListView();
-//        strategyObject = null;
         writeKeysAndSettings.writeNewSettingsAndStates();
     }
 
 
 
-//    public void setStrategySettingAndStatus(StrategyObject strategyObject) {
-//        this.strategyObject = strategyObject;
-//    }
-
-
-
     // найти стратегию
-    public void findStrategy(String in) {
+    public synchronized void findStrategy(String in) {
         // разбираем строку и по основным данным находим стратегию
-        String id = in.split(Lines.delimiter)[0];
+        String id;
+        if (in.contains(Lines.delimiter)) { id = in.split(Lines.delimiter)[0]; }
+        else { id = in; }
+
         for (StrategyObject object : tradedStrategyList) {
             if (id.equals(object.getClassID())) {
                 strategyObject = object;
@@ -98,6 +93,7 @@ public class ArraysOfStrategies {
         String id = in.split(Lines.delimiter)[0];
         StrategyObject sObject = null;
         int index = -1;
+
         for (StrategyObject object : stoppedStrategyList) {
             if (id.equals(object.getClassID())) {
                 index = stoppedStrategyList.indexOf(object);
@@ -105,6 +101,7 @@ public class ArraysOfStrategies {
                 break;
             }
         }
+
         if (sObject != null) {
             sObject.setWorks(true);
             tradedStrategyList.add(sObject);
@@ -124,6 +121,7 @@ public class ArraysOfStrategies {
         StrategyObject sObject = null;
         System.out.println(id);
         int index = -1;
+
         for (StrategyObject s : tradedStrategyList) {
             if (id.equals(s.getClassID())) {
                 index = tradedStrategyList.indexOf(s);
@@ -131,6 +129,7 @@ public class ArraysOfStrategies {
                 break;
             }
         }
+
         if (sObject != null) {
             sObject.setWorks(false);
             tradedStrategyList.remove(index);
@@ -143,7 +142,7 @@ public class ArraysOfStrategies {
 
 
     // удалить стратегию
-    public void removeStrategy(String in) {
+    public synchronized void removeStrategy(String in) {
         // разбираем строку и по основным данным находим стратегию и удаляем ее отовсюду
         String id = in.split(Lines.delimiter)[0];
         int index = -1;

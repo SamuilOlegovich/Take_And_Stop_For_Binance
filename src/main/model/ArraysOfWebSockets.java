@@ -51,13 +51,8 @@ public class ArraysOfWebSockets {
         String key = in.getTradingPair();
         if (map.containsKey(key)) {
             map.get(key).addStrategyObject(in);
-            if (Agent.isStartAllOrStopAll()) {
-                map.get(key).startAll();
-            }
-        }
-        else {
-            map.put(key, new WebSocket(in));
-        }
+            if (Agent.isStartAllOrStopAll()) { map.get(key).startAll(); }
+        } else { map.put(key, new WebSocket(in)); }
     }
 
 
@@ -77,9 +72,7 @@ public class ArraysOfWebSockets {
 
 
     public Double getPriceNow(String in) {
-        if (map.containsKey(in)) {
-            return map.get(in).getPriceNow();
-        }
+        if (map.containsKey(in)) { return map.get(in).getPriceNow(); }
         return null;
     }
 

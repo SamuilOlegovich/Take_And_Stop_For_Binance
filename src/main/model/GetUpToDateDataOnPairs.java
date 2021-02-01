@@ -33,6 +33,7 @@ public class GetUpToDateDataOnPairs implements Runnable {
             Agent.getWriteKeysAndSettings().writePatternForKeys();
             Agent.setGetUpToDateDataOnPairs(false);
         }
-        if (b) Agent.setGetUpToDateDataOnPairs(true);
+
+        if (b) { Agent.setGetUpToDateDataOnPairs(true); }
     }
 }

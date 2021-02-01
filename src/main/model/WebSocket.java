@@ -157,6 +157,7 @@ public class WebSocket implements Runnable {
 
     public Double getPriceNow() {
         Double priceBid = 0.0;
+
         try {
             priceBid = binanceEventDepthUpdate.bids.get(0).price.doubleValue();
             previousPriceValue = priceBid;
@@ -169,9 +170,7 @@ public class WebSocket implements Runnable {
 
 
     public void addStrategyObject(StrategyObject strategyObject) {
-        if (!arrayList.contains(strategyObject)) {
-            arrayList.add(strategyObject);
-        }
+        if (!arrayList.contains(strategyObject)) { arrayList.add(strategyObject); }
     }
 
     public void removeStrategyObject(StrategyObject strategyObject) { this.id = strategyObject.getClassID(); }
@@ -179,7 +178,4 @@ public class WebSocket implements Runnable {
     public void stopAll() { this.stopAndStartAll = false; }
     public void startAll() { this.stopAndStartAll = true; }
 
-//    public void mainInfoPrice(boolean) {
-
-//    }
 }

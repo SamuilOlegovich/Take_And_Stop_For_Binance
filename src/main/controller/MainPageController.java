@@ -2,11 +2,6 @@ package main.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -24,11 +19,12 @@ import javafx.scene.text.Text;
 
 
 public class MainPageController {
+    private ShowExchangeRates showExchangeRates;
     private CreatesTemplatesAndData createsTemplatesAndData;
     private ArraysOfWebSockets arraysOfWebSockets;
     private ArraysOfStrategies arraysOfStrategies;
     private ObservableList<String> observableList;
-    private volatile boolean stopThreads;
+    private Clocks clocks;
 
 
     @FXML
@@ -65,19 +61,25 @@ public class MainPageController {
     private Button deleteButton;
 
     @FXML
-    private Text startStopPriceText;
+    private Text startStopText;
+
+    @FXML
+    private Text pricesText;
 
 
 
     @FXML
     void initialize() {
-        stopThreads = true;
-        new Thread(new Clock()).start();
-        Thread showExchangeRatesAndStatusBar = new Thread(new ShowExchangeRatesAndStatusBar());
-        showExchangeRatesAndStatusBar.start();
-
         Agent.getArraysOfStrategies().setMainPageController(this);
         Agent.setMainPageController(this);
+
+        showExchangeRates = new ShowExchangeRates(this);
+        clocks = new Clocks(this);
+        showExchangeRates.start();
+        clocks.start();
+
+        if (Agent.isStartAllOrStopAll()) { startStopText.setText(Enums.START.toString()); }
+        else { startStopText.setText(Enums.STOP.toString()); }
 
         observableList = FXCollections.observableArrayList();
         arraysOfWebSockets = Agent.getArraysOfWebSockets();
@@ -98,7 +100,8 @@ public class MainPageController {
                 String stringOfList = getSelectedItem();
                 if (!stringOfList.equals(Enums.ON_LINE_STRATEGY.toString())
                         && !stringOfList.equals(Enums.OFF_LINE_STRATEGY.toString())
-                        && !stringOfList.equals(Lines.thereAreNoStrategiesNow)) {
+                        && !stringOfList.equals(Lines.thereAreNoStrategiesNow)
+                        && !stringOfList.equals(Lines.tableOfContents)) {
                     arraysOfStrategies.findStrategy(stringOfList);
                     openNewScene("/main/view/info.fxml");
                 }
@@ -106,33 +109,29 @@ public class MainPageController {
         });
 
         startAllButton.setOnAction(event -> {
-            new StartAllButton().start();
-//            if (!Agent.isGetUpToDateDataOnPairs()) {
-//                openNewScene("/main/view/error_api_or_secret_key.fxml");
-//            } else {
-//                Agent.setStartAllOrStopAll(true);
-//                arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
-//            }
+            if (!Agent.isGetUpToDateDataOnPairs()) { openNewScene("/main/view/error_api_or_secret_key.fxml"); }
+            else {
+                startStopText.setText(Enums.START.toString());
+                Agent.setStartAllOrStopAll(true);
+                arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
+            }
         });
 
+        // останавливает передачу данных котировок на все рабочие стратегии, но сокеты не отключают
         stopAllButton.setOnAction(event -> {
-            new StopAllButton().start();
-//            Agent.setStartAllOrStopAll(false);
-//            arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
+            startStopText.setText(Enums.STOP.toString());
+            Agent.setStartAllOrStopAll(false);
+            arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
         });
 
         startButton.setOnAction(event -> {
-            new StartButton().start();
-//            String string = getSelectedItem();
-//            if (string.length() > 5) arraysOfStrategies.launchStrategy(string);
+            String string = getSelectedItem();
+            if (string.length() > 5) { arraysOfStrategies.launchStrategy(string); }
         });
 
         stopButton.setOnAction(event -> {
-            new StopButton().start();
-//            String string = getSelectedItem();
-//            if(string.length() > 5) {
-//                arraysOfStrategies.stopStrategy(string);
-//            }
+            String string = getSelectedItem();
+            if(string.length() > 5) { arraysOfStrategies.stopStrategy(string); }
         });
 
         addButton.setOnAction(event -> {
@@ -144,15 +143,16 @@ public class MainPageController {
             if (!stringOfList.equals(Enums.ON_LINE_STRATEGY.toString())
                     && !stringOfList.equals(Enums.OFF_LINE_STRATEGY.toString())
                     && !stringOfList.equals(Lines.thereAreNoStrategiesNow)
+                    && !stringOfList.equals(Lines.tableOfContents)
                     && !stringOfList.equals("")) {
-                arraysOfStrategies.findStrategy(getSelectedItem());
+                arraysOfStrategies.findStrategy(stringOfList);
                 openNewScene("/main/view/edit.fxml");
             }
         });
 
         deleteButton.setOnAction(event -> {
             String string = getSelectedItem();
-            if (string.length() > 5) arraysOfStrategies.removeStrategy(string);
+            if (string.length() > 5) { arraysOfStrategies.removeStrategy(string); }
         });
 
         timeText.setOnMouseClicked(mouseEvent -> {
@@ -160,37 +160,19 @@ public class MainPageController {
         });
 
 
-        Agent.getWriterAndReadFile().writerFile(DatesTimes.getDateLogs(), Agent.getFilesAndPathCreator().getPathLogs(), true);
+        Agent.getWriterAndReadFile().writerFile(DatesTimes.getDateLogs(),
+                Agent.getFilesAndPathCreator().getPathLogs(), true);
     }
 
 
 
-    private void getAListOfStrategy() {
-        observableList.clear();
-        observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
-        observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
-        observableList.add(Enums.OFF_LINE_STRATEGY.toString());
-        observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
-        listViewInMainPage.refresh();
-    }
-
-
-
-    private void getAddressesOfUsedClasses() {
-        arraysOfStrategies = Agent.getArraysOfStrategies();
-        createsTemplatesAndData = Agent.getCreatesTemplatesAndData();
-        arraysOfStrategies.setWriteKeysAndSettings(Agent.getWriteKeysAndSettings());
-    }
-
-
-
-    private void openNewScene(String in) {
-        String window = new String(in);
-        stopThreads = false;
+    private void openNewScene(String window) {
+        showExchangeRates.stopThreads(false);
+        clocks.stopThreads(false);
         // при нажатии на кнопку мы прячем окно
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится
-        // и дальше уже это окно уже прячем
+        // и дальше уже это окно прячем
         stopButton.getScene().getWindow().hide();
         // далее нам нужно отобразить следующее нужное нам окно
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -210,116 +192,53 @@ public class MainPageController {
 
 
 
+    private void getAListOfStrategy() {
+        observableList.clear();
+        observableList.addAll(Lines.tableOfContents);
+        observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
+        observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
+        observableList.add(Enums.OFF_LINE_STRATEGY.toString());
+        observableList.addAll(createsTemplatesAndData.getStoppedStrategyList());
+        listViewInMainPage.refresh();
+    }
+
+
+
+    private void getAddressesOfUsedClasses() {
+        arraysOfStrategies = Agent.getArraysOfStrategies();
+        createsTemplatesAndData = Agent.getCreatesTemplatesAndData();
+        arraysOfStrategies.setWriteKeysAndSettings(Agent.getWriteKeysAndSettings());
+    }
+
+
+
+    // дать строку выбранную в списке
     private String getSelectedItem() {
         return listViewInMainPage.getSelectionModel().getSelectedItems().toString()
                 .replaceAll("\\[", "").replaceAll("]", "");
     }
 
 
-
-
-
-    private class StartAllButton extends Thread {
-        @Override
-        public synchronized void start() {
-            if (!Agent.isGetUpToDateDataOnPairs()) {
-                openNewScene("/main/view/error_api_or_secret_key.fxml");
-            } else {
-                Agent.setStartAllOrStopAll(true);
-                arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
-            }
-        }
+    private synchronized void setStartStopPriceText(String in) {
+        pricesText.setText(in);
     }
 
 
 
-    private class StopAllButton extends Thread {
-        @Override
-        public synchronized void start() {
-            Agent.setStartAllOrStopAll(false);
-            arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
-        }
+    public synchronized void updateListView() { getAListOfStrategy(); }
+
+
+
+    // обновляет время
+    public synchronized void serClocks(String in) {
+        timeText.setText(in);
     }
 
 
 
-    private class StartButton extends Thread {
-        @Override
-        public synchronized void start() {
-            String string = getSelectedItem();
-            if (string.length() > 5) {
-                arraysOfStrategies.launchStrategy(string);
-            }
-        }
+    // обновляет курсы валют и строку состояния
+    public synchronized void setExchangeRates(String in) {
+        pricesText.setText(in);
     }
 
-
-
-    private class StopButton extends Thread {
-        @Override
-        public synchronized void start() {
-            String string = getSelectedItem();
-            if(string.length() > 5) {
-                arraysOfStrategies.stopStrategy(string);
-            }
-        }
-    }
-
-
-
-    private class Clock implements Runnable {
-        DateFormat dateFormat;
-
-        @Override
-        public void run() {
-            dateFormat = new SimpleDateFormat("EEEE HH:mm:ss", Locale.ENGLISH);
-            while (stopThreads) {
-            timeText.setText(getDate());
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        private String getDate() {
-            Date date = new Date();
-            date.setTime(Agent.getDateDifference() > 0
-                    ? date.getTime() + (1000 * 60 * 60 * Math.abs(Agent.getDateDifference()))
-                    : date.getTime() - (1000 * 60 * 60 * Math.abs(Agent.getDateDifference())));
-            dateFormat.format(date);
-            return dateFormat.format(date);
-        }
-    }
-
-
-    // Показать курсы валют и строку состояния
-    private class ShowExchangeRatesAndStatusBar implements Runnable {
-        private final ArraysOfWebSockets webSockets;
-
-        public ShowExchangeRatesAndStatusBar() { this.webSockets = Agent.getArraysOfWebSockets(); }
-
-        @Override
-        public void run() {
-            while (stopThreads) {
-                try { Thread.sleep(1000);
-                } catch (InterruptedException e) { e.printStackTrace(); }
-                startStopPriceText.setText(getStingExchangeRatesAndStatus());
-            }
-        }
-
-        private String getStingExchangeRatesAndStatus() {
-            StringBuilder out = new StringBuilder();
-            out.append(Agent.isStartAllOrStopAll() ? Enums.START.toString() : Enums.STOP.toString());
-            out.append("   ");
-            for (String s : Agent.getViewPairSockets()) {
-                out.append("  ").append(s).append(" -> ").append(webSockets.getPriceNow(s));
-            }
-            return out.toString();
-        }
-    }
-
-
-    public void updateListView() { getAListOfStrategy(); }
 }

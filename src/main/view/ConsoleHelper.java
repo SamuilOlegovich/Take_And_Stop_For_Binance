@@ -50,8 +50,7 @@ public class ConsoleHelper {
 
 
     public static String readString() {
-        try {
-            return reader.readLine();
+        try { return reader.readLine();
         } catch (IOException e){
             writeMessage("Произошла ошибка при попытке ввода текста. Попробуйте еще раз.");
             return readString();
@@ -61,8 +60,7 @@ public class ConsoleHelper {
 
 
     public static int readInt() {
-        try {
-            return Integer.parseInt(readString());
+        try { return Integer.parseInt(readString());
         } catch (NumberFormatException e) {
             writeMessage("Произошла ошибка при попытке ввода числа. Попробуйте еще раз.");
             return readInt();

@@ -47,9 +47,18 @@
                   </Text>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="51.0" layoutY="15.0" prefHeight="51.0" prefWidth="728.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="15.0">
+            <AnchorPane layoutX="51.0" layoutY="15.0" prefHeight="52.0" prefWidth="150.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="15.0">
                <children>
-                  <Text id="startStopPriceText" fx:id="startStopPriceText" fill="#0b2440" strokeType="OUTSIDE" strokeWidth="0.0" text="START   BTCUSD = 34000.50   ETHUSD = 1260.50" wrappingWidth="701.41015625" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+                  <Text id="startStopText" fx:id="startStopText" fill="#0b2440" strokeType="OUTSIDE" strokeWidth="0.0" text="START" textAlignment="CENTER" wrappingWidth="118.41015625" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="11.0">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="184.0" layoutY="15.0" prefHeight="52.0" prefWidth="620.0" style="-fx-background-color: #bab6b6; -fx-background-radius: 20;" AnchorPane.leftAnchor="184.0" AnchorPane.topAnchor="15.0">
+               <children>
+                  <Text id="startStopPriceText" fx:id="pricesText" fill="#0b2440" strokeType="OUTSIDE" strokeWidth="0.0" text="BTCUSD = 34000.50   ETHUSD = 1260.50" textAlignment="CENTER" wrappingWidth="590.41015625" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="11.0">
                      <font>
                         <Font name="System Bold" size="25.0" />
                      </font>

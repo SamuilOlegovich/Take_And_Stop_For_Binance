@@ -45,31 +45,22 @@ public class FilesAndPathCreator {
                 Path settingsAndStatus = Paths.get(finish + "SettingsAndStatus");
                 // действия, если папка существует
                 if (!Files.exists(settingsAndStatus)) {
-                    try {
-                        Files.createDirectories(Paths.get("SettingsAndStatus"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    try { Files.createDirectories(Paths.get("SettingsAndStatus")); }
+                    catch (IOException e) { e.printStackTrace(); }
                 }
 
                 Path  apiAndSecretKeys = Paths.get(finish + "APIAndSecretKeys");
                 // действия, если папка существует
                 if (!Files.exists(apiAndSecretKeys)) {
-                    try {
-                        Files.createDirectories(Paths.get("APIAndSecretKeys"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    try { Files.createDirectories(Paths.get("APIAndSecretKeys")); }
+                    catch (IOException e) { e.printStackTrace(); }
                 }
 
                 Path logs = Paths.get(finish + "Logs");
                 // действия, если папка существует
                 if (!Files.exists(logs)) {
-                    try {
-                        Files.createDirectories(Paths.get("Logs"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    try { Files.createDirectories(Paths.get("Logs")); }
+                    catch (IOException e) { e.printStackTrace(); }
                 }
 
                 pathLogs = finish + "Logs\\" + DatesTimes.getDateLogs().replaceAll(":", "-")
@@ -82,31 +73,22 @@ public class FilesAndPathCreator {
                 Path settingsAndStatus = Paths.get(strings[0] + "SettingsAndStatus");
                 // действия, если папка существует
                 if (!Files.exists(settingsAndStatus)) {
-                    try {
-                        Files.createDirectories(Paths.get("SettingsAndStatus"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    try { Files.createDirectories(Paths.get("SettingsAndStatus")); }
+                    catch (IOException e) { e.printStackTrace(); }
                 }
 
                 Path apiAndSecretKeys = Paths.get(strings[0] + "APIAndSecretKeys");
                 // действия, если папка существует
                 if (!Files.exists(apiAndSecretKeys)) {
-                    try {
-                        Files.createDirectories(Paths.get("APIAndSecretKeys"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    try { Files.createDirectories(Paths.get("APIAndSecretKeys")); }
+                    catch (IOException e) { e.printStackTrace(); }
                 }
 
                 Path logs = Paths.get(strings[0] + "Logs");
                 // действия, если папка существует
                 if (!Files.exists(logs)) {
-                    try {
-                        Files.createDirectories(Paths.get("Logs"));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    try { Files.createDirectories(Paths.get("Logs")); }
+                    catch (IOException e) { e.printStackTrace(); }
                 }
 
                 pathSettingsAndStatus = finish + "SettingsAndStatus/SettingsAndStatus.txt";

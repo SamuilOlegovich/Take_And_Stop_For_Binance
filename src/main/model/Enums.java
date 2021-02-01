@@ -21,6 +21,7 @@ public enum Enums {
     BUY_OR_SELL,
     TAKE_PRICE,
     STOP_PRICE,
+    DIRECTION,
     SETTINGS,
     POSITION,
     STATUS,

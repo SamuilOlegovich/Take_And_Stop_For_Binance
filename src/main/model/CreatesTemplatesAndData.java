@@ -8,9 +8,7 @@ public class CreatesTemplatesAndData {
     private ArraysOfStrategies arraysOfStrategies;
 
 
-    public CreatesTemplatesAndData() {
-        this.arraysOfStrategies = Agent.getArraysOfStrategies();
-    }
+    public CreatesTemplatesAndData() { this.arraysOfStrategies = Agent.getArraysOfStrategies(); }
 
 
 
@@ -129,7 +127,7 @@ public class CreatesTemplatesAndData {
         for (StrategyObject s : arraysOfStrategies.getTradedStrategyListObject()) {
             out.add(transformObjectToString(s));
         }
-        if (out.size() < 1) out.add(Lines.thereAreNoStrategiesNow);
+        if (out.size() < 1) { out.add(Lines.thereAreNoStrategiesNow); }
         return out;
     }
 
@@ -140,7 +138,8 @@ public class CreatesTemplatesAndData {
         for (StrategyObject s : arraysOfStrategies.getStoppedStrategyListObject()) {
             out.add(transformObjectToString(s));
         }
-        if (out.size() < 1) out.add(Lines.thereAreNoStrategiesNow);
+
+        if (out.size() < 1) { out.add(Lines.thereAreNoStrategiesNow); }
         return out;
     }
 

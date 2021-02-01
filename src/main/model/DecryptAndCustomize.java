@@ -17,8 +17,9 @@ public class DecryptAndCustomize {
     private void parseAndSetting() {
         for (String s : listSettings) {
             if (s.startsWith(Enums.DATE_DIFFERENCE.toString())) {
-                String value = s.split(Lines.delimiter)[1];
-                Agent.setDateDifference(Integer.parseInt(value));
+                Agent.setDateDifference(Integer.parseInt(s.split(Lines.delimiter)[1]));
+            } else if (s.startsWith(Enums.NUMBER_OF_ATTEMPTS_TO_EXECUTE_A_TRADE.toString())) {
+                Agent.setNumberOfAttemptsToExecuteTrade(Integer.parseInt(s.split(Lines.delimiter)[1]));
             }
         }
     }
