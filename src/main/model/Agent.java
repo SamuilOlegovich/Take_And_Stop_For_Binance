@@ -33,6 +33,8 @@ public class Agent {
     private static boolean yesOrNotAPIKey;
 
 
+    // количество попыток выполнить сделку
+    private static int numberOfAttemptsToExecuteTrade = 10;
     private static int DateDifference = 0;
 
 
@@ -174,5 +176,13 @@ public class Agent {
 
     public static void setStartAllOrStopAll(boolean startAllOrStopAll) {
         Agent.startAllOrStopAll = startAllOrStopAll;
+    }
+
+    public static int getNumberOfAttemptsToExecuteTrade() {
+        return numberOfAttemptsToExecuteTrade;
+    }
+
+    public static void setNumberOfAttemptsToExecuteTrade(int numberOfAttemptsToExecuteTrade) {
+        Agent.numberOfAttemptsToExecuteTrade = numberOfAttemptsToExecuteTrade;
     }
 }

@@ -1,51 +1,51 @@
 package main.view;
 
+import main.model.Agent;
+import main.model.DatesTimes;
+import main.model.Enums;
+import main.model.Lines;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+
+
 
 public class ConsoleHelper {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 
     public static void writeMessage(String string) {
-//        bitmex.Bot.model.Gasket.getViewThread().updateInfoView(string);
-//        writerFile(string + "\n", getFilesAndPathCreator().getPathLogs(), true);
-        System.out.println(string);
+        write(DatesTimes.getDateLogs() + Lines.delimiter + string + Lines.newline);
     }
 
 
 
-
     public static void writeERROR(String string) {
-//        String out = string + " --- " + TypeData.ERROR.toString();
-//        if (Gasket.isERROR()) {
-//            getViewThread().updateInfoView(out);
-//        }
-//        writerFile(out + "\n", getFilesAndPathCreator().getPathLogs(), true);
-//        System.out.println(out);
+        write( DatesTimes.getDateLogs() + Lines.delimiter + Enums.ERROR + string + Lines.newline);
     }
 
 
 
     public static void writeDEBUG(String string) {
-//        String out = string + " --- " + TypeData.DEBUG.toString();
-//        if (Gasket.isDEBUG()) {
-//            getViewThread().updateInfoView(out);
-//        }
-//        writerFile(out + "\n", getFilesAndPathCreator().getPathLogs(), true);
-//        System.out.println(out);
+        write( DatesTimes.getDateLogs() + Lines.delimiter + Enums.DEBUG + string + Lines.newline);
     }
 
 
     public static void writeINFO(String string) {
-//        String out = string + " --- " + TypeData.INFO.toString();
-//        if (Gasket.isINFO()) {
-//            getViewThread().updateInfoView(out);
-//        }
-//        writerFile(out + "\n", getFilesAndPathCreator().getPathLogs(), true);
-//        System.out.println(out);
+        write( DatesTimes.getDateLogs() + Lines.delimiter + Enums.INFO + string + Lines.newline);
     }
+
+
+    private static void write(String outString) {
+        Agent.getWriterAndReadFile().writerFile(outString, Agent.getFilesAndPathCreator().getPathLogs(), true);
+        System.out.print(outString);
+    }
+
+
+
+
 
 
 

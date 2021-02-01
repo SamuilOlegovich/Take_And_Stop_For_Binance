@@ -158,6 +158,9 @@ public class MainPageController {
         timeText.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getClickCount() == 2) { openNewScene("/main/view/time.fxml"); }
         });
+
+
+        Agent.getWriterAndReadFile().writerFile(DatesTimes.getDateLogs(), Agent.getFilesAndPathCreator().getPathLogs(), true);
     }
 
 

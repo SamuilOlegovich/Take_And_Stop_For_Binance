@@ -1,5 +1,6 @@
 package main.model;
 
+
 import main.view.ConsoleHelper;
 
 import java.io.IOException;
@@ -138,9 +139,9 @@ public class FilesAndPathCreator {
 
 
     private void showPath() {
-        ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- " + pathSettingsAndStatus);
-        ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- " + pathAPIAndSecretKeys);
-        ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- " + pathLogs);
+        System.out.println(DatesTimes.getDateTerminal() + " --- " + pathSettingsAndStatus);
+        System.out.println(DatesTimes.getDateTerminal() + " --- " + pathAPIAndSecretKeys);
+        System.out.println(DatesTimes.getDateTerminal() + " --- " + pathLogs);
     }
 
 
@@ -156,10 +157,10 @@ public class FilesAndPathCreator {
         File file = new File(pathSettingsAndStatus);
         try {
             boolean newFile = file.createNewFile();
-            ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- "
+            System.out.println(DatesTimes.getDateTerminal() + " --- "
                     + "Новый файл SettingsAndStatus успешно создан.");
         } catch (IOException ex) {
-            ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- "
+            System.out.println(DatesTimes.getDateTerminal() + " --- "
                     + "Не удалось создать файл SettingsAndStatus.");
         }
     }
@@ -170,10 +171,10 @@ public class FilesAndPathCreator {
         File file = new File(pathAPIAndSecretKeys);
         try {
             boolean newFile = file.createNewFile();
-            ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- "
+            System.out.println(DatesTimes.getDateTerminal() + " --- "
                     + "Новый файл для APIAndSecretKeys успешно создан.");
         } catch (IOException ex) {
-            ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- "
+            System.out.println(DatesTimes.getDateTerminal() + " --- "
                     + "Не удалось создать файл APIAndSecretKeys.");
         }
     }
@@ -184,10 +185,10 @@ public class FilesAndPathCreator {
         File file = new File(pathLogs);
         try {
             boolean newFile = file.createNewFile();
-            ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- "
+            System.out.println(DatesTimes.getDateTerminal() + " --- "
                     + "Новый Logs файл успешно создан.");
         } catch (IOException ex) {
-            ConsoleHelper.writeMessage(DatesTimes.getDateTerminal() + " --- "
+            System.out.println(DatesTimes.getDateTerminal() + " --- "
                     + "Не удалось создать Logs файл.");
         }
     }
