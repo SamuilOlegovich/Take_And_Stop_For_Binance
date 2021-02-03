@@ -77,6 +77,5 @@ public class ArraysOfWebSockets {
     }
 
 
-
     public void setArraysOfStrategies(ArraysOfStrategies arraysOfStrategies) { this.arraysOfStrategies = arraysOfStrategies; }
 }

@@ -453,7 +453,7 @@ public class EditController {
 
     // Заменить стратегию
     private void replaceStrategy() {
-        System.out.println(strategyObject.isLowerOrHigherPrices());
+//        System.out.println(strategyObject.isLowerOrHigherPrices());/////////////////////////
         arraysOfStrategies.replaceStrategy(strategyObject);
     }
 

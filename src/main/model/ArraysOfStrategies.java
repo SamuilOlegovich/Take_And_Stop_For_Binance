@@ -169,7 +169,6 @@ public class ArraysOfStrategies {
 
 
 
-
     public void setMainPageController(MainPageController mainPageController) { this.mainPageController = mainPageController; }
     public void setArraysOfWebSockets(ArraysOfWebSockets arraysOfWebSockets) { this.arraysOfWebSockets = arraysOfWebSockets; }
     public void setWriteKeysAndSettings(WriteKeysAndSettings in) { this.writeKeysAndSettings = in; }

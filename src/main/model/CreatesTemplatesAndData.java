@@ -1,5 +1,7 @@
 package main.model;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 
 
@@ -123,23 +125,30 @@ public class CreatesTemplatesAndData {
 
 
     public ArrayList<String> getTradedStrategyList() {
+        ArrayList<StrategyObject> list = new ArrayList<>(arraysOfStrategies.getTradedStrategyListObject());
         ArrayList<String> out = new ArrayList<>();
-        for (StrategyObject s : arraysOfStrategies.getTradedStrategyListObject()) {
-            out.add(transformObjectToString(s));
+        if (list.size() > 0) {
+            for (StrategyObject s : list) {
+                out.add(transformObjectToString(s));
+            }
+        } else {
+            out.add(Lines.thereAreNoStrategiesNow);
         }
-        if (out.size() < 1) { out.add(Lines.thereAreNoStrategiesNow); }
         return out;
     }
 
 
 
     public ArrayList<String> getStoppedStrategyList() {
+        ArrayList<StrategyObject> list = new ArrayList<>(arraysOfStrategies.getStoppedStrategyListObject());
         ArrayList<String> out = new ArrayList<>();
-        for (StrategyObject s : arraysOfStrategies.getStoppedStrategyListObject()) {
-            out.add(transformObjectToString(s));
+        if (list.size() > 0) {
+            for (StrategyObject s : list) {
+                out.add(transformObjectToString(s));
+            }
+        } else {
+            out.add(Lines.thereAreNoStrategiesNow);
         }
-
-        if (out.size() < 1) { out.add(Lines.thereAreNoStrategiesNow); }
         return out;
     }
 

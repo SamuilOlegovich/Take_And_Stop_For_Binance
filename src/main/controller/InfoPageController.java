@@ -145,9 +145,11 @@ public class InfoPageController {
         });
 
         okButton.setOnAction(event -> {
+            if (!strategyObject.getWorks()) {
                 String stringID = strategyObject.getClassID();
                 arraysOfStrategies.findStrategy(stringID);
                 openNewScene("/main/view/edit.fxml");
+            }
         });
 
         backButton.setOnAction(event -> {

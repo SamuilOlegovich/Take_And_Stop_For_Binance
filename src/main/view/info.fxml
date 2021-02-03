@@ -52,7 +52,7 @@
                   </Text>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="496.0" layoutY="284.0" prefHeight="185.0" prefWidth="445.0" style="-fx-background-color: #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="284.0">
+            <AnchorPane layoutX="496.0" layoutY="284.0" prefHeight="185.0" prefWidth="445.0" style="-fx-background-color: #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="284.0">
                <children>
                   <Text id="nameStrategyField" fx:id="nameStrategyField" fill="#0b2440" layoutX="-64.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name strategy -&gt; StrBTC" wrappingWidth="409.9999999999999" AnchorPane.bottomAnchor="115.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                      <font>
@@ -107,7 +107,7 @@
                   </Text>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="18.0" layoutY="416.0" prefHeight="50.0" prefWidth="445.0" style="-fx-background-color: #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="417.0">
+            <AnchorPane layoutX="18.0" layoutY="416.0" prefHeight="50.0" prefWidth="445.0" style="-fx-background-color: #bab6b6 #bab6b6; -fx-background-radius: 20;" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="417.0">
                <children>
                   <Text id="stopPriceField" fx:id="stopPriceField" fill="#0b2440" layoutX="-72.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stop price -&gt; 100.0" wrappingWidth="409.9999999999999" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                      <font>

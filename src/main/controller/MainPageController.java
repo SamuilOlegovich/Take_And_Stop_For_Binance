@@ -146,7 +146,9 @@ public class MainPageController {
                     && !stringOfList.equals(Lines.tableOfContents)
                     && !stringOfList.equals("")) {
                 arraysOfStrategies.findStrategy(stringOfList);
-                openNewScene("/main/view/edit.fxml");
+                if (!arraysOfStrategies.getStrategySettingAndStatus().getWorks()) {
+                    openNewScene("/main/view/edit.fxml");
+                }
             }
         });
 
@@ -193,7 +195,7 @@ public class MainPageController {
 
 
     private void getAListOfStrategy() {
-        observableList.clear();
+        if (observableList.size() > 0) { observableList.clear(); }
         observableList.addAll(Lines.tableOfContents);
         observableList.addAll(Enums.ON_LINE_STRATEGY.toString());
         observableList.addAll(createsTemplatesAndData.getTradedStrategyList());
@@ -225,7 +227,9 @@ public class MainPageController {
 
 
 
-    public synchronized void updateListView() { getAListOfStrategy(); }
+    public synchronized void updateListView() {
+        getAListOfStrategy();
+    }
 
 
 

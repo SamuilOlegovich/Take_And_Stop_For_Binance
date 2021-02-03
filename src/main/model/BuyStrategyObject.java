@@ -72,19 +72,11 @@ public class BuyStrategyObject implements Runnable {
 
         if (fractions <= 1) {
             try {
-                System.out.println("Вошел в покупку");////////////////////////
-
                 JsonObject jsonObject = binanceAPI.createOrder(binanceOrderPlacement);
                 System.out.println(jsonObject.toString());////////////////////
-
-                System.out.println("Вошел в покупку 2");
                 writerAndReadFile.writerFile(getTransactionInformation(), filesAndPathCreator.getPathLogs(), true);
-                System.out.println("Вошел в покупку 3");//////////////////
             } catch (BinanceApiException e) {
-
-                System.out.println(e.getMessage());//////////////////////
                 System.out.println("ERROR");/////////////////////////////
-
                 writerAndReadFile.writerFile("ERROR", filesAndPathCreator.getPathLogs(), true);////////////////
                 errorException(e.getMessage(), 0);
             }
@@ -125,19 +117,17 @@ public class BuyStrategyObject implements Runnable {
     // сделать так чтобы менялся статус ордера на неисполненый,
     // а так же состояние менялось и список если надо и добавлялся опять в список слушателей
     // ну или все это но в ручную
+    // в данном случаи стратегия получает предыдущий статус и переходит список офлайн стратегий
     private void errorException(String string, int fraction) {
         if (fraction <= 1) {
-            if (attempts <= 0) {
-                strategyObject.setNameStrategy(strategyObject.getNameStrategy() + Lines.delimiterError + string);
-                strategyObject.setBuyOrSellCoins(0.0);
-                strategyObject.setPosition(preliminaryPosition);
-                arraysOfStrategies.replaceStrategy(strategyObject);
+            if (attempts < 0) {
+                understandAndExecute(string);
             } else {
                 try { Thread.sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); }
                 createdNewTrade();
             }
         } else {
-            if (attempts <= 0) { understandAndExecute(string, fraction); }
+            if (attempts < 0) { understandAndExecute(string, fraction); }
             else {
                 try { Thread.sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); }
                 executedOrders = fraction - 1;
@@ -183,6 +173,7 @@ public class BuyStrategyObject implements Runnable {
 
 
 
+    // посмотреть и поработать с setBuyOrSellCoins
     private void understandAndExecute(String string) {
         if (preliminaryPosition.equals(Position.NORMAL_POSITION)) {
             strategyObject.setNameStrategy(strategyObject.getNameStrategy()
@@ -219,8 +210,8 @@ public class BuyStrategyObject implements Runnable {
 
             binanceOrderPlacement.setQuantity(new BigDecimal(fractions > 1
                     ? fractionsAmountCoins.toString()
-                    : returnAmountCoins.toString())
-                    .setScale(5, ROUND_FLOOR));
+                    : returnAmountCoins.toString()
+            ).setScale(5, ROUND_FLOOR));
 
             binanceOrderPlacement.setTimeInForce(BinanceTimeInForce.GOOD_TILL_CANCELLED);
             binanceOrderPlacement.setNewClientOrderId(strategyObject.getClassID());
@@ -241,28 +232,25 @@ public class BuyStrategyObject implements Runnable {
 
         if (position.equals(Position.BUY_COMPLETED_POSITION)) {
             amountCoins = strategyObject.getAmountOfCoins();
-//            fractions = strategyObject.getFractionalParts();
-//            symbol = strategyObject.getTradingPair();
             price = strategyObject.getPrice();
         } else if (position.equals(Position.BUY_TAKE_OR_STOP_POSITION)) {
             amountCoins = strategyObject.getAmountOfCoins();
-//            fractions = strategyObject.getFractionalParts();
-//            symbol = strategyObject.getTradingPair();
             price = strategyObject.getPrice();
-//            returnAmountCoins = amountCoins / price;
             strategyObject.setBuyOrSellCoins(returnAmountCoins);
         } else if (position.equals(Position.BUY_TAKE_COMPLETED_POSITION)) {
             amountCoins = strategyObject.getBuyOrSellCoins();
-//            fractions = strategyObject.getFractionalParts();
-//            symbol = strategyObject.getTradingPair();
             price = strategyObject.getTakePrice();
         } else if (position.equals(Position.BUY_TRAILING_STOP_COMPLETED_POSITION)) {
             amountCoins = strategyObject.getAmountOfCoins();
-//            fractions = strategyObject.getFractionalParts();
-//            symbol = strategyObject.getTradingPair();
-            price = strategyObject.getPrice();
+            price = strategyObject.getPriceStopTrailing();
         }
     }
+
+
+
+
+
+
 
 
     //////////////////////// TEST ////////////////////////////
