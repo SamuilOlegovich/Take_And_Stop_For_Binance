@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import main.model.*;
 
 
+
 public class InfoPageController {
     private ArraysOfStrategies arraysOfStrategies;
     private StrategyObject strategyObject;
@@ -103,8 +104,6 @@ public class InfoPageController {
     @FXML
     void initialize() {
         arraysOfStrategies = Agent.getArraysOfStrategies();
-//        // получаем и выводим список торговых пар
-//        getAListOfTradingPairs();
         // получаем объект из которого надо получить все данные
         getAnObjectAndDataFromIt();
         // установка группы радио кнопок и т д
@@ -114,42 +113,34 @@ public class InfoPageController {
 
 
         buyRadioButton.setOnAction(event -> {
-//            buyOrSell = 1;
             setGroupsOfRadioButtons();
         });
 
         sellRadioButton.setOnAction(event -> {
-//            buyOrSell = -1;
             setGroupsOfRadioButtons();
         });
 
         higherButton.setOnAction(event -> {
-//            lowerOrHigher = true;
             setGroupsOfRadioButtons();
         });
 
         lowerButton.setOnAction(event -> {
-//            lowerOrHigher = false;
             setGroupsOfRadioButtons();
         });
 
         onTSRadioButton.setOnAction(event -> {
-//            onOrOffTS = true;
             setGroupsOfRadioButtons();
         });
 
         offTSRadioButton.setOnAction(event -> {
-//            onOrOffTS = false;
             setGroupsOfRadioButtons();
         });
 
         onFPRadioButton.setOnAction(event -> {
-//            onOrOffFP = true;
             setGroupsOfRadioButtons();
         });
 
         offFPRadioButton.setOnAction(event -> {
-//            onOrOffFP = false;
             setGroupsOfRadioButtons();
         });
 
@@ -219,7 +210,7 @@ public class InfoPageController {
         buyRadioButton.setToggleGroup(groupBuyOrSel);
         sellRadioButton.setToggleGroup(groupBuyOrSel);
         if (buyOrSell == 1) buyRadioButton.setSelected(true);
-        else sellRadioButton.setSelected(true);
+        else if (buyOrSell == -1) sellRadioButton.setSelected(true);
 
         ToggleGroup groupLowerOrHigher = new ToggleGroup();
         lowerButton.setToggleGroup(groupLowerOrHigher);

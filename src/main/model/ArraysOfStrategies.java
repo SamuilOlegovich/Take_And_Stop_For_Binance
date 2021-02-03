@@ -47,9 +47,14 @@ public class ArraysOfStrategies {
         for (StrategyObject object : works ? tradedStrategyList : stoppedStrategyList) {
             if (id.equals(object.getClassID())) {
                 if (works) {
+                    object.setWorks(false);
                     index = tradedStrategyList.indexOf(object);
                     arraysOfWebSockets.deleteStrategy(object);
-                } else index = stoppedStrategyList.indexOf(object);
+                    break;
+                } else {
+                    index = stoppedStrategyList.indexOf(object);
+                    break;
+                }
             }
         }
 
@@ -61,6 +66,68 @@ public class ArraysOfStrategies {
         stoppedStrategyList.add(in);
         writeKeysAndSettings.writeNewSettingsAndStates();
     }
+
+
+
+
+//    public void replaceStrategy(String id, StrategyObject newStrategyObject) {
+//        // находит по стратегие - strategyObject - удаляем её и вставляем новую
+//        // для новой будет новый айди - его находим и все ее обслуживание переводим теперь на него
+//        // это делаем везде где она может быть
+//        int index = -1;
+//
+//        for (StrategyObject object : stoppedStrategyList) {
+//            if (id.equals(object.getClassID())) {
+//                index = stoppedStrategyList.indexOf(object);
+//            }
+//        }
+//
+//        if (index >= 0) { stoppedStrategyList.remove(index); }
+//
+//        for (StrategyObject object : tradedStrategyList) {
+//            if (id.equals(object.getClassID())) {
+//                object.setWorks(false);
+//                arraysOfWebSockets.deleteStrategy(object);
+//                index = tradedStrategyList.indexOf(object);
+//            }
+//        }
+//
+//        if (index >= 0) { tradedStrategyList.remove(index); }
+//
+//        newStrategyObject.setWorks(false);
+//        stoppedStrategyList.add(newStrategyObject);
+//        writeKeysAndSettings.writeNewSettingsAndStates();
+//    }
+//
+//
+//
+//    public void replaceStrategy(StrategyObject in) {
+//        // находит по стратегие - strategyObject - удаляем её и вставляем новую
+//        // для новой будет новый айди - его находим и все ее обслуживание переводим теперь на него
+//        // это делаем везде где она может быть
+//        String id = in.getClassID();
+//        boolean works = in.getWorks();
+//        int index = -1;
+//
+//        for (StrategyObject object : works ? tradedStrategyList : stoppedStrategyList) {
+//            if (id.equals(object.getClassID())) {
+//                if (works) {
+//                    object.setWorks(false);
+//                    arraysOfWebSockets.deleteStrategy(object);
+//                    index = tradedStrategyList.indexOf(object);
+//                }
+//            } else {
+//                index = stoppedStrategyList.indexOf(object);
+//            }
+//        }
+//
+//        if (works) { tradedStrategyList.remove(index); }
+//        else { stoppedStrategyList.remove(index); }
+//
+//        in.setClassID();
+//        stoppedStrategyList.add(in);
+//        writeKeysAndSettings.writeNewSettingsAndStates();
+//    }
 
 
 

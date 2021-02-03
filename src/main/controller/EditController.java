@@ -110,9 +110,15 @@ public class EditController {
     @FXML
     private RadioButton lowerButton;
 
+
+
+
     @FXML
     void initialize() {
         arraysOfStrategies = Agent.getArraysOfStrategies();
+        lowerOrHigher = false;
+        onOrOffFP = false;
+        onOrOffTS = false;
         // получаем и выводим список торговых пар
         getAListOfTradingPairs();
         // получаем объект из которого надо получить все данные
@@ -205,7 +211,7 @@ public class EditController {
         buyRadioButton.setToggleGroup(groupBuyOrSel);
         sellRadioButton.setToggleGroup(groupBuyOrSel);
         if (buyOrSell == 1) buyRadioButton.setSelected(true);
-        else sellRadioButton.setSelected(true);
+        else if (buyOrSell == -1) sellRadioButton.setSelected(true);
 
         ToggleGroup groupLowerOrHigher = new ToggleGroup();
         lowerButton.setToggleGroup(groupLowerOrHigher);
@@ -227,8 +233,7 @@ public class EditController {
     }
 
 
-    private void openNewScene(String in) {
-        String window = new String(in);
+    private void openNewScene(String window) {
         // при нажатии на кнопку мы прячем окно
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится
@@ -298,7 +303,7 @@ public class EditController {
         if (stopPriceText.length() > 1) { stopPrice = Double.parseDouble(stopPriceText); }
         else { stopPrice = -1.0; }
 
-        if (fractionalPartsText.length() > 1) {
+        if (fractionalPartsText.length() > 0) {
             int i = Integer.parseInt(fractionalPartsText);
             if (i > 1 && i < 11) { fractionalParts = i; }
             else { fractionalParts = -1; }
@@ -431,6 +436,7 @@ public class EditController {
 
     // создаем и заполняем обект стратегии
     private void createAndFillAnObject() {
+        strategyObject.setLowerOrHigherPrices(lowerOrHigher);
         strategyObject.setFractionalParts(fractionalParts);
         strategyObject.setAmountOfCoins(numberOfCoins);
         strategyObject.setNameStrategy(nameStrategy);
@@ -447,6 +453,7 @@ public class EditController {
 
     // Заменить стратегию
     private void replaceStrategy() {
+        System.out.println(strategyObject.isLowerOrHigherPrices());
         arraysOfStrategies.replaceStrategy(strategyObject);
     }
 
@@ -454,7 +461,7 @@ public class EditController {
 
     // получить объект и данные из него
     private void getAnObjectAndDataFromIt() {
-        strategyObject = Agent.getArraysOfStrategies().getStrategySettingAndStatus();
+        strategyObject = arraysOfStrategies.getStrategySettingAndStatus();
         if (strategyObject != null) {
             nameStrategy = strategyObject.getNameStrategy();
             tradingPair = strategyObject.getTradingPair();

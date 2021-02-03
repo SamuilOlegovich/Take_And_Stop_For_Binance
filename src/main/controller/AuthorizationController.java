@@ -57,6 +57,10 @@ public class AuthorizationController {
                 catch (InterruptedException e) { e.printStackTrace(); }
 
                 if (Agent.isGetUpToDateDataOnPairs()) {
+                    Agent.getArraysOfWebSockets().addViewSocket("BTCUSDT");
+                    Agent.getArraysOfWebSockets().addViewSocket("ETHUSDT");
+                    Agent.addViewPairSockets("BTCUSDT");
+                    Agent.addViewPairSockets("ETHUSDT");
                     openNewScene("/main/view/main.fxml");
                 } else {
                     keyError();

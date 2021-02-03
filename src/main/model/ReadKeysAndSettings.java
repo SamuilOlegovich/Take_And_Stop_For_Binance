@@ -132,7 +132,8 @@ public class ReadKeysAndSettings {
             }
         }
 
-        if (api.getAPI_KEY().length() > 20 && api.getSECRET_KEY().length() > 20) { Agent.setYesOrNotAPIKey(true); }
+        if (api.getAPI_KEY() != null && api.getSECRET_KEY() != null && api.getAPI_KEY().length() > 20
+                && api.getSECRET_KEY().length() > 20) { Agent.setYesOrNotAPIKey(true); }
         else { writeKeysAndSettings.writePatternForKeys(); }
         arrayList.clear();
     }
