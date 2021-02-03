@@ -159,8 +159,7 @@ public class InfoPageController {
 
 
 
-    private void openNewScene(String in) {
-        String window = new String(in);
+    private void openNewScene(String window) {
         // при нажатии на кнопку мы прячем окно
         // мы берем сцену на которой она находится
         // потом берем окно на которой она находится

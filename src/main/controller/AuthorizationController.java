@@ -84,6 +84,7 @@ public class AuthorizationController {
     }
 
 
+
     private void openNewScene(String window) {
         // при нажатии на кнопку мы прячем окно
         // мы берем сцену на которой она находится
