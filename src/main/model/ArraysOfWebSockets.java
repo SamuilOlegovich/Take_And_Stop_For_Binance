@@ -1,5 +1,6 @@
 package main.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,17 +19,11 @@ public class ArraysOfWebSockets {
 
     // Запустить все розетки для рабочих пар
     public void runAllWebSocketsForWorkingCouples() {
-        for (StrategyObject strategyObject : arraysOfStrategies.getTradedStrategyListObject()) {
+        ArrayList<StrategyObject> list = new ArrayList<>(arraysOfStrategies.getTradedStrategyListObject());
+        for (StrategyObject strategyObject : list) {
             addToListener(strategyObject);
         }
-    }
-
-
-
-    // Остановить все розетки для рабочих пар
-    public void stopAllWebSocketsForWorkingCouples() {
-        String[] keys = map.keySet().toArray(new String[0]);
-        for (String key : keys) { map.get(key).stopAll(); }
+        list.clear();
     }
 
 
@@ -40,6 +35,7 @@ public class ArraysOfWebSockets {
 
 
 
+    // останавливает нить сокета и убирает его из списка сокетов
     public synchronized void closeWebSocket(String key) {
         map.get(key).setSocket();
         map.remove(key);
@@ -49,9 +45,7 @@ public class ArraysOfWebSockets {
 
     private void addToListener(StrategyObject in) {
         String key = in.getTradingPair();
-        if (map.containsKey(key)) {
-            map.get(key).addStrategyObject(in);
-            if (Agent.isStartAllOrStopAll()) { map.get(key).startAll(); }
+        if (map.containsKey(key)) { map.get(key).addStrategyObject(in);
         } else { map.put(key, new WebSocket(in)); }
     }
 
@@ -59,7 +53,6 @@ public class ArraysOfWebSockets {
 
     public void deleteStrategy(StrategyObject in) {
         String key = in.getTradingPair();
-        map.get(key).removeStrategyObject(in);
     }
 
 

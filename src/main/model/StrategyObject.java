@@ -1,7 +1,7 @@
 package main.model;
 
 
-
+import java.math.BigDecimal;
 
 public class StrategyObject {
     private final WriteKeysAndSettings writeKeysAndSettings;
@@ -57,13 +57,13 @@ public class StrategyObject {
 
 
 
-    public synchronized void setPriceAskAndBidNow(Double ask, Double bid) {
+    public synchronized void setPriceAskAndBidNow(BigDecimal ask, BigDecimal bid) {
+        // при первом запуске стратегии определяем ее назначение и дальнейшую работу
         if (count) { determineThePosition(); }
-
-        System.out.println(tradingPair + "===" + bid.toString());///////////////////////////////////
-
-        this.priceAskNow = ask;
-        this.priceBidNow = bid;
+        this.priceAskNow = ask.doubleValue();
+        this.priceBidNow = bid.doubleValue();
+        System.out.println(tradingPair + "===" + priceBidNow);///////////////////////////////////
+        // если стратегия запушена, то сверяем ее данные с котировками
         if (works) { doSomethingOrNot();}
     }
 
@@ -73,10 +73,11 @@ public class StrategyObject {
     private synchronized void determineThePosition() {
         count = false;
         if (position.equals(Position.STARTED_POSITION)) {
+            preliminaryPosition = Position.STARTED_POSITION;
             if (onOrOffTS && trailingStop > 0.0) { position = Position.TRAILING_STOP_POSITION; }
             else if (price > 0.0 && stopPrice > 0.0 && takePrice > 0.0) { position = Position.NORMAL_POSITION; }
             else if (price > 0.0 && stopPrice <= 0.0 && takePrice <= 0.0) { position = Position.EASY_POSITION; }
-            // разкоментировать для теста 2 строки
+            // закомментировать для теста 2 строки
             writeKeysAndSettings.writeNewSettingsAndStates();
             Agent.getMainPageController().updateListView();
         }
@@ -84,7 +85,7 @@ public class StrategyObject {
 
 
 
-    // делаем что-то или нет
+    // делаем что-то или нет в зависимости от позиции
     private synchronized void doSomethingOrNot() {
         if (position.equals(Position.NORMAL_POSITION)) { normalPosition(); }
         else if (position.equals(Position.EASY_POSITION)) { easyPosition(); }
@@ -95,13 +96,18 @@ public class StrategyObject {
 
 
 
+    // при трайлирующей стратегии в зависимости от направления игры
+    // следим за обновлением пиковой цены и дальнейшим отклонением от неё,
+    // сравниваем цены с текущими и если условие срабатывает
+    // - меняем назначение стратегии и передаем ее на сделку,
+    // а также переводим стратегию в выключеное состояние
     private void trailingStopPosition() {
 //        if (lowerOrHigherPrices) {
             // в будущем переделать чтобы можно было выбирать
             // траллирующий стоп как от вершины - так и от низа
 //        }
         if (maxPrice < priceBidNow) {
-            maxPrice = priceBidNow;
+            maxPrice = priceBidNow.doubleValue();
             priceStopTrailing = (maxPrice - ((maxPrice / 100.0) * trailingStop));
         }
 
@@ -120,6 +126,10 @@ public class StrategyObject {
 
 
 
+    // при второй части нормальной стратегии в зависимости от направления игры
+    // сравниваем цены с текущими и если условие срабатывает
+    // - меняем назначение стратегии и передаем ее на сделку,
+    // а также переводим стратегию в выключеное состояние
     private void buyTakeOrStopPosition() {
         if (takePrice >= priceAskNow) {
             preliminaryPosition = position;
@@ -136,6 +146,10 @@ public class StrategyObject {
 
 
 
+    // при второй части нормальной стратегии в зависимости от направления игры
+    // сравниваем цены с текущими и если условие срабатывает
+    // - меняем назначение стратегии и передаем ее на сделку,
+    // а также переводим стратегию в выключеное состояние
     private void sellTakeOrStopPosition() {
         if (takePrice >= priceBidNow) {
             preliminaryPosition = position;
@@ -152,6 +166,10 @@ public class StrategyObject {
 
 
 
+    // при простой (легкой) стратегии в зависимости от направления игры
+    // сравниваем цены с текущими и если условие срабатывает
+    // - меняем назначение стратегии и передаем ее на сделку,
+    // а также переводим стратегию в выключеное состояние
     private void easyPosition() {
         if (buyOrSell == 1) {
             if (lowerOrHigherPrices && price <= priceBidNow) {
@@ -182,6 +200,9 @@ public class StrategyObject {
 
 
 
+    // при обычной стратегии в зависимости от направления игры
+    // сравниваем цены с текущими и если условие срабатывает
+    // - меняем назначение стратегии и передаем ее на сделку
     private void  normalPosition() {
         if (buyOrSell == 1) {
             if (lowerOrHigherPrices && price <= priceBidNow) {
@@ -283,7 +304,6 @@ public class StrategyObject {
 
 
 
-
     /////////////////////////// TEST ///////////////////////////
 
     public static void main(String[] args) {
@@ -320,7 +340,7 @@ public class StrategyObject {
 
         while (strategyObject.getWorks()) {
             price++;
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -346,7 +366,7 @@ public class StrategyObject {
 
         while (strategyObject.getWorks()) {
             price--;
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -374,7 +394,7 @@ public class StrategyObject {
 
         while (strategyObject.getWorks()) {
             price--;
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -409,7 +429,7 @@ public class StrategyObject {
                 price++;
             }
 
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -445,7 +465,7 @@ public class StrategyObject {
             } else {
                 price--;
             }
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -474,7 +494,7 @@ public class StrategyObject {
         while (strategyObject.getWorks()) {
             price++;
 
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -502,7 +522,7 @@ public class StrategyObject {
 
         while (strategyObject.getWorks()) {
             price++;
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -528,7 +548,7 @@ public class StrategyObject {
 
         while (strategyObject.getWorks()) {
             price--;
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -556,7 +576,7 @@ public class StrategyObject {
 
         while (strategyObject.getWorks()) {
             price--;
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -591,7 +611,7 @@ public class StrategyObject {
                 price++;
             }
 
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -627,7 +647,7 @@ public class StrategyObject {
             } else {
                 price--;
             }
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -656,7 +676,7 @@ public class StrategyObject {
         while (strategyObject.getWorks()) {
             price++;
 
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -692,7 +712,7 @@ public class StrategyObject {
                 price--;
             }
 
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -728,7 +748,7 @@ public class StrategyObject {
                 price--;
             }
 
-            strategyObject.setPriceAskAndBidNow(price, price);
+            strategyObject.setPriceAskAndBidNow(new BigDecimal(price), new BigDecimal(price));
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

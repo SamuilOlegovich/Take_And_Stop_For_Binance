@@ -22,7 +22,7 @@ public class Main extends Application {
             primaryStage.setScene(new Scene(root, 1200, 700));
         } else {
             Parent root = FXMLLoader.load(getClass().getResource("/main/view/authorization.fxml"));
-            primaryStage.setTitle("Take and Loss for Binance");
+//            primaryStage.setTitle("Take and Loss for Binance");
             primaryStage.setScene(new Scene(root, 800, 500));
         }
         primaryStage.show();
@@ -55,6 +55,7 @@ public class Main extends Application {
         thread.start();
         try { thread.join(); }
         catch (InterruptedException e) { e.printStackTrace(); }
+        Agent.setOneStatr(true);
 
         // Запускаем визуальную часть в зависимости от того что считалось из файлоф
         launch(args);

@@ -108,20 +108,20 @@ public class MainPageController {
             }
         });
 
+        // запускаем все рабочие стратегии и разрешаем подачу на них котировок
         startAllButton.setOnAction(event -> {
-            if (!Agent.isGetUpToDateDataOnPairs()) { openNewScene("/main/view/error_api_or_secret_key.fxml"); }
-            else {
-                startStopText.setText(Enums.START.toString());
-                Agent.setStartAllOrStopAll(true);
+            Agent.setStartAllOrStopAll(true);
+            startStopText.setText(Enums.START.toString());
+            if (Agent.isStartAllOrStopAll()) {
                 arraysOfWebSockets.runAllWebSocketsForWorkingCouples();
+                Agent.setOneStatr(false);
             }
         });
 
-        // останавливает передачу данных котировок на все рабочие стратегии, но сокеты не отключают
+        // останавливает передачу данных котировок на все рабочие стратегии, но сокеты не отключаем
         stopAllButton.setOnAction(event -> {
-            startStopText.setText(Enums.STOP.toString());
             Agent.setStartAllOrStopAll(false);
-            arraysOfWebSockets.stopAllWebSocketsForWorkingCouples();
+            startStopText.setText(Enums.STOP.toString());
         });
 
         startButton.setOnAction(event -> {

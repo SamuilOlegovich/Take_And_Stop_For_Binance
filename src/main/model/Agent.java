@@ -31,6 +31,7 @@ public class Agent {
     private static boolean startAllOrStopAll;
     private static boolean connectWebSocket;
     private static boolean yesOrNotAPIKey;
+    private static boolean oneStatr;
 
 
     // количество попыток выполнить сделку
@@ -164,6 +165,14 @@ public class Agent {
 
     public static ArrayList<String> getViewPairSockets() {
         return viewPairSockets;
+    }
+
+    public static boolean isOneStatr() {
+        return oneStatr;
+    }
+
+    public static void setOneStatr(boolean oneStatr) {
+        Agent.oneStatr = oneStatr;
     }
 
     public static void addViewPairSockets(String in) {

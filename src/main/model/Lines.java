@@ -2,7 +2,7 @@ package main.model;
 
 public class Lines {
     public static final String tableOfContents = Enums.ID + "===" + Enums.TRADING_PAIR + "===" + Enums.DIRECTION
-            + "===" + Enums.STATUS + "===" + Enums.NAME_STRATEGY;
+            + "===" + Enums.STATUS + "===" + Enums.PREVIOUS_STATUS + "===" + Enums.NAME_STRATEGY;
     public static final String thereAreNoStrategiesNow = " *** There are no strategies now *** ";
     public static final String delimiterErrorFR = "===ERROR===FR===";
     public static final String delimiterError = "===ERROR===";

@@ -19,7 +19,7 @@ public class BuyStrategyObject implements Runnable {
 
     private BinanceOrderPlacement binanceOrderPlacement;
     private final ArraysOfStrategies arraysOfStrategies;
-    private final StrategyObject strategyObject;
+    private StrategyObject strategyObject;
     private BinanceSymbol binanceSymbol;
     private final BinanceAPI binanceAPI;
 
@@ -73,10 +73,9 @@ public class BuyStrategyObject implements Runnable {
         if (fractions <= 1) {
             try {
                 JsonObject jsonObject = binanceAPI.createOrder(binanceOrderPlacement);
-                System.out.println(jsonObject.toString());////////////////////
+                new TradeReport(strategyObject, jsonObject);
                 writerAndReadFile.writerFile(getTransactionInformation(), filesAndPathCreator.getPathLogs(), true);
             } catch (BinanceApiException e) {
-                System.out.println("ERROR");/////////////////////////////
                 writerAndReadFile.writerFile("ERROR", filesAndPathCreator.getPathLogs(), true);////////////////
                 errorException(e.getMessage(), 0);
             }
@@ -85,10 +84,13 @@ public class BuyStrategyObject implements Runnable {
             // в ошибке прилетит количество выполненых! ордеров
             for (int i = executedOrders; i < fractions; i++) {
                 binanceOrderPlacement.setNewClientOrderId(strategyObject.getClassID() + "FR" + (i + 1));
-                try { binanceAPI.createOrder(binanceOrderPlacement); }
+                try {
+                    JsonObject jsonObject = binanceAPI.createOrder(binanceOrderPlacement);
+                    new TradeReport(strategyObject, jsonObject);
+                }
                 catch (BinanceApiException e) { errorException(e.getMessage(), fraction); }
                 fraction = i + 1;
-                try { Thread.sleep(500); } catch (InterruptedException e) { errorException(e.getMessage(), fraction); }
+                try { Thread.sleep(1000); } catch (InterruptedException e) { errorException(e.getMessage(), fraction); }
             }
         }
     }
@@ -245,9 +247,6 @@ public class BuyStrategyObject implements Runnable {
             price = strategyObject.getPriceStopTrailing();
         }
     }
-
-
-
 
 
 

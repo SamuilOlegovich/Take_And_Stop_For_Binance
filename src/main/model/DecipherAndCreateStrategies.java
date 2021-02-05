@@ -54,7 +54,15 @@ public class DecipherAndCreateStrategies {
                             break;
                         }
                     }
-                } else if (name.equals(Enums.NAME_STRATEGY.toString())) { strategyObject.setNameStrategy(value); }
+                } else if (name.equals(Enums.PRELIMINARY_POSITION.toString())) {
+                    for (Position p : Position.values()) {
+                        if (value.equals(p.toString())) {
+                            strategyObject.setPreliminaryPosition(p);
+                            break;
+                        }
+                    }
+                }
+                else if (name.equals(Enums.NAME_STRATEGY.toString())) { strategyObject.setNameStrategy(value); }
             }
 
             if (strategyObject.getClassID().equals(Enums.DONE_BY_HAND.toString())) {

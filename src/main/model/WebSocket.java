@@ -26,7 +26,6 @@ public class WebSocket implements Runnable {
 
     private boolean isBinanceSymbol;
     private boolean stopStartThread;
-    private boolean stopAndStartAll;
 
 
 
@@ -39,7 +38,6 @@ public class WebSocket implements Runnable {
         this.isBinanceSymbol = true;
         this.stopStartThread = true;
         this.socketThread = null;
-        stopAndStartAll = true;
         this.thread = new Thread(this);
         thread.start();
     }
@@ -51,7 +49,6 @@ public class WebSocket implements Runnable {
         this.previousPriceValue = 0.0;
         this.stopStartThread = true;
         this.socketThread = null;
-        stopAndStartAll = false;
         this.symbol = in;
         this.thread = new Thread(this);
         thread.start();
@@ -66,6 +63,8 @@ public class WebSocket implements Runnable {
         readsAndTransmits();
     }
 
+
+    // нить сокета получает и заполняет котировки
     private class SocketThread extends Thread {
         BinanceSymbol binanceSymbol;
 
@@ -86,15 +85,14 @@ public class WebSocket implements Runnable {
                         });
                 try {
                     Thread.sleep(5000);
-                    System.out.println("2");
+                    System.out.println("2");////////////////////////////////////////
                 } catch (InterruptedException e) {
                     System.out.println("3");////////////////////////////////////////
                     restartSocket();
                 }
             } catch (BinanceApiException e) {
-                System.out.println("4");
+                System.out.println("4");////////////////////////////////////////
                 restartSocket();
-//            throw new BinanceApiException("Сокет не подключился => " + e);
             }
         }
     }
@@ -105,30 +103,23 @@ public class WebSocket implements Runnable {
         int countExceptions = 0;
         while (stopStartThread) {
             try {
-                if (stopAndStartAll) {
-//                   System.out.println(symbol + "===" + binanceEventDepthUpdate.asks.get(0).price.toString());
-//                    BigDecimal priceAsk = binanceEventDepthUpdate.asks.get(0).price;
-//                    BigDecimal priceBid = binanceEventDepthUpdate.bids.get(0).price;
-                    Double priceAsk = binanceEventDepthUpdate.asks.get(0).price.doubleValue();
-                    Double priceBid = binanceEventDepthUpdate.bids.get(0).price.doubleValue();
-                    previousPriceValue = priceBid;
-                    String string = "";
+                if (Agent.isStartAllOrStopAll()) {
+                    BigDecimal priceAsk = binanceEventDepthUpdate.asks.get(0).price;
+                    BigDecimal priceBid = binanceEventDepthUpdate.bids.get(0).price;
+                    previousPriceValue = priceBid.doubleValue();
                     int index = -1;
 
                     for (StrategyObject strategyObject : arrayList) {
-                        if (strategyObject.getWorks() && !strategyObject.getClassID().equals(id)) {
+                        if (strategyObject.getWorks()) {
                             strategyObject.setPriceAskAndBidNow(priceAsk, priceBid);
                         } else {
                             index = arrayList.indexOf(strategyObject);
-                            string = strategyObject.getClassID();
                         }
                     }
 
-                    if (index >= 0 && string.equals(id) ) {
-                        arraysOfStrategies.replaceStrategy(arrayList.get(index));
+                    if (index > -1) {
                         arrayList.remove(index);
                     }
-//                            if (arrayList.size() == 0) arraysOfWebSockets.closeWebSocket(symbol);
                 }
             }
             catch (NullPointerException e) {
@@ -139,7 +130,7 @@ public class WebSocket implements Runnable {
                 System.out.println("310");////////////////////////////////////////////
             }
             try { Thread.sleep(1000);
-            } catch (InterruptedException e) { stopStartThread = false; }
+            } catch (InterruptedException e) { }
 
             if (countExceptions > 120) {
                 restartSocket();
@@ -188,10 +179,5 @@ public class WebSocket implements Runnable {
         if (!arrayList.contains(strategyObject)) { arrayList.add(strategyObject); }
     }
 
-
-    public void removeStrategyObject(StrategyObject strategyObject) { this.id = strategyObject.getClassID(); }
     public void setSocket() { this.stopStartThread = false; }
-    public void stopAll() { this.stopAndStartAll = false; }
-    public void startAll() { this.stopAndStartAll = true; }
-
 }

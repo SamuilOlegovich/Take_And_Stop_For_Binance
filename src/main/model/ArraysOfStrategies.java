@@ -49,7 +49,6 @@ public class ArraysOfStrategies {
                 if (works) {
                     object.setWorks(false);
                     index = tradedStrategyList.indexOf(object);
-                    arraysOfWebSockets.deleteStrategy(object);
                     break;
                 } else {
                     index = stoppedStrategyList.indexOf(object);

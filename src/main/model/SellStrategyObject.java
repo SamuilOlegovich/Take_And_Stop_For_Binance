@@ -3,7 +3,7 @@ package main.model;
 
 
 public class SellStrategyObject implements Runnable {
-    private StrategyObject strategyObject;
+    private final StrategyObject strategyObject;
 
     public SellStrategyObject(StrategyObject strategyObject) {
         this.strategyObject = strategyObject;

@@ -29,6 +29,7 @@ public class CreatesTemplatesAndData {
                 + Enums.STATUS + Lines.newline
                 + Enums.ID + Lines.delimiter + Enums.IF_IT_WAS_NOT_CREATED_THROUGH_THE_PROGRAM_THEM_WE_WRITE_DONE_BY_HAND + Lines.newline
                 + Enums.POSITION + Lines.delimiter + Position.EXAMPLE_POSITION + Lines.newline
+                + Enums.PRELIMINARY_POSITION + Lines.delimiter + Position.EXAMPLE_POSITION + Lines.newline
                 + Enums.WORKS + Lines.delimiter + Enums.FALSE + Lines.newline
                 + Enums.TRADING_PAIR + Lines.delimiter +"ETHBTC" + Lines.newline
                 + Enums.BUY_OR_SELL + Lines.delimiter + Enums.BUY + Lines.newline
@@ -46,6 +47,7 @@ public class CreatesTemplatesAndData {
                 + Enums.NEXT + Lines.newline
                 + Enums.ID + Lines.delimiter + Enums.IF_IT_WAS_NOT_CREATED_THROUGH_THE_PROGRAM_THEM_WE_WRITE_DONE_BY_HAND + Lines.newline
                 + Enums.POSITION + Lines.delimiter + Position.EXAMPLE_POSITION + Lines.newline
+                + Enums.PRELIMINARY_POSITION + Lines.delimiter + Position.EXAMPLE_POSITION + Lines.newline
                 + Enums.WORKS + Lines.delimiter + Enums.FALSE + Lines.newline
                 + Enums.TRADING_PAIR + Lines.delimiter + "LTCBTC" + Lines.newline
                 + Enums.BUY_OR_SELL + Lines.delimiter + Enums.SELL + Lines.newline
@@ -77,6 +79,7 @@ public class CreatesTemplatesAndData {
             for (StrategyObject s : stoppedStrategyList) {
                 sB.append(Enums.ID).append(Lines.delimiter).append(s.getClassID()).append(Lines.newline);
                 sB.append(Enums.POSITION).append(Lines.delimiter).append(s.getPosition()).append(Lines.newline);
+                sB.append(Enums.PRELIMINARY_POSITION).append(Lines.delimiter).append(s.getPreliminaryPosition()).append(Lines.newline);
                 sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks() ? Enums.TRUE : Enums.FALSE).append(Lines.newline);
                 sB.append(Enums.TRADING_PAIR).append(Lines.delimiter).append(s.getTradingPair()).append(Lines.newline);
                 sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.newline);
@@ -98,6 +101,7 @@ public class CreatesTemplatesAndData {
             for (StrategyObject s : tradedStrategyList) {
                 sB.append(Enums.ID).append(Lines.delimiter).append(s.getClassID()).append(Lines.newline);
                 sB.append(Enums.POSITION).append(Lines.delimiter).append(s.getPosition()).append(Lines.newline);
+                sB.append(Enums.PRELIMINARY_POSITION).append(Lines.delimiter).append(s.getPreliminaryPosition()).append(Lines.newline);
                 sB.append(Enums.WORKS).append(Lines.delimiter).append(s.getWorks() ? Enums.TRUE : Enums.FALSE).append(Lines.newline);
                 sB.append(Enums.TRADING_PAIR).append(Lines.delimiter).append(s.getTradingPair()).append(Lines.newline);
                 sB.append(Enums.BUY_OR_SELL).append(Lines.delimiter).append(s.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.newline);
@@ -157,7 +161,8 @@ public class CreatesTemplatesAndData {
         StringBuilder sB = new StringBuilder()
                 .append(in.getClassID()).append(Lines.delimiter).append(in.getTradingPair()).append(Lines.delimiter)
                 .append(in.getBuyOrSell() == 1 ? Enums.BUY : Enums.SELL).append(Lines.delimiter)
-                .append(in.getPosition()).append(Lines.delimiter).append(in.getNameStrategy());
+                .append(in.getPosition()).append(Lines.delimiter).append(in.getPreliminaryPosition()).append(Lines.delimiter)
+                .append(in.getNameStrategy());
         return sB.toString();
     }
 }

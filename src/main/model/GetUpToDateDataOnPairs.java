@@ -30,8 +30,8 @@ public class GetUpToDateDataOnPairs implements Runnable {
             treeSet.clear();
             b = true;
         } catch (BinanceApiException e) {
-            Agent.getWriteKeysAndSettings().writePatternForKeys();
             Agent.setGetUpToDateDataOnPairs(false);
+            Agent.getWriteKeysAndSettings().writePatternForKeys();
         }
 
         if (b) { Agent.setGetUpToDateDataOnPairs(true); }
