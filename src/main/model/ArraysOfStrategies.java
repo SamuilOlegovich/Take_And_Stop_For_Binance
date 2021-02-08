@@ -12,7 +12,6 @@ public class ArraysOfStrategies {
 
     private WriteKeysAndSettings writeKeysAndSettings;
     private ArraysOfWebSockets arraysOfWebSockets;
-    private MainPageController mainPageController;
     private StrategyObject strategyObject;
 
 
@@ -21,7 +20,6 @@ public class ArraysOfStrategies {
         this.stoppedStrategyList = new ArrayList<>();
         this.tradedStrategyList = new ArrayList<>();
         this.writeKeysAndSettings = null;
-        this.mainPageController = null;
     }
 
 
@@ -110,7 +108,7 @@ public class ArraysOfStrategies {
             sObject.setWorks(true);
             tradedStrategyList.add(sObject);
             stoppedStrategyList.remove(index);
-            mainPageController.updateListView();
+            new RefreshList();
             writeKeysAndSettings.writeNewSettingsAndStates();
             arraysOfWebSockets.addOneStrategyToWiretap(sObject);
         }
@@ -138,7 +136,7 @@ public class ArraysOfStrategies {
             sObject.setWorks(false);
             tradedStrategyList.remove(index);
             stoppedStrategyList.add(sObject);
-            mainPageController.updateListView();
+            new RefreshList();
             writeKeysAndSettings.writeNewSettingsAndStates();
         }
     }
@@ -160,7 +158,7 @@ public class ArraysOfStrategies {
 
         if (index >= 0 ) {
             stoppedStrategyList.remove(index);
-            mainPageController.updateListView();
+            new RefreshList();
         }
 
         writeKeysAndSettings.writeNewSettingsAndStates();
@@ -168,7 +166,6 @@ public class ArraysOfStrategies {
 
 
 
-    public void setMainPageController(MainPageController mainPageController) { this.mainPageController = mainPageController; }
     public void setArraysOfWebSockets(ArraysOfWebSockets arraysOfWebSockets) { this.arraysOfWebSockets = arraysOfWebSockets; }
     public void setWriteKeysAndSettings(WriteKeysAndSettings in) { this.writeKeysAndSettings = in; }
     public ArrayList<StrategyObject> getStoppedStrategyListObject() { return stoppedStrategyList; }

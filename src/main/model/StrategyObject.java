@@ -79,7 +79,8 @@ public class StrategyObject {
             else if (price > 0.0 && stopPrice <= 0.0 && takePrice <= 0.0) { position = Position.EASY_POSITION; }
             // закомментировать для теста 2 строки
             writeKeysAndSettings.writeNewSettingsAndStates();
-            Agent.getMainPageController().updateListView();
+//            Agent.getMainPageController().updateListView();
+            new RefreshList();
         }
     }
 

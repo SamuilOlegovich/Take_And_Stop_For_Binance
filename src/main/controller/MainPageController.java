@@ -2,10 +2,13 @@ package main.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -70,7 +73,6 @@ public class MainPageController {
 
     @FXML
     void initialize() {
-        Agent.getArraysOfStrategies().setMainPageController(this);
         Agent.setMainPageController(this);
 
         showExchangeRates = new ShowExchangeRates(this);
@@ -103,7 +105,7 @@ public class MainPageController {
                         && !stringOfList.equals(Lines.thereAreNoStrategiesNow)
                         && !stringOfList.equals(Lines.tableOfContents)) {
                     arraysOfStrategies.findStrategy(stringOfList);
-                    openNewScene("/main/view/info.fxml");
+                    openNewScene("/main/view/info.fxml", "INFO STRATEGY");
                 }
             }
         });
@@ -135,7 +137,7 @@ public class MainPageController {
         });
 
         addButton.setOnAction(event -> {
-            openNewScene("/main/view/setting.fxml");
+            openNewScene("/main/view/setting.fxml", "ADD STRATEGY");
         });
 
         editButton.setOnAction(event -> {
@@ -147,7 +149,7 @@ public class MainPageController {
                     && !stringOfList.equals("")) {
                 arraysOfStrategies.findStrategy(stringOfList);
                 if (!arraysOfStrategies.getStrategySettingAndStatus().getWorks()) {
-                    openNewScene("/main/view/edit.fxml");
+                    openNewScene("/main/view/edit.fxml", "EDIT");
                 }
             }
         });
@@ -158,7 +160,7 @@ public class MainPageController {
         });
 
         timeText.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() == 2) { openNewScene("/main/view/time.fxml"); }
+            if (mouseEvent.getClickCount() == 2) { openNewScene("/main/view/time.fxml", "SET TIME"); }
         });
 
 
@@ -168,7 +170,7 @@ public class MainPageController {
 
 
 
-    private void openNewScene(String window) {
+    private void openNewScene(String window, String title) {
         showExchangeRates.stopThreads(false);
         clocks.stopThreads(false);
         // при нажатии на кнопку мы прячем окно
@@ -188,6 +190,7 @@ public class MainPageController {
         }
         Parent parent = fxmlLoader.getRoot();
         Stage stage = new Stage();
+        stage.setTitle(title);
         stage.setScene(new Scene(parent));
         stage.show();
     }
@@ -227,8 +230,16 @@ public class MainPageController {
 
 
 
-    public synchronized void updateListView() {
-        getAListOfStrategy();
+    public synchronized void updateListView(ArrayList<String> in) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                // Update UI here.
+                observableList.clear();
+                observableList.addAll(in);
+                listViewInMainPage.refresh();
+            }
+        });
     }
 
 

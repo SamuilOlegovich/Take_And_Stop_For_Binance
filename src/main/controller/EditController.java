@@ -251,6 +251,7 @@ public class EditController {
         }
         Parent parent = fxmlLoader.getRoot();
         Stage stage = new Stage();
+        stage.setTitle("Take and Loss for Binance");
         stage.setScene(new Scene(parent));
         stage.show();
     }
