@@ -35,7 +35,7 @@ public class BuyStrategyObject implements Runnable {
 
     private int executedOrders;
     private final int fractions;
-    private final int attempts;
+    private int attempts;
 
 
 
@@ -61,7 +61,11 @@ public class BuyStrategyObject implements Runnable {
     public void run() {
         determineWhatToDo();
         createBinanceOrderPlacement();
-        createdNewTrade();
+        if (fractions <= 1 ) {
+            createdNewTrade();
+        } else {
+            createdNewTrades();
+        }
     }
 
 
@@ -69,28 +73,40 @@ public class BuyStrategyObject implements Runnable {
     // отправляем сделку на биржу
     private void createdNewTrade() {
         int fraction = 0;
+        attempts--;
+        try {
+            // если все хорошо то записываем в логи информацию о транзакциях.
+            JsonObject jsonObject = binanceAPI.createOrder(binanceOrderPlacement);
+            new TradeReport(strategyObject, jsonObject);
+            writerAndReadFile.writerFile(getTransactionInformation(), filesAndPathCreator.getPathLogs(), true);
+        } catch (BinanceApiException e) {
+            // если что-то пошло не так, то записываем в лог информацию об ошибке
+            // и начинаем обработку ошибки
+            writerAndReadFile.writerFile("ERROR" + getTransactionERRORInformation(),
+                    filesAndPathCreator.getPathLogs(), true);
+            errorException(e.getMessage());
+        }
+    }
 
-        if (fractions <= 1) {
+
+
+    // отправляем сделку на биржу, но частями
+    private void createdNewTrades() {
+        int fraction = 0;
+        attempts--;
+        for (int i = executedOrders; i < fractions; i++) {
+            binanceOrderPlacement.setNewClientOrderId(strategyObject.getClassID() + "FR" + (i + 1));
             try {
                 JsonObject jsonObject = binanceAPI.createOrder(binanceOrderPlacement);
                 new TradeReport(strategyObject, jsonObject);
-                writerAndReadFile.writerFile(getTransactionInformation(), filesAndPathCreator.getPathLogs(), true);
             } catch (BinanceApiException e) {
-                writerAndReadFile.writerFile("ERROR", filesAndPathCreator.getPathLogs(), true);////////////////
-                errorException(e.getMessage(), 0);
-            }
-        } else {
-            // если нужно разбить сделку
-            // в ошибке прилетит количество выполненых! ордеров
-            for (int i = executedOrders; i < fractions; i++) {
-                binanceOrderPlacement.setNewClientOrderId(strategyObject.getClassID() + "FR" + (i + 1));
-                try {
-                    JsonObject jsonObject = binanceAPI.createOrder(binanceOrderPlacement);
-                    new TradeReport(strategyObject, jsonObject);
-                }
-                catch (BinanceApiException e) { errorException(e.getMessage(), fraction); }
+                // в ошибке прилетит количество выполненых! ордеров
+                errorException(e.getMessage(), fraction);
                 fraction = i + 1;
-                try { Thread.sleep(1000); } catch (InterruptedException e) { errorException(e.getMessage(), fraction); }
+            }
+
+            try { Thread.sleep(1000); } catch (InterruptedException e) {
+                errorException(e.getMessage(), fraction);
             }
         }
     }
@@ -121,35 +137,44 @@ public class BuyStrategyObject implements Runnable {
     // ну или все это но в ручную
     // в данном случаи стратегия получает предыдущий статус и переходит список офлайн стратегий
     private void errorException(String string, int fraction) {
-        if (fraction <= 1) {
-            if (attempts < 0) {
-                understandAndExecute(string);
-            } else {
-                try { Thread.sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); }
-                createdNewTrade();
-            }
+        if (attempts < 0) {
+            understandAndExecute(string, fraction);
         } else {
-            if (attempts < 0) { understandAndExecute(string, fraction); }
-            else {
-                try { Thread.sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); }
-                executedOrders = fraction - 1;
-                createdNewTrade();
-            }
+            try { Thread.sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); }
+            executedOrders = fraction - 1;
+            createdNewTrades();
         }
     }
 
 
 
+    private void errorException(String string) {
+        if (attempts < 0) {
+            understandAndExecute(string);
+        } else {
+            try { Thread.sleep(1000); } catch (InterruptedException e) { e.printStackTrace(); }
+            createdNewTrade();
+        }
+    }
 
+
+
+    // откатываем состояние стратегии в зависимости от ситуации с фракциями
     private void understandAndExecute(String string, int fraction) {
+        // если перед этим былы нормальная позиция и не выполнилась
         if (preliminaryPosition.equals(Position.NORMAL_POSITION)) {
-        // если была перед ошибкой нормальная позиция со стопами и тейками
+            // расчитываем оставшиеся количество монет
             Double remainder = (strategyObject.getAmountOfCoins() / fractions) * (fractions - fraction);
+            // дописываем к имени стратегии ERROR и дальше сообщение об ошибке
             strategyObject.setNameStrategy(strategyObject.getNameStrategy()
                     + Lines.delimiterErrorFR + fraction + Lines.delimiter + string);
+            // так же указываем количество распроданых монет
             strategyObject.setBuyOrSellCoins(fractionsAmountCoins * fraction);
+            // возвращаем ее предыдущую позицию - NORMAL_POSITION
             strategyObject.setPosition(preliminaryPosition);
+            // вписываем количество невыполненых монет
             strategyObject.setAmountOfCoins(remainder);
+            // переводим ее в список офлайн стратегий
             arraysOfStrategies.replaceStrategy(strategyObject);
 
         } else if (preliminaryPosition.equals(Position.EASY_POSITION)
@@ -176,14 +201,21 @@ public class BuyStrategyObject implements Runnable {
 
 
     // посмотреть и поработать с setBuyOrSellCoins
+    // откатываем состояние стратегии в зависимости от ситуации
     private void understandAndExecute(String string) {
+        // если перед этим былы нормальная позиция и не выполнилась
         if (preliminaryPosition.equals(Position.NORMAL_POSITION)) {
+            // дописываем к имени стратегии ERROR и дальше сообщение об ошибке
             strategyObject.setNameStrategy(strategyObject.getNameStrategy()
                     + Lines.delimiterError + Lines.delimiter + string);
+            // возвращаем ее предыдущую позицию - NORMAL_POSITION
             strategyObject.setPosition(preliminaryPosition);
+            // так же востанавливаем количество монет
             strategyObject.setAmountOfCoins(amountCoins);
             strategyObject.setBuyOrSellCoins(0.0);
+            // переводим ее в список офлайн стратегий
             arraysOfStrategies.replaceStrategy(strategyObject);
+
         } else if (preliminaryPosition.equals(Position.EASY_POSITION)
                 || preliminaryPosition.equals(Position.TRAILING_STOP_POSITION)) {
             strategyObject.setNameStrategy(strategyObject.getNameStrategy()
@@ -191,6 +223,7 @@ public class BuyStrategyObject implements Runnable {
             strategyObject.setPosition(preliminaryPosition);
             strategyObject.setAmountOfCoins(amountCoins);
             arraysOfStrategies.replaceStrategy(strategyObject);
+
         } else if (preliminaryPosition.equals(Position.BUY_TAKE_OR_STOP_POSITION)) {
             strategyObject.setNameStrategy(strategyObject.getNameStrategy()
                     + Lines.delimiterError + Lines.delimiter + string);
@@ -202,6 +235,7 @@ public class BuyStrategyObject implements Runnable {
 
 
 
+    // создаем обект - торгового ордеоа и запоняем его
     private void createBinanceOrderPlacement() {
         if (fractions > 1) { fractionsAmountCoins = amountCoins / fractions; }
         else { returnAmountCoins = amountCoins / price; }
