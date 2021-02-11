@@ -1,21 +1,21 @@
 package main.model;
 
-import main.controller.MainPageController;
+import main.controller.MainController;
 
 import java.util.ArrayList;
 
 
 
 public class ShowExchangeRates extends Thread {
-    private MainPageController mainPageController;
+    private MainController mainController;
     private final ArraysOfWebSockets webSockets;
     private final ArrayList<String> strings;
     private boolean stopThreads;
 
 
-    public ShowExchangeRates(MainPageController mainPageController) {
+    public ShowExchangeRates(MainController mainController) {
         this.webSockets = Agent.getArraysOfWebSockets();
-        this.mainPageController = mainPageController;
+        this.mainController = mainController;
         this.strings = Agent.getViewPairSockets();
         this.stopThreads = true;
     }
@@ -27,7 +27,7 @@ public class ShowExchangeRates extends Thread {
         while (stopThreads) {
             try { Thread.sleep(1000); }
             catch (InterruptedException e) { e.printStackTrace(); }
-            mainPageController.setExchangeRates(getStingExchangeRates());
+            mainController.setExchangeRates(getStingExchangeRates());
         }
     }
 

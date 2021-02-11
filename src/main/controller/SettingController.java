@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import main.model.binance.datatype.BinanceEventDepthUpdate;
 
 
-public class SettingPageController {
+public class SettingController {
     private ArraysOfStrategies arraysOfStrategies;
     private StrategyObject strategyObject;
 

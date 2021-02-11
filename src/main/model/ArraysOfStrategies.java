@@ -1,7 +1,5 @@
 package main.model;
 
-import main.controller.MainPageController;
-
 import java.util.ArrayList;
 
 

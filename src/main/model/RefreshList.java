@@ -1,16 +1,16 @@
 package main.model;
 
-import main.controller.MainPageController;
+import main.controller.MainController;
 
 import java.util.ArrayList;
 
 public class RefreshList extends Thread {
     private final CreatesTemplatesAndData createsTemplatesAndData;
-    private final MainPageController mainPageController;
+    private final MainController mainController;
 
     public RefreshList() {
         this.createsTemplatesAndData = Agent.getCreatesTemplatesAndData();
-        this.mainPageController = Agent.getMainPageController();
+        this.mainController = Agent.getMainPageController();
         start();
     }
 
@@ -22,6 +22,6 @@ public class RefreshList extends Thread {
         listOut.addAll(createsTemplatesAndData.getTradedStrategyList());
         listOut.add(Enums.OFF_LINE_STRATEGY.toString());
         listOut.addAll(createsTemplatesAndData.getStoppedStrategyList());
-        mainPageController.updateListView(listOut);
+        mainController.updateListView(listOut);
     }
 }

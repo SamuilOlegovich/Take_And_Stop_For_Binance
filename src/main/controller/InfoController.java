@@ -17,7 +17,7 @@ import main.model.*;
 
 
 
-public class InfoPageController {
+public class InfoController {
     private ArraysOfStrategies arraysOfStrategies;
     private StrategyObject strategyObject;
 

@@ -1,7 +1,5 @@
 package main.model;
 
-import main.controller.MainPageController;
-
 public class WriteKeysAndSettings {
     private final CreatesTemplatesAndData createsTemplatesAndData;
     private final FilesAndPathCreator filesAndPathCreator;

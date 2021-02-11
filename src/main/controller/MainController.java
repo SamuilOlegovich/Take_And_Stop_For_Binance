@@ -21,7 +21,7 @@ import javafx.scene.text.Text;
 
 
 
-public class MainPageController {
+public class MainController {
     private ShowExchangeRates showExchangeRates;
     private CreatesTemplatesAndData createsTemplatesAndData;
     private ArraysOfWebSockets arraysOfWebSockets;

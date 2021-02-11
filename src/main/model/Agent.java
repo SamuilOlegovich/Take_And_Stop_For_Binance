@@ -1,10 +1,8 @@
 package main.model;
 
-import javafx.stage.Stage;
-import main.controller.MainPageController;
+import main.controller.MainController;
 import main.model.binance.api.BinanceAPI;
 import main.model.binance.datatype.BinanceEventDepthUpdate;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 
@@ -19,7 +17,7 @@ public class Agent {
     private static WriteKeysAndSettings writeKeysAndSettings;
     private static ReadKeysAndSettings readKeysAndSettings;
     private static FilesAndPathCreator filesAndPathCreator;
-    private static MainPageController mainPageController;
+    private static MainController mainController;
     private static ArraysOfStrategies arraysOfStrategies;
     private static ArraysOfWebSockets arraysOfWebSockets;
     private static WriterAndReadFile writerAndReadFile;
@@ -139,12 +137,12 @@ public class Agent {
         Agent.writeKeysAndSettings = writeKeysAndSettings;
     }
 
-    public static MainPageController getMainPageController() {
-        return mainPageController;
+    public static MainController getMainPageController() {
+        return mainController;
     }
 
-    public static void setMainPageController(MainPageController mainPageController) {
-        Agent.mainPageController = mainPageController;
+    public static void setMainPageController(MainController mainController) {
+        Agent.mainController = mainController;
     }
 
     public static API getApi() {
