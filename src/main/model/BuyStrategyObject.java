@@ -7,6 +7,7 @@ import main.model.binance.datatype.*;
 import main.view.ConsoleHelper;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static java.math.BigDecimal.ROUND_FLOOR;
 
@@ -57,6 +58,7 @@ public class BuyStrategyObject implements Runnable {
     }
 
 
+
     @Override
     public void run() {
         determineWhatToDo();
@@ -67,6 +69,59 @@ public class BuyStrategyObject implements Runnable {
             createdNewTrades();
         }
     }
+
+
+
+    private void determineWhatToDo() {
+        position = strategyObject.getPosition();
+
+        if (position.equals(Position.BUY_COMPLETED_POSITION)) {
+            amountCoins = strategyObject.getAmountOfCoins();
+            price = strategyObject.getPrice();
+        } else if (position.equals(Position.BUY_TAKE_OR_STOP_POSITION)) {
+            amountCoins = strategyObject.getAmountOfCoins();
+            price = strategyObject.getPrice();
+            strategyObject.setBuyOrSellCoins(returnAmountCoins);
+        } else if (position.equals(Position.BUY_TAKE_COMPLETED_POSITION)) {
+            amountCoins = strategyObject.getBuyOrSellCoins();
+            price = strategyObject.getTakePrice();
+        } else if (position.equals(Position.BUY_TRAILING_STOP_COMPLETED_POSITION)) {
+            amountCoins = strategyObject.getAmountOfCoins();
+            price = strategyObject.getPriceStopTrailing();
+        }
+    }
+
+
+
+    // создаем обект - торгового ордеоа и запоняем его
+    private void createBinanceOrderPlacement() {
+        if (fractions > 1) {
+            fractionsAmountCoins = amountCoins / fractions;
+        } else {
+            returnAmountCoins = amountCoins / price;
+        }
+
+        try {
+            binanceOrderPlacement = new BinanceOrderPlacement();
+            binanceSymbol = new BinanceSymbol(symbol);
+
+            binanceOrderPlacement.setQuantity(new BigDecimal(fractions > 1
+                    ? fractionsAmountCoins.toString()
+                    : returnAmountCoins.toString()
+            ).setScale(5, RoundingMode.HALF_EVEN));
+
+            binanceOrderPlacement.setTimeInForce(BinanceTimeInForce.GOOD_TILL_CANCELLED);
+            binanceOrderPlacement.setNewClientOrderId(strategyObject.getClassID());
+            binanceOrderPlacement.setPrice(new BigDecimal(price.toString()));
+            binanceOrderPlacement.setType(BinanceOrderType.MARKET);
+            binanceOrderPlacement.setSide(BinanceOrderSide.BUY);
+            binanceOrderPlacement.setSymbol(binanceSymbol);
+        } catch (BinanceApiException e) {
+            ConsoleHelper.writeERROR(e.getMessage());
+            errorException(e.getMessage());
+        }
+    }
+
 
 
 
@@ -109,25 +164,6 @@ public class BuyStrategyObject implements Runnable {
                 errorException(e.getMessage(), fraction);
             }
         }
-    }
-
-
-
-
-    private String getTransactionInformation() {
-        return DatesTimes.getDateLogs() + Lines.delimiter + symbol + Lines.delimiter + Enums.PRICE
-                + Lines.delimiter + price + Lines.delimiter + Enums.AMOUNT_OF_COINS
-                + Lines.delimiter + amountCoins + Lines.delimiter + Enums.RECEIVED_COINS
-                + Lines.delimiter + returnAmountCoins + Lines.newline;
-    }
-
-
-
-    private String getTransactionERRORInformation() {
-        return DatesTimes.getDateLogs() + Lines.delimiter + symbol + Lines.delimiter + Enums.PRICE
-                + Lines.delimiter + price + Lines.delimiter + Enums.AMOUNT_OF_COINS
-                + Lines.delimiter + amountCoins + Lines.delimiter + Enums.RECEIVED_COINS
-                + Lines.delimiter + returnAmountCoins + Lines.newline;
     }
 
 
@@ -200,7 +236,6 @@ public class BuyStrategyObject implements Runnable {
 
 
 
-    // посмотреть и поработать с setBuyOrSellCoins
     // откатываем состояние стратегии в зависимости от ситуации
     private void understandAndExecute(String string) {
         // если перед этим былы нормальная позиция и не выполнилась
@@ -235,52 +270,28 @@ public class BuyStrategyObject implements Runnable {
 
 
 
-    // создаем обект - торгового ордеоа и запоняем его
-    private void createBinanceOrderPlacement() {
-        if (fractions > 1) { fractionsAmountCoins = amountCoins / fractions; }
-        else { returnAmountCoins = amountCoins / price; }
-
-        try {
-            binanceSymbol = new BinanceSymbol(symbol);
-            binanceOrderPlacement = new BinanceOrderPlacement();
-
-            binanceOrderPlacement.setQuantity(new BigDecimal(fractions > 1
-                    ? fractionsAmountCoins.toString()
-                    : returnAmountCoins.toString()
-            ).setScale(5, ROUND_FLOOR));
-
-            binanceOrderPlacement.setTimeInForce(BinanceTimeInForce.GOOD_TILL_CANCELLED);
-            binanceOrderPlacement.setNewClientOrderId(strategyObject.getClassID());
-            binanceOrderPlacement.setPrice(new BigDecimal(price.toString()));
-            binanceOrderPlacement.setType(BinanceOrderType.MARKET);
-            binanceOrderPlacement.setSide(BinanceOrderSide.BUY);
-            binanceOrderPlacement.setSymbol(binanceSymbol);
-        } catch (BinanceApiException e) {
-            ConsoleHelper.writeERROR(e.getMessage());
-            errorException(e.getMessage(), 0);
-        }
+    private String getTransactionInformation() {
+        return DatesTimes.getDateLogs() + Lines.delimiter + symbol + Lines.delimiter + Enums.PRICE
+                + Lines.delimiter + price + Lines.delimiter + Enums.AMOUNT_OF_COINS
+                + Lines.delimiter + amountCoins + Lines.delimiter + Enums.RECEIVED_COINS
+                + Lines.delimiter + returnAmountCoins + Lines.newline;
     }
 
 
 
-    private void determineWhatToDo() {
-        position = strategyObject.getPosition();
-
-        if (position.equals(Position.BUY_COMPLETED_POSITION)) {
-            amountCoins = strategyObject.getAmountOfCoins();
-            price = strategyObject.getPrice();
-        } else if (position.equals(Position.BUY_TAKE_OR_STOP_POSITION)) {
-            amountCoins = strategyObject.getAmountOfCoins();
-            price = strategyObject.getPrice();
-            strategyObject.setBuyOrSellCoins(returnAmountCoins);
-        } else if (position.equals(Position.BUY_TAKE_COMPLETED_POSITION)) {
-            amountCoins = strategyObject.getBuyOrSellCoins();
-            price = strategyObject.getTakePrice();
-        } else if (position.equals(Position.BUY_TRAILING_STOP_COMPLETED_POSITION)) {
-            amountCoins = strategyObject.getAmountOfCoins();
-            price = strategyObject.getPriceStopTrailing();
-        }
+    private String getTransactionERRORInformation() {
+        return DatesTimes.getDateLogs() + Lines.delimiter + symbol + Lines.delimiter + Enums.PRICE
+                + Lines.delimiter + price + Lines.delimiter + Enums.AMOUNT_OF_COINS
+                + Lines.delimiter + amountCoins + Lines.delimiter + Enums.RECEIVED_COINS
+                + Lines.delimiter + returnAmountCoins + Lines.newline;
     }
+
+
+
+
+
+
+
 
 
 
