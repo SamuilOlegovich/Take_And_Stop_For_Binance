@@ -54,6 +54,7 @@ public class UserDataStreamTest {
         Thread.sleep(2000);
         session.close();
         log.info("DELETED=" + binanceApi.deleteUserDataStream(listenKey));
+
     }
 }
 

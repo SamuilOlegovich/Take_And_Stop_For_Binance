@@ -45,5 +45,4 @@ public enum Enums {
     BUY,
     ON,
     ID
-
 }

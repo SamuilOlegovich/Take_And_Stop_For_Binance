@@ -9,9 +9,6 @@ import main.view.ConsoleHelper;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static java.math.BigDecimal.ROUND_FLOOR;
-
-
 
 
 public class BuyStrategyObject implements Runnable {
@@ -127,7 +124,6 @@ public class BuyStrategyObject implements Runnable {
 
     // отправляем сделку на биржу
     private void createdNewTrade() {
-        int fraction = 0;
         attempts--;
         try {
             // если все хорошо то записываем в логи информацию о транзакциях.
@@ -285,16 +281,6 @@ public class BuyStrategyObject implements Runnable {
                 + Lines.delimiter + amountCoins + Lines.delimiter + Enums.RECEIVED_COINS
                 + Lines.delimiter + returnAmountCoins + Lines.newline;
     }
-
-
-
-
-
-
-
-
-
-
 
 
     //////////////////////// TEST ////////////////////////////
