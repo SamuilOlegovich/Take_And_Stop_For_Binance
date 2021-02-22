@@ -89,5 +89,4 @@ public class TradeReport extends Thread {
             }
         }
     }
-
 }

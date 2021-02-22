@@ -4,6 +4,8 @@ import main.controller.MainController;
 
 import java.util.ArrayList;
 
+
+
 public class RefreshList extends Thread {
     private final CreatesTemplatesAndData createsTemplatesAndData;
     private final MainController mainController;

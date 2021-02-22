@@ -20,8 +20,4 @@ public class Lines {
     public static final String s5 = "Все хорошо!\n Добавляю новую торговую стратегию...";
     public static final String s6 = "The API or secret keys were entered incorrectly. Rre-enter. Be careful.";
     public static final String s7 = "API или секретные ключи введены не правильно. Повторите ввод. Будьте внимательней.";
-
-
-
-
 }

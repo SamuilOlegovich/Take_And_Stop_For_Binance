@@ -3,6 +3,9 @@ package main.model;
 
 import java.math.BigDecimal;
 
+
+
+
 public class StrategyObject {
     private final WriteKeysAndSettings writeKeysAndSettings;
     private String nameStrategy;

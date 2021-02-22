@@ -1,7 +1,7 @@
 package main.model;
 
-import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
+import main.model.binance.api.BinanceAPI;
 
 import java.util.ArrayList;
 import java.util.TreeSet;

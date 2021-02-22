@@ -1,7 +1,6 @@
 package main.model;
 
 
-import main.view.ConsoleHelper;
 
 import java.io.IOException;
 import java.nio.file.Files;

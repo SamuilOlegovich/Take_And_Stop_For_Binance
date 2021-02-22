@@ -17,10 +17,10 @@ public class Agent {
     private static WriteKeysAndSettings writeKeysAndSettings;
     private static ReadKeysAndSettings readKeysAndSettings;
     private static FilesAndPathCreator filesAndPathCreator;
-    private static MainController mainController;
     private static ArraysOfStrategies arraysOfStrategies;
     private static ArraysOfWebSockets arraysOfWebSockets;
     private static WriterAndReadFile writerAndReadFile;
+    private static MainController mainController;
     private static String keyForWebSocket;
     private static BinanceAPI binanceAPI;
     private static API api;

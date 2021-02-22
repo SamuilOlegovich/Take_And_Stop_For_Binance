@@ -1,9 +1,9 @@
 package main.model;
 
-import main.model.binance.api.BinanceApiException;
-import main.model.binance.datatype.BinanceEventDepthUpdate;
-import main.model.binance.datatype.BinanceSymbol;
 import main.model.binance.websocket.BinanceWebSocketAdapterDepth;
+import main.model.binance.datatype.BinanceEventDepthUpdate;
+import main.model.binance.api.BinanceApiException;
+import main.model.binance.datatype.BinanceSymbol;
 import org.eclipse.jetty.websocket.api.Session;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class WebSocket implements Runnable {
     private volatile BinanceEventDepthUpdate binanceEventDepthUpdate;
-    private final ArraysOfStrategies arraysOfStrategies;
+//    private final ArraysOfStrategies arraysOfStrategies;
     private final ArrayList<StrategyObject> arrayList;
     private final Thread thread;
     private final String symbol;
@@ -30,7 +30,7 @@ public class WebSocket implements Runnable {
 
 
     public WebSocket(StrategyObject strategyObject) {
-        this.arraysOfStrategies = Agent.getArraysOfStrategies();
+//        this.arraysOfStrategies = Agent.getArraysOfStrategies();
         this.symbol = strategyObject.getTradingPair();
         this.arrayList = new ArrayList<>();
         this.previousPriceValue = 0.0;
@@ -44,7 +44,7 @@ public class WebSocket implements Runnable {
 
 
     public WebSocket(String in) {
-        this.arraysOfStrategies = Agent.getArraysOfStrategies();
+//        this.arraysOfStrategies = Agent.getArraysOfStrategies();
         this.arrayList = new ArrayList<>();
         this.previousPriceValue = 0.0;
         this.stopStartThread = true;

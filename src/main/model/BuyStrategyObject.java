@@ -1,13 +1,13 @@
 package main.model;
 
-import com.google.gson.JsonObject;
-import main.model.binance.api.BinanceAPI;
 import main.model.binance.api.BinanceApiException;
+import main.model.binance.api.BinanceAPI;
 import main.model.binance.datatype.*;
+import com.google.gson.JsonObject;
 import main.view.ConsoleHelper;
 
-import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.math.BigDecimal;
 
 
 
